@@ -68,6 +68,9 @@ module GrubHaus
     # Precompile *all* assets, except those that start with underscore
     config.assets.precompile << /(^[^_\/]|\/[^_])[^\/]*$/
 
+    # Add file types requirejs understands
+    config.requirejs.logical_asset_filter += [/\.templ$/]
+
     # Turning on Mongoid loggers here.
     Mongoid.logger.level = Logger::DEBUG
     Moped.logger.level = Logger::DEBUG
