@@ -7,7 +7,6 @@ gem 'rails', '3.2.8'
 
 gem 'mongoid', '~> 3.0.0'
 
-
 gem 'requirejs-rails'
 
 # Gems used only for assets and not required
@@ -34,6 +33,12 @@ group :test, :development do
   gem 'guard-spork'
   gem 'guard-rspec'
   gem 'terminal-notifier-guard'
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'mongoid-rspec'
 end
 
 gem 'jquery-rails'
