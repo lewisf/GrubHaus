@@ -64,5 +64,9 @@ module GrubHaus
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Precompile *all* assets, except those that start with underscore
+    config.assets.precompile << /(^[^_\/]|\/[^_])[^\/]*$/
+
   end
 end
