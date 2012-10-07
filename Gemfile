@@ -18,6 +18,7 @@ group :assets do
   gem 'compass-960-plugin'
   gem 'sassy-buttons'
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'haml-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
