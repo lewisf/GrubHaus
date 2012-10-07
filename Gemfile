@@ -13,7 +13,7 @@ gem 'pg'
 group :assets do
   gem 'compass-rails', '~> 1.0.0.rc.2'
   gem 'compass-colors'
-  gem 'compass960-plugin'
+  gem 'compass-960-plugin'
   gem 'sassy-buttons'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -22,6 +22,10 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :test, :development do
+  gem 'rspec-rails', '~> 2.0'
 end
 
 gem 'jquery-rails'
