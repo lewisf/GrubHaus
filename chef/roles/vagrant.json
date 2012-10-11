@@ -1,0 +1,13 @@
+{
+  "run_list": ["grubhaus"],
+  "default_attributes": {
+    "grubhaus": {
+      "path": "/home/vagrant/grubhaus",
+      "db": {
+        "name": "grub_haus_development",
+        "port": "27017"
+      }
+    }
+  }
+}
+
