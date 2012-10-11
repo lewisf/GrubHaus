@@ -8,10 +8,29 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
 
+  # Trapping eager loading.
+  require 'rails/application'
+
+  Spork.trap_method(Rails::Application, :reload_routes!)
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+
+  require 'rails/mongoid'
+  Spork.trap_class_method(Rails::Mongoid, :load_models)
+
+  # Prevent main application to eager_load in the prefork block
+  Spork.trap_method(Rails::Application, :eager_load!)
+
+  require File.expand_path("../../config/environment", __FILE__)
+
+  # Load all railties
+  Rails.application.railties.all { |r| r.eager_load! }
+
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+
+  require 'mongoid-rspec'
 
 end
 
