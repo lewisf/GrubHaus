@@ -2,7 +2,14 @@ require 'spec_helper'
 
 describe Recipe do
   
-  it { should have_fields(:name, :author, :photo, :description) }
+  it { should have_fields(:name, :author, :photo, :description, :prep_time, :cook_time, :ready_in, :serving_size) }
+  it { should embed_many(:steps) }
+  it { should has_many(:tags) }
+  it { should have_many(:ingredients) }
+
+  it { should have_one(:parent).of_type(Recipe) }
+  it { should have_many(:children).of_type(Recipe) }
+  it { should have_many(:followers).as_inverse_of(:following) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:author) }
