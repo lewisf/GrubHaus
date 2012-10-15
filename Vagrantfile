@@ -7,7 +7,7 @@ Vagrant::Config.run do |config|
 
   config.vm.network :hostonly, "192.168.33.10"
 
-  config.vm.forward_port 8000, 8000
+  config.vm.forward_port 3000, 3000
 
   config.vm.customize ["modifyvm", :id, "--rtcuseutc", "on"]
 
@@ -17,7 +17,7 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = ["chef/cookbooks"]
     chef.roles_path = ["chef/roles"]
     chef.log_level = :debug
-    chef.add_role "grubhaus"
+    chef.add_role "vagrant"
   end
 
 end
