@@ -4,4 +4,6 @@ class Recipe
   field :name, type: String
   field :draft, type: Boolean, :default => true
 
+  has_one :author
+
 end
