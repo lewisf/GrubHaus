@@ -32,11 +32,14 @@ group :test, :development do
   gem 'guard'
   gem 'guard-spork'
   gem 'guard-rspec'
+  gem 'guard-cucumber'
   gem 'terminal-notifier-guard'
+  gem 'foreman'
 end
 
 group :test do
   gem 'database_cleaner'
+  gem 'cucumber-rails', require: false
   gem 'factory_girl_rails'
   gem 'mongoid-rspec'
 end

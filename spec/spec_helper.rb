@@ -21,6 +21,8 @@ Spork.prefork do
   Spork.trap_method(Rails::Application, :eager_load!)
 
   require File.expand_path("../../config/environment", __FILE__)
+  require 'rspec/rails'
+  require 'capybara/rspec'
 
   # Load all railties
   Rails.application.railties.all { |r| r.eager_load! }

@@ -72,8 +72,8 @@ module GrubHaus
     config.requirejs.logical_asset_filter += [/\.templ$/]
 
     # Turning on Mongoid loggers here.
-    Mongoid.logger.level = Logger::DEBUG
-    Moped.logger.level = Logger::DEBUG
+    # Mongoid.logger.level = Logger::DEBUG
+    # Moped.logger.level = Logger::DEBUG
 
   end
 end
