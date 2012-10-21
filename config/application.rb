@@ -75,5 +75,8 @@ module GrubHaus
     # Mongoid.logger.level = Logger::DEBUG
     # Moped.logger.level = Logger::DEBUG
 
+    # Heroku config, uncomment if not running on Heroku
+    config.assets.initialize_on_precompile = false
+
   end
 end
