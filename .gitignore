@@ -11,6 +11,7 @@
 /db/*.sqlite3
 /db/mongod.lock
 /db/journal/*
+/db/grub_haus_test*
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
