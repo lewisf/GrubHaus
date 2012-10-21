@@ -2,12 +2,12 @@ modules:
   - name: 'application'
 
 deps:  
-  - "main"
+  - "app/main"
 
 paths:
-  libs: "../app/assets/javascripts/libs"
-  plugins: "../app/assets/javascripts/plugins"
-  vendor: "../app/assets/javascripts/vendor"
+  libs: "javascripts/libs"
+  plugins: "javascripts/plugins"
+  vendor: "javascripts/vendor"
 
   # Libraries
   jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
