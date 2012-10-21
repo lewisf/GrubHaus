@@ -8,6 +8,7 @@ Vagrant::Config.run do |config|
   config.vm.network :hostonly, "192.168.33.10"
 
   config.vm.forward_port 3000, 3000
+  config.vm.forward_port 8000, 8010
 
   config.vm.customize ["modifyvm", :id, "--rtcuseutc", "on"]
 

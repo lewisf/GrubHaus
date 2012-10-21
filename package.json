@@ -2,7 +2,9 @@
   "name": "grubhaus",
   "version": "0.0.1",
   "author": "Jon Wong <j@jnwng.com>",
-  "dependencies": {
-    "bbb"
+  "devDependencies": {
+    "bbb": ">=0.1.14",
+    "mocha": ">=1.6.0",
+
   }
 }
