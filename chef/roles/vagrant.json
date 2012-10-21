@@ -1,0 +1,18 @@
+{
+  "json_class": "Chef::Role",
+  "run_list": ["grubhaus"],
+  "default_attributes": {
+    "user": "vagrant",
+    "rbenv": {
+      "dir": "/home/vagrant/.rbenv"
+    },
+    "grubhaus": {
+      "home": "/home/vagrant",
+      "db": {
+        "name": "grub_haus_development",
+        "port": "27017"
+      }
+    }
+  }
+}
+
