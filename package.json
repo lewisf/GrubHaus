@@ -1,0 +1,8 @@
+{
+  "name": "grubhaus",
+  "version": "0.0.1",
+  "author": "Jon Wong <j@jnwng.com>",
+  "dependencies": {
+    "bbb"
+  }
+}
