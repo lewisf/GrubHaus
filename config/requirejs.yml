@@ -9,7 +9,7 @@ paths:
   plugins: "../app/assets/javascripts/plugins"
   vendor: "../app/assets/javascripts/vendor"
 
-  // Libraries
+  # Libraries
   jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
   lodash: "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.8.2/lodash.min.js"
   backbone: "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"

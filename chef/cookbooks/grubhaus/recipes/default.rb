@@ -5,9 +5,9 @@ include_recipe "nodejs"
 include_recipe "nodejs::dev"
 include_recipe "nodejs::npm"
 
-mongodb_instance node['grubhaus']['db']['name'] do
-    port node['grubhaus']['db']['port']
-end
+# mongodb_instance node['grubhaus']['db']['name'] do
+#     port node['grubhaus']['db']['port']
+# end
 
 %w(zlib1g-dev openssl libopenssl-ruby1.9.1 libssl-dev libruby1.9.1\ 
    libreadline-dev git-core).each { |pkg| 
