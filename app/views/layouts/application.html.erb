@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>GrubHaus</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= requirejs_include_tag  "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+!!!
+%head
+  %head
+    %title GrubHaus
+    = stylesheet_link_tag "application", :media => "all"
+    = requirejs_include_tag "application"
+    = csrf_meta_tags
+  %body
+    #wrap
+      .app-container
+        %p.notice= notice
+        %p.alert= alert
+        = yield
 
-<%= yield %>
-
-</body>
-</html>

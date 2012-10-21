@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
 
-  it { should have_fields(:username, :email, :firstname, :lastname, :profile_photo, :tagline) }
+  it { should have_fields(:username, :email) }
   it { should embed_one(:profile) }
   it { should have_many(:recipes) }
   it { should validate_uniqueness_of(:username) }

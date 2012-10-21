@@ -6,6 +6,7 @@ gem 'rails', '3.2.8'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mongoid', '~> 3.0.0'
+gem 'devise'
 
 gem 'requirejs-rails'
 
@@ -35,6 +36,7 @@ group :test, :development do
   gem 'guard-cucumber'
   gem 'terminal-notifier-guard'
   gem 'foreman'
+  gem 'colorize'
 end
 
 group :test do

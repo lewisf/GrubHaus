@@ -1,0 +1,19 @@
+/*
+ * application.scss
+ *
+ * Since we're using SASS, we don't wnt to use Sprocket's 'require' syntax. Instead we want to use
+ * @import provided by SASS.
+ */
+
+// Include some nice mixins
+@import "compass/reset"
+@import "compass/css3"
+@import "sassy-buttons"
+@import "960/grid"
+
+$ninesixty-columns: 12
+$ninesixty-grid-width: 960px
+$ninesixty-gutter-width: 20px
+$ninesixty-class-separator: '_'
+
+@import "base"
