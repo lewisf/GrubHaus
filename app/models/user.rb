@@ -4,12 +4,15 @@ class User
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :authentication_keys => [:login]
 
   ## Database authenticatable
+  field :username,           :type => String, :default => ""
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
 
+  validates_presence_of :username
   validates_presence_of :email
   validates_presence_of :encrypted_password
   
@@ -40,5 +43,23 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+
+  attr_accessor :login
+  attr_accessible :login
+
+  embeds_one :profile
+  has_many :followers, :class_name => "User"
+  has_many :following, :class_name => "User"
+
+
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      self.any_of({ :usernmae => /^#{Regexp.escape(login)}$/i },
+                  { :email => /^#{Regexp.escape(login)}$/i} ).first
+    else
+      super
+    end
+  end
 
 end

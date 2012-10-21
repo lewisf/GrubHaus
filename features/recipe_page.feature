@@ -1,12 +1,12 @@
 Feature: Viewer visits the page of a recipe
-  In order to see a recipe
-  As a viewer
-  I want to see a recipe
+  In order to add value to our service
+  Viewer should be able to see and 
+  interact with recipes. 
   
   Scenario: New viewer visits a recipe page
     Given I am on a recipe page
     And I am not a user
-    Then I should see a recipe page
+    Then I should see a recipe with instructions
     
   Scenario: New viewer wants to interact with a recipe page
     Given I am on a recipe page
@@ -16,7 +16,7 @@ Feature: Viewer visits the page of a recipe
   Scenario: New viewer wants to share a recipe
     Given I am on a recipe page
     And I am not a user
-    Then I should be given choices on how to share
+    Then I should be prompted with a link that I can use to share
 
   Scenario: User visits a recipe page
     Given I am on a recipe page
