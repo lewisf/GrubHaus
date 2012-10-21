@@ -51,14 +51,15 @@ class User
   has_many :followers, :class_name => "User"
   has_many :following, :class_name => "User"
 
-
+  # Overriding the default devise user query because we want to allow
+  # logging in with both username or email.
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      self.any_of({ :usernmae => /^#{Regexp.escape(login)}$/i },
+      self.any_of({ :username => /^#{Regexp.escape(login)}$/i },
                   { :email => /^#{Regexp.escape(login)}$/i} ).first
     else
-      super
+      super  # do normal is 'login' is not passed in the conditions
     end
   end
 
