@@ -1,6 +1,9 @@
 
 include_recipe "nginx"
 include_recipe "mongodb::10gen_repo"
+include_recipe "nodejs"
+include_recipe "nodejs::dev"
+include_recipe "nodejs::npm"
 
 mongodb_instance node['grubhaus']['db']['name'] do
     port node['grubhaus']['db']['port']
