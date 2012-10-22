@@ -3,7 +3,7 @@ define ["jquery",
         "backbone",
         "handlebars",
         # "GrubHaus",
-        "plugins/backbone.layoutmanager"], 
+        "backbone.layoutmanager"], 
   ($, _, Backbone, Handlebars) ->
   # ($, _, Backbone, Handlebars, GrubHaus) ->
     app = {root: "/"}
@@ -34,7 +34,7 @@ define ["jquery",
         return JST[path]
 
     _.extend app, {
-      module: additionalProps ->
+      module: (additionalProps) ->
         _.extend {Views: {}}, additionalProps
       useLayout: (name, options) ->
         if @layout and @layout.options.template is name
