@@ -16,3 +16,5 @@ Feature: Viewer views a user profile
       Given I am a user's profile page
       And I am a user
       Then I should be able to follow the user
+      And I should be able to send the user a message
+      And I should be able to comment on a user's profile

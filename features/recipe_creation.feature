@@ -6,7 +6,7 @@ Feature: User creates a recipe
   I should see an area for pictures
   I should see an area for descriptions
   
-  Scenario: User adds a step
+  Scenario: Try to create a recipe
     Given I am adding a recipe
     And I am a user
     Then I should be able to add a photo, estimated time, description, and ingredients
