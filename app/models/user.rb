@@ -45,11 +45,12 @@ class User
   # field :authentication_token, :type => String
 
   attr_accessor :login
-  attr_accessible :login
+  attr_accessible :login, :username, :email, :password, :password_confirmation
 
   embeds_one :profile
   has_many :followers, :class_name => "User"
   has_many :following, :class_name => "User"
+  has_many :recipes, :inverse_of => :author
 
   # Overriding the default devise user query because we want to allow
   # logging in with both username or email.

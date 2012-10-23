@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Recipe do
   
-  it { should have_fields(:name, :photo, :description, :prep_time, :cook_time, :ready_in, :serving_size, :draft) }
+  it { should have_fields(:name, :photo, :description, :prep_time, :cook_time, :ready_in, :serving_size, :published) }
   it { should embed_many(:steps) }
   it { should embed_many(:cookware) }
   it { should has_many(:tags) }
@@ -24,7 +24,7 @@ describe Recipe do
   end
 
   it "should be initialized in draft state" do
-    expect(@recipe.draft).to eq(true)
+    expect(@recipe.published).to eq(false)
   end
 
   it "should not allow draft to be true (should not publish) without all the fields filled in." do

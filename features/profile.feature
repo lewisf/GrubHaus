@@ -15,4 +15,4 @@ Feature: Viewer views a user profile
     Scenario: Viewer visits a user's profile
       Given I am a user's profile page
       And I am a user
-      I should be able to follow the user
+      Then I should be able to follow the user

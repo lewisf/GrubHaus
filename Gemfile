@@ -37,6 +37,7 @@ group :test, :development do
   gem 'terminal-notifier-guard'
   gem 'foreman'
   gem 'colorize'
+  gem 'faker'
 end
 
 group :test do
