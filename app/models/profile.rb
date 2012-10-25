@@ -6,6 +6,5 @@ class Profile
   field :tagline, type: String
 
   embedded_in :user
-  has_many :favorites, :class_name => "Recipe"
 
 end
