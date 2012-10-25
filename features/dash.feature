@@ -9,7 +9,7 @@ Feature: User visits his dashboard
     Given I am on my home page
     And I am a user
     Then I should see a list of recipes I've made
-    And if I click on one of the recipes
+    When I click on one of the recipes
     Then I should be on a recipe page
     And be presented with a way to edit the recipe
     

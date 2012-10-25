@@ -7,10 +7,10 @@ Feature: Viewer views a user profile
       Given I am on a user's profile page
       And I am a viewer
       Then I should see a username
-      Then I should see a profile page
-      Then I should be able to see a list of recipes
-      Then I should be able to see al ist of tags he's following
-      Then I should be able to see a list of who he's following
+      And I should be able to see a list of recipes that he owns
+      And I should be able to see a list of recipes that he has favorited
+      And I should be able to see a list of tags he's following
+      And I should be able to see a list of who he's following
       
     Scenario: Viewer visits a user's profile
       Given I am a user's profile page

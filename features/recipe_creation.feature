@@ -7,11 +7,13 @@ Feature: User creates a recipe
   I should see an area for descriptions
   
   Scenario: Try to create a recipe
-    Given I am adding a recipe
+    Given I am on the home page
     And I am a user
-    Then I should be able to add a photo, estimated time, description, and ingredients
+    When I click the create recipe link
+    Then I am on the create recipe page
+    And I should be able to add a photo, estimated time, description, and ingredients
     
   Scenario: User adds a tag
-    Given I am adding a recipe
+    Given Iam on the create recipe page
     And I am a user
-    Then I should be able to tag my recipe with categories
+    Then I should be able to add tags to the recipe
