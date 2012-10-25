@@ -45,7 +45,7 @@ class User
   # field :authentication_token, :type => String
 
   attr_accessor :login
-  attr_accessible :login, :username, :email, :password, :password_confirmation
+  attr_accessible :login
 
   embeds_one :profile
   has_many :followers, :class_name => "User", :inverse_of => :following

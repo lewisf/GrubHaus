@@ -12,56 +12,79 @@ def random_user
   User.skip(rand).limit(1).first
 end
 
-@lewis_p = Profile.new(first_name: "Lewis",
-                       last_name: "Chung",
-                       tagline: "Life is too good to be wasted coding.")
+p "Creating users..."
 
-@lewis = User.create(username: "lewisf",
-                     email: "lewis.f.chung@gmail.com",
-                     password: "foobar",
-                     password_confirmation: "foobar",
-                     profile: @lewis_p)
+@lewis = User.new do |u|
+  u.username = "lewisf",
+  u.email = "lewis.f.chung@gmail.com",
+  u.password = "foobar",
+  u.password_confirmation = "foobar",
+  u.profile = Profile.new do |p|
+    p.first_name = "Lewis"
+    p.last_name = "Chung"
+    p.tagline = "Life is goooooood."
+  end
+end
+@lewis.save!
+p "Created Lewis"
 
 @jon_p = Profile.new(first_name: "Jon",
                      last_name: "Wong",
                      tagline: "Wat")
 
-@jon = User.create(username: "jnwng",
-                   email: "j@jnwng.com",
-                   password: "foobar",
-                   password_confirmation: "foobar",
-                   profile: @jon_p)
+@jon = User.new do |u|
+  u.username = "jnwng"
+  u.email = "j@jnwng.com"
+  u.password = "foobar"
+  u.password_confirmation = "foobar"
+  u.profile = @jon_p
+end
+@jon.save!
+p "Created Jon"
 
 @wes_p = Profile.new(first_name: "Wes",
                      last_name: "Vetter",
                      tagline: "Im gonna shoot you!")
 
-@wes = User.create(username: "wes.vetter",
-                   email: "wes.vetter@gmail.com",
-                   password: "foobar",
-                   password_confirmation: "foobar",
-                   profile: @wes_p)
+@wes = User.new do |u| 
+  u.username = "wes.vetter"
+  u.email = "wes.vetter@gmail.com"
+  u.password = "foobar"
+  u.password_confirmation = "foobar"
+  u.profile = @wes_p
+end
+@wes.save!
+p "Created Wes"
 
 @phi_p = Profile.new(first_name: "Phi",
                      last_name: "Le",
                      tagline: "Booooooooooooo")
 
-@phi = User.create(username: "vietataru",
-                   email: "vietataru@gmail.com",
-                   password: "foobar",
-                   password_confirmation: "foobar",
-                   profile: @phi_p)
+@phi = User.new do |u| 
+  u.username = "vietataru"
+  u.email = "vietataru@gmail.com"
+  u.password = "foobar"
+  u.password_confirmation = "foobar"
+  u.profile = @phi_p
+end
+@phi.save!
+p "Created Phi"
 
 @gylmar_p = Profile.new(first_name: "Gylmar",
                         last_name: "Moreno",
                         tagline: "Booooooooooooo")
 
-@gylmar = User.create(username: "gylmar",
-                      email: "morenonomore@gmail.com",
-                      password: "foobar",
-                      password_confirmation: "foobar",
-                      profile: @gylmar_p)
+@gylmar = User.new do |u| 
+  u.username = "gylmar"
+  u.email = "morenonomore@gmail.com"
+  u.password = "foobar"
+  u.password_confirmation = "foobar"
+  u.profile = @gylmar_p
+end
+@gylmar.save!
+p "Created Gylmar"
 
+p "Creating recipes ..."
 Recipe.create do |recipe|
   recipe.name = "Spaghetti and Meatballs"
   recipe.photo = "http://www.imgur.com/19fdj2.png"
@@ -72,10 +95,12 @@ Recipe.create do |recipe|
   recipe.serving_size = 4
   recipe.author = @lewis
 end
+p "Created Spaghetti and meatballs"
 
 100.times do
+  name = Faker::Lorem.sentence(word_count = 2, supplemental = true)
   @recipe = Recipe.create! do |recipe|
-    recipe.name = Faker::Name.name
+    recipe.name = name
     recipe.photo = Faker::Internet.url
     recipe.description = Faker::Lorem.sentence(word_count = 4, supplemental = false)
     recipe.prep_time = Random.new.rand(10..40)
@@ -84,5 +109,6 @@ end
     recipe.serving_size = Random.new.rand(1..6)
     recipe.author = random_user
   end
+  p "Created #{name}"
 end
 
