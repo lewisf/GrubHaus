@@ -1,3 +1,3 @@
 db: mongod
-tests: guard
+guard: guard
 web: rails s
