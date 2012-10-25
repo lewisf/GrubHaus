@@ -101,7 +101,8 @@ p "Created Spaghetti and meatballs"
   name = Faker::Lorem.sentence(word_count = 2, supplemental = true)
   @recipe = Recipe.create! do |recipe|
     recipe.name = name
-    recipe.photo = Faker::Internet.url
+    recipe.published = true
+    recipe.photo = "http://placekitten.com/300/300"
     recipe.description = Faker::Lorem.sentence(word_count = 4, supplemental = false)
     recipe.prep_time = Random.new.rand(10..40)
     recipe.cook_time = Random.new.rand(10..40)

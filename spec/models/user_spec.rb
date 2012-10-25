@@ -6,11 +6,11 @@ describe User do
   it { should embed_one(:profile) }
   it { should have_many(:recipes) }
   it { should validate_uniqueness_of(:username) }
-  it { should validate_presence(:username) }
-  it { should validate_presence(:username, :email) }
+  it { should validate_presence_of(:username) }
+  it { should validate_presence_of(:email) }
 
   it { should have_many(:following).of_type(User).as_inverse_of(:followers) }
-  if { should have_many(:followers).of_type(User).as_inverse_of(:following)}
+  it { should have_many(:followers).of_type(User).as_inverse_of(:following)}
   it { should have_many(:favorites).of_type(Recipe) }
 
   before :each do
