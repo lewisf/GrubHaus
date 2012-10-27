@@ -1,8 +1,9 @@
 modules:
-  - name: 'app'
+  - name: 'main'
 
-deps:  
+deps:
   - "main"
+  - "app"
 
 paths:
   libs: "javascripts/libs"
