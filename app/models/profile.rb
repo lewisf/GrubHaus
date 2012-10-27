@@ -6,5 +6,6 @@ class Profile
   field :tagline, type: String
 
   embedded_in :user
+  embeds_many :comments, as: :commentable
 
 end

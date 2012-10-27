@@ -8,9 +8,10 @@ Feature: New viewer visits the recipe listing
     And I am not a user
     Then I should see the name of the recipe
     And I should see a picture of the recipe
-    And i should see directions on how to make the recipe
+    And I should see directions on how to make the recipe
 
   Scenario: New viewer visits gallery page
     Given I am on the recipes page
     And I am not a user
-    Then I should see a gallery of the most recently submitted recipes
+    When I am on the gallery page
+    Then I should see a list of the most recently published recipes

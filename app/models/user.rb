@@ -12,7 +12,7 @@ class User
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
 
-  validates_presence_of :username
+  validates :username, presence: true, uniqueness: true
   validates_presence_of :email
   validates_presence_of :encrypted_password
   
@@ -45,11 +45,12 @@ class User
   # field :authentication_token, :type => String
 
   attr_accessor :login
-  attr_accessible :login, :username, :email, :password, :password_confirmation
+  attr_accessible :login
 
   embeds_one :profile
   has_many :followers, :class_name => "User", :inverse_of => :following
   has_many :following, :class_name => "User", :inverse_of => :followers
+  has_many :favorites, :class_name => "Recipe"
   has_many :recipes, :inverse_of => :author
 
   # Overriding the default devise user query because we want to allow
@@ -57,6 +58,7 @@ class User
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
+      Rails.logger.info("Picked up login")
       self.any_of({ :username => /^#{Regexp.escape(login)}$/i },
                   { :email => /^#{Regexp.escape(login)}$/i} ).first
     else
