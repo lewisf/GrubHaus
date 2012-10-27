@@ -9,9 +9,8 @@ define ["backbone"
       $("body").append @recipeView.el
 
     start: ->
-      # Backbone.history.start
-      #   pushState: true
-      #   root: app.root
+      Backbone.history.start
+        pushState: true
 
   initialize = ->
     router = new Router()
