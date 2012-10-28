@@ -12,18 +12,14 @@ class Api::RecipesController < ApplicationController
     end
   end
 
-  def edit
-    @recipe = Recipe.where(author: current_user).find(params[:id])
+  def create
+    @recipe = Recipe.new(params[:recipe])
     respond_to do |format|
-      format.json { render :json => @recipe }
-    end
-  end
-
-  def update
-    @recipe = Recipe.where(author: current_user).find(params[:id])
-    @recipe.update_attributes!(params[:recipe])
-    respond_to do |format|
-      format.json { render :json => @recipe }
+      if @recipe.save
+        format.json { render :json => [] }
+      else
+        raise ActiveRecord::RecordNotSaved
+      end
     end
   end
 
@@ -31,7 +27,32 @@ class Api::RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
 
     respond_to do |format|
-      format.json { render :json => @recipe }
+      if @recipe
+        format.json { render :json => @recipe }
+      else
+        raise ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
+  def update
+    @recipe = Recipe.where(author: current_user).find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @recipe
+
+    respond_to do |format|
+      if @recipe.update_attributes!(params[:recipe])
+        format.json { render :json => @recipe }
+      else
+        raise ActiveRecord::RecordNotSaved
+      end
+    end
+  end
+
+  def destroy
+    @recipe = Recipe.where(author: current_user).find(params[:id])
+    @recipe.destroy
+    respond_to do |format|
+      format.json { render :json => [] }
     end
   end
 

@@ -4,7 +4,11 @@ class Api::UsersController < ApplicationController
     @user = User.find(params[:id])
 
     respond_to do |format|
-      format.json { render :json => @user }
+      if @user
+        format.json { render :json => @user }
+      else
+        raise ActiveRecord::RecordNotFound
+      end
     end
   end
 
