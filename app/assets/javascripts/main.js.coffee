@@ -8,6 +8,6 @@ require ["app", "backbone"], (App) ->
 
     root = "#{location.protocol}//#{location.host}#{App.root}"
 
-    if href.prop and href.prop[0...] is root
+    if href.prop and href.prop[0...root.length] is root
       e.preventDefault()
       Backbone.history.navigate href.attr, true

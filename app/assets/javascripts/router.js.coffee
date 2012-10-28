@@ -1,19 +1,34 @@
+
 define ["backbone"
-        "views/recipe"], (Backbone, RecipeView) ->
-  Router = Backbone.Router.extend
-    routes: 
-      "": "index"
-    index: ->
-    initialize: -> 
-      @recipeView = new RecipeView()
-      $("body").append @recipeView.el
+        "views/recipe"
+        "views/recipeList"
+        "views/index"], 
+  (Backbone, RecipeView, RecipeListView, IndexView) ->
+    Router = Backbone.Router.extend
+      routes: 
+        "": "index"
+        "recipes": "showRecipes"
+        "recipes/:id": "showRecipe"
 
-    start: ->
-      Backbone.history.start
-        pushState: true
+      start: ->
+        Backbone.history.start
+          pushState: true
 
-  initialize = ->
-    router = new Router()
-    router.start()
+      index: ->
+        indexView = new IndexView()
+        $("nav").html indexView.el
 
-  {initialize: initialize}
+      showRecipe: (id) ->
+        recipeView = new RecipeView {id: id}
+        $("section.container").html recipeView.el
+
+      showRecipes: ->
+        recipeListView = new RecipeListView()
+        $("section.container").html recipeListView.el
+
+
+    initialize = ->
+      router = new Router()
+      router.start()
+
+    {initialize: initialize}
