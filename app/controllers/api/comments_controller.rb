@@ -20,4 +20,43 @@ class Api::CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @comment = Comment.find(params[:id])
+    
+    respond_to do |format|
+      format.json { render :json => @comment }
+    end
+  end
+
+  def create
+    @comment = Comment.new(params[:id])
+    respond_to do |format|
+      if @comment.save
+        format.json { render :json => @comment }
+      else
+        format.json { render :json => [] }
+      end
+    end
+  end
+
+  def update
+    @comment = Comment.new(params[:id])
+    respond_to do |format|
+      if @comment.update_attributes(params[:comment])
+        format.json { render :json => @comment }
+      else
+        format.json { render :json => [] }
+      end
+    end
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+
+    respond_to do |format|
+      if @comment.update_attribute(params[:comments])
+      end
+  end
+
 end

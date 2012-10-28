@@ -35,4 +35,12 @@ class Api::RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    @recipe = Recipe.where(author: current_user).find(params[:id])
+    @recipe.destroy
+    respond_to do |format|
+      format.json { render :json => [] }
+    end
+  end
+
 end
