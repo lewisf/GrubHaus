@@ -1,13 +1,17 @@
 
 define ["backbone"
         "handlebars"
-        "text!templates/test.html"], 
-  (Backbone, Handlebars, testTemplateHtml) ->
+        "models/recipe"
+        "text!templates/recipe.html"], 
+  (Backbone, Handlebars, Recipe, testTemplateHtml) ->
 
     class RecipeView extends Backbone.View
-      initialize: ->
+      initialize: (params) ->
         @template = Handlebars.compile testTemplateHtml
-        @render()
+        @model = new Recipe {_id: params.id}
+        @model.fetch
+          success: =>
+            @render()
 
       render: ->
-        @$el.html @template
+        @$el.html @template @model.for_template()

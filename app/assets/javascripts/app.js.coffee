@@ -8,7 +8,7 @@ define ["jquery",
     initialize = ->
       Router.initialize()
 
-    return {initialize: initialize}
+    return {initialize: initialize, root: "/"}
 
 
 
