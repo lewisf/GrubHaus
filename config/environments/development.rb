@@ -38,5 +38,6 @@ GrubHaus::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.assets.paths << "#{Rails.root}/app/assets/javascripts/app"
+  config.assets.paths << "#{Rails.root}/app/assets/javascripts"
+  config.assets.paths << "#{Rails.root}/app/assets/javascripts/templates"
 end

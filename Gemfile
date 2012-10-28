@@ -42,7 +42,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', :require => false
   gem 'factory_girl_rails'
   gem 'mongoid-rspec'
 end
