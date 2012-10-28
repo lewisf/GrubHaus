@@ -11,7 +11,7 @@ describe Recipe do
 
   it { should belong_to(:parent).of_type(Recipe).as_inverse_of(:children) }
   it { should have_many(:children).of_type(Recipe) }
-  it { should have_many(:followers).as_inverse_of(:favorites) }
+  it { should have_many(:favorited).as_inverse_of(:favorites) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:author) }
