@@ -5,6 +5,7 @@ GrubHaus::Application.routes.draw do
   namespace :api do
     resources :users
     resources :recipes
+    resource :comments
   end
 
   root :to => "home#index"
