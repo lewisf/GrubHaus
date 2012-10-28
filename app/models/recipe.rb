@@ -10,7 +10,7 @@ class Recipe
   field :ready_in, type: Integer
   field :serving_size, type: Integer
 
-  belongs_to :author, :class_name => "User"
+  belongs_to :author, :class_name => "User", :inverse_of => :recipes
   embeds_many :recipe_ingredients
   embeds_many :steps
   embeds_many :cookware
@@ -21,7 +21,7 @@ class Recipe
   # Not sure if we're using this relation yet
   belongs_to :parent, :class_name => "Recipe", :inverse_of => :children
   has_many :children, :class_name => "Recipe", :inverse_of => :parent
-  has_many :followers, :class_name => "User", :inverse_of => :favorites
+  has_many :favorited, :class_name => "User", :inverse_of => :favorites
   has_many :tags
 
   before_save :check_publishable
