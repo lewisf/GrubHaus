@@ -16,15 +16,11 @@ class Api::CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
 
     respond_to do |format|
-      format.json { render :json => @comment }
-    end
-  end
-
-  def edit
-    @comment = Comment.find(params[:id])
-    
-    respond_to do |format|
-      format.json { render :json => @comment }
+      if @comment
+        format.json { render :json => @comment }
+      else
+        raise ActiveRecord::RecordNotFound
+      end
     end
   end
 
@@ -40,7 +36,9 @@ class Api::CommentsController < ApplicationController
   end
 
   def update
-    @comment = Comment.new(params[:id])
+    @comment = Comment.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @comment
+
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.json { render :json => @comment }
@@ -52,10 +50,12 @@ class Api::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @comment
     @comment.destroy
 
     respond_to do |format|
       if @comment.update_attribute(params[:comments])
+        format.json { render :json => [] }
       end
   end
 
