@@ -2,12 +2,14 @@
 define ["backbone"
         "views/recipe"
         "views/recipeList"
-        "views/index"], 
-  (Backbone, RecipeView, RecipeListView, IndexView) ->
+        "views/index"
+        "views/createRecipe"], 
+  (Backbone, RecipeView, RecipeListView, IndexView, CreateRecipeView) ->
     Router = Backbone.Router.extend
       routes: 
         "": "index"
         "recipes": "showRecipes"
+        "recipes/create": "createRecipe"
         "recipes/:id": "showRecipe"
 
       start: ->
@@ -25,6 +27,10 @@ define ["backbone"
       showRecipes: ->
         recipeListView = new RecipeListView()
         $("section.container").html recipeListView.el
+
+      createRecipe: ->
+        createRecipeView = new CreateRecipeView()
+        $("section.container").html createRecipeView.el
 
 
     initialize = ->

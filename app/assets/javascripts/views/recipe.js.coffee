@@ -3,11 +3,11 @@ define ["backbone"
         "handlebars"
         "models/recipe"
         "text!templates/recipe.html"], 
-  (Backbone, Handlebars, Recipe, testTemplateHtml) ->
+  (Backbone, Handlebars, Recipe, recipeTemplateHtml) ->
 
     class RecipeView extends Backbone.View
       initialize: (params) ->
-        @template = Handlebars.compile testTemplateHtml
+        @template = Handlebars.compile recipeTemplateHtml
         @model = new Recipe {_id: params.id}
         @model.fetch
           success: =>

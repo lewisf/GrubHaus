@@ -14,12 +14,10 @@ paths:
   jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min"
   lodash: "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.8.2/lodash.min"
   backbone: "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min"
+  backbone-forms: "backbone-forms-min"
   handlebars: "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.min"
 
 shim:
-  backbone.layoutmanager: 
-    deps: 
-      - "backbone"
   backbone: 
     deps: 
       - "lodash"

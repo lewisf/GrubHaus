@@ -1,0 +1,7 @@
+
+<form>
+    {{#each form_fields}}
+        <label for="{{this.field}}">{{this.field}}</label>
+        <input id="{{this.field}}" type="text"></input>
+    {{/each}}
+</form>
