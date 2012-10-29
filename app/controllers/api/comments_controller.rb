@@ -25,7 +25,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:id])
+    @comment = Comment.new(params[:comment])
     respond_to do |format|
       if @comment.save
         format.json { render :json => @comment }
