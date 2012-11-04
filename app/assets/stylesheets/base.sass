@@ -1,22 +1,31 @@
+html
+
+body 
+
 h1
   font-size: 1.3em
 
 #wrap
   .app-container
-    +grid-system(16)
+    +grid-system(12)
 
     #header
-      +grid(16)
+      +grid(12)
+      +alpha
+      +omega
+      border-bottom: 3px solid black
+      margin-bottom: 20px
 
       #logo
         +grid(4)
         +alpha
         font-size: 1.6em
+        line-height: 2.0em
         font-weight: bold
 
       #navigation
-        +grid-prefix(2)
-        +grid(10)
+        +grid-prefix(4)
+        +grid(4)
         +omega
 
         ul
@@ -26,3 +35,4 @@ h1
             float: left
             margin-left: 20px
             list-style-type: none
+            line-height: 1.3em
