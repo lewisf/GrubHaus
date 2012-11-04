@@ -9,5 +9,6 @@ GrubHaus::Application.routes.draw do
   end
 
   root :to => "home#index"
+  match '*path' => 'home#index'
   
 end
