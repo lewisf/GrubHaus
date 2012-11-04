@@ -1,7 +1,28 @@
 h1
   font-size: 1.3em
-  color: red
 
 #wrap
-  .app_container
+  .app-container
     +grid-system(16)
+
+    #header
+      +grid(16)
+
+      #logo
+        +grid(4)
+        +alpha
+        font-size: 1.6em
+        font-weight: bold
+
+      #navigation
+        +grid-prefix(2)
+        +grid(10)
+        +omega
+
+        ul
+          overflow: hidden
+
+          li
+            float: left
+            margin-left: 20px
+            list-style-type: none
