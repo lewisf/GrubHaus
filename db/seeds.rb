@@ -15,10 +15,10 @@ end
 p "Creating users..."
 
 @lewis = User.new do |u|
-  u.username = "lewisf",
-  u.email = "lewis.f.chung@gmail.com",
-  u.password = "foobar",
-  u.password_confirmation = "foobar",
+  u.username = "lewisf"
+  u.email = "lewis.f.chung@gmail.com"
+  u.password = "foobar"
+  u.password_confirmation = "foobar"
   u.profile = Profile.new do |p|
     p.first_name = "Lewis"
     p.last_name = "Chung"

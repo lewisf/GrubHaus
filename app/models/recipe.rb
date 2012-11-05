@@ -5,10 +5,10 @@ class Recipe
   field :published, type: Boolean, :default => false
   field :photo, type: String
   field :description, type: String
-  field :prep_time, type: Integer
-  field :cook_time, type: Integer
-  field :ready_in, type: Integer
-  field :serving_size, type: Integer
+  field :prep_time, type: String
+  field :cook_time, type: String
+  field :ready_in, type: String
+  field :serving_size, type: String
 
   belongs_to :author, :class_name => "User", :inverse_of => :recipes
   embeds_many :recipe_ingredients

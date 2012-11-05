@@ -3,8 +3,13 @@
   #navigation
     %ul
       %li 
-        %a{:href=> "#"}Submit a Recipe
+        %a{:href=> "/recipes/create"}Submit a Recipe
+      %li
+        %a{:href=>"/recipes"}Dashboard
+      - if user_signed_in?
+        %li 
+          = current_user.username
       %li 
-        %a{:href=>"#"}Home 
-      %li 
-        %a{:href=>"#"}You
+        %a{:href=>"/"}Homepage
+      %li
+        = link_to "Sign out", destroy_user_session_path, 'data-bypass' => true
