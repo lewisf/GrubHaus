@@ -19,7 +19,7 @@ class Api::CommentsController < ApplicationController
       if @comment
         format.json { render :json => @comment }
       else
-        raise ActiveRecord::RecordNotFound
+        raise MongoidErrors::DocumentNotFound
       end
     end
   end
@@ -37,7 +37,7 @@ class Api::CommentsController < ApplicationController
 
   def update
     @comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound unless @comment
+    raise MongoidErrors::DocumentNotFound unless @comment
 
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
@@ -50,7 +50,7 @@ class Api::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    raise ActiveRecord::RecordNotFound unless @comment
+    raise MongoidErrors::DocumentNotFound unless @comment
     @comment.destroy
 
     respond_to do |format|

@@ -14,4 +14,5 @@ define ["backbone"
             @render()
 
       render: ->
+        console.log @model
         @$el.html @template @model.for_template()
