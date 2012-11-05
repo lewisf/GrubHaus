@@ -5,18 +5,17 @@ define ["backbone"], (Backbone) ->
     urlRoot: "/api/recipes"
 
     schema: 
-      name: ['Text']
-      prep_time: ['Number',
+      name: ['Text',
+        verbose: 'Name'
+      ]
+      prep_time: ['Text',
       	verbose: "Preparation Time"
-      	choices: [1,2,5,10,20,30,45,60,120]
       ]
-      cook_time: ['Number',
+      cook_time: ['Text',
       	verbose: "Cook Time"
-      	choices: [1,2,5,10,20,30,45,60,120]
       ]
-      serving_size: ['Number',
+      serving_size: ['Text',
       	verbose: "Serving Size"
-      	choices: ["1", "1-2", "2-4", "4-8"]
       ]
 
     permalink: ->
