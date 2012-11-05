@@ -1,8 +1,10 @@
 
 <form id="create_recipe" method="POST" action="/api/recipes" enctype="multipart/form-data">
     {{#each form_fields}}
+      <p>
       <label for="{{this.field}}">{{this.field_name}}</label>
       {{form_field}}
+      </p>
     {{/each}}
     <input type="submit"/>
 </form>
