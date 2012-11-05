@@ -5,7 +5,8 @@ class Api::RecipesController < ApplicationController
     @page = params[:page].to_i - 1
     @offset = @page * @amount
 
-    @recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
+    #@recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
+    @recipes = Recipe.all
 
     respond_to do |format|
       format.json { render :json => @recipes }
@@ -13,7 +14,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.new(params[:recipe])
+    @recipe = Recipe.new(params)
     respond_to do |format|
       if @recipe.save
         format.json { render :json => [] }

@@ -15,7 +15,7 @@ class Recipe
   embeds_many :steps
   embeds_many :cookware
 
-  validates_presence_of :photo, :description, :author, :name
+  # validates_presence_of :photo, :description, :author, :name
   validates_uniqueness_of :name, :scope => :author
 
   # Not sure if we're using this relation yet

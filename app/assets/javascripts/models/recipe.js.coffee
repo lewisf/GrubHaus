@@ -2,7 +2,7 @@ define ["backbone"], (Backbone) ->
 
   class Recipe extends Backbone.Model
     idAttribute: "_id"
-    urlRoot: "/api/recipes"
+    urlRoot: "/api/recipes.json"
 
     schema: 
       name: ['Text']
