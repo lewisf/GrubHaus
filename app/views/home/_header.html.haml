@@ -4,7 +4,10 @@
     %ul
       %li 
         %a{:href=> "/recipes/create"}Submit a Recipe
-      %li 
-        %a{:href=>"/recipes"}You
+      %li
+        %a{:href=>"/recipes"}Dashboard
+      - if user_signed_in?
+        %li 
+          = current_user.username
       %li 
         %a{:href=>"/"}Homepage
