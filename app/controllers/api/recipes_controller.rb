@@ -18,7 +18,7 @@ class Api::RecipesController < ApplicationController
       if @recipe.save
         format.json { render :json => [] }
       else
-        raise MongoidErrors::UnsavedDocument
+        # raise MongoidErrors::UnsavedDocument
       end
     end
   end
@@ -30,20 +30,20 @@ class Api::RecipesController < ApplicationController
       if @recipe
         format.json { render :json => @recipe }
       else
-        raise MongoidErrors::DocumentNotFound
+        # raise MongoidErrors::DocumentNotFound
       end
     end
   end
 
   def update
     @recipe = Recipe.where(author: current_user).find(params[:id])
-    raise MongoidErrors::DocumentNotFound unless @recipe
+    # raise MongoidErrors::DocumentNotFound unless @recipe
 
     respond_to do |format|
       if @recipe.update_attributes!(params[:recipe])
         format.json { render :json => @recipe }
       else
-        raise MongoidErrors::UnsavedDocument
+         # raise MongoidErrors::UnsavedDocument
       end
     end
   end

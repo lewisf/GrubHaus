@@ -7,7 +7,7 @@ class Api::UsersController < ApplicationController
       if @user
         format.json { render :json => @user }
       else
-        raise MongoidErrors::DocumentNotFound
+        # raise MongoidErrors::DocumentNotFound
       end
     end
   end
