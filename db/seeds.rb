@@ -89,10 +89,10 @@ Recipe.create do |recipe|
   recipe.name = "Spaghetti and Meatballs"
   recipe.photo = "http://www.imgur.com/19fdj2.png"
   recipe.description = "Scrumptious fresh budget spaghetti and meatballs recipe"
-  recipe.prep_time = 30
-  recipe.cook_time = 30
-  recipe.ready_in = 60
-  recipe.serving_size = 4
+  recipe.prep_time = 30.to_s
+  recipe.cook_time = 30.to_s
+  recipe.ready_in = 60.to_s
+  recipe.serving_size = 4.to_s
   recipe.author = @lewis
 end
 p "Created Spaghetti and meatballs"
@@ -106,7 +106,7 @@ p "Created Spaghetti and meatballs"
     recipe.description = Faker::Lorem.sentence(word_count = 4, supplemental = false)
     recipe.prep_time = Random.new.rand(10..40)
     recipe.cook_time = Random.new.rand(10..40)
-    recipe.ready_in = recipe.prep_time + recipe.cook_time + Random.new.rand(10..20)
+    recipe.ready_in = (recipe.prep_time.to_i + recipe.cook_time.to_i + Random.new.rand(10..20)).to_s
     recipe.serving_size = Random.new.rand(1..6)
     recipe.author = random_user
   end
