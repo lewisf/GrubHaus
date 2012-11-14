@@ -4,9 +4,12 @@ define ["backbone"], (Backbone) ->
     idAttribute: "_id"
     urlRoot: "/api/recipes"
 
-    schema: 
+    schema:
       name: ['Text',
         verbose: 'Name'
+      ]
+      description: ['Text',
+        verbose: 'Description'
       ]
       prep_time: ['Text',
       	verbose: "Preparation Time"
@@ -16,6 +19,9 @@ define ["backbone"], (Backbone) ->
       ]
       serving_size: ['Text',
       	verbose: "Serving Size"
+      ]
+      photo: ['Text',
+        verbose: "Photo"
       ]
 
     permalink: ->

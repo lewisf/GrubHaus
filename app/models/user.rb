@@ -13,7 +13,6 @@ class User
   field :encrypted_password, :type => String, :default => ""
 
   validates :username, presence: true, uniqueness: true
-  validates_presence_of :email
   validates_presence_of :encrypted_password
   
   ## Recoverable
@@ -45,6 +44,7 @@ class User
   # field :authentication_token, :type => String
 
   attr_accessor :login
+  attr_accessible :username, :email, :password, :password_confirmation, :remember_me
   attr_accessible :login
 
   embeds_one :profile

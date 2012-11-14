@@ -1,10 +1,9 @@
 class Step
   include Mongoid::Document
 
-  field :photo, type: String
   field :description, type: String
-  field :time, type: DateTime
-  field :duration, type: Integer
+  field :start_time, type: Integer
+  field :end_time, type: Integer
 
   validates_presence_of :description
   

@@ -87,7 +87,7 @@ p "Created Gylmar"
 p "Creating recipes ..."
 Recipe.create do |recipe|
   recipe.name = "Spaghetti and Meatballs"
-  recipe.photo = "http://www.imgur.com/19fdj2.png"
+  recipe.photo = "http://placekitten.com/190/190"
   recipe.description = "Scrumptious fresh budget spaghetti and meatballs recipe"
   recipe.prep_time = 30.to_s
   recipe.cook_time = 30.to_s
@@ -102,8 +102,22 @@ p "Created Spaghetti and meatballs"
   @recipe = Recipe.create! do |recipe|
     recipe.name = name
     recipe.published = true
-    recipe.photo = "http://placekitten.com/300/300"
+    recipe.photo = "http://placekitten.com/190/190"
     recipe.description = Faker::Lorem.sentence(word_count = 4, supplemental = false)
+    10.times do
+      recipe.recipe_ingredients.new do |ingredient|
+        ingredient.name = Faker::Lorem.sentence(word_count = 1, supplemental = false)
+        ingredient.amount = ['1/4', '1/3', '1/2', '1', '3/2', '5/4', '4/3', '2'].sample
+        ingredient.unit = ['tbsp', 'tsp', 'cup', 'lb'].sample
+      end
+    end
+    5.times do
+      recipe.steps.new do |step|
+        step.description = Faker::Lorem.sentence(word_count = 4, supplemental = false)
+        times = [[0,5], [5,10], [10,15], [0,15], [15,30], [10,20], [15,45], [30,45], [40,45], [45,60]]
+        step.start_time, step.end_time = times.sample
+      end
+    end
     recipe.prep_time = Random.new.rand(10..40)
     recipe.cook_time = Random.new.rand(10..40)
     recipe.ready_in = (recipe.prep_time.to_i + recipe.cook_time.to_i + Random.new.rand(10..20)).to_s

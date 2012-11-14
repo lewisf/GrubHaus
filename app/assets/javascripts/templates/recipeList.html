@@ -1,10 +1,14 @@
-
 <ul class="recipe-list">
     {{#each recipes}}
         <li>
             <a href="{{this.url}}">
-            {{this.name}}
+                <img src="{{this.photo}}"/>
             </a>
+            <div class="name-background">
+                <span class="name-text">
+                    {{this.name}}
+                </span>
+            </div>
         </li>
     {{/each}}
 </ul>

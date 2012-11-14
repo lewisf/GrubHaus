@@ -1,4 +1,3 @@
-
 define ["backbone"
         "handlebars"
         "lodash"
@@ -41,7 +40,8 @@ define ["backbone"
         false
 
       render: ->
+        schema = _.omit Recipe::schema, "photo"
         form_fields =
-          for k, v of Recipe::schema
+          for k, v of schema
             get_field k, v...
         @$el.html @template {form_fields: form_fields}

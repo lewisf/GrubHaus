@@ -3,7 +3,7 @@ class RecipeIngredient
 
   field :name, type: String
   field :amount, type: Integer
-  field :unit, type: Float
+  field :unit, type: String
 
   embedded_in :recipe
   has_one :parent_ingredient, class_name: "Ingredient", inverse_of: :used_in
