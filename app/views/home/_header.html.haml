@@ -4,7 +4,8 @@
     #navigation
       %ul
         %li
-          Welcome, #{current_user.username}
+          - if user_signed_in?
+            Welcome, #{current_user.username}
         %li 
           %a{:href=> "/recipes/create"}Submit a Recipe
         %li
@@ -12,5 +13,7 @@
         %li 
           %a{:href=>"/"}Homepage
         %li
-          -if user_signed_in?
+          - if user_signed_in?
             = link_to "Sign out", destroy_user_session_path, 'data-bypass' => true
+          - else
+            = link_to "Sign in", new_user_session_path, 'data-bypass' => true
