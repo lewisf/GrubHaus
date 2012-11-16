@@ -1,9 +1,10 @@
 define ["backbone"
         "handlebars"
         "models/recipe"
+        "text!templates/timeline.html"
         "text!templates/timelineCircle.html"
         "text!templates/timelineLine.html"],
-  (Backbone, Handlebars, Recipe, circleTemplate, lineTemplate) ->
+  (Backbone, Handlebars, Recipe, timelineTemplate, circleTemplate, lineTemplate) ->
     class RecipeTimelineView extends Backbone.View
       steps: []
       num_units: null
@@ -11,12 +12,15 @@ define ["backbone"
       stepListId: "step-unit-list"
       start_times: []
       end_times: []
+      el: "#rcontainer"
 
       initialize: (steps) ->
+        @timelineTemplate = Handlebars.compile timelineTemplate
         @lineTemplate = Handlebars.compile lineTemplate
         @circleTemplate = Handlebars.compile circleTemplate
 
         @steps = _.sortBy steps, (step) -> step.start_time
+
         @num_units = (_.max @steps, (step) -> step.end_time).end_time
         @start_times = _.map _.pluck(@steps, 'start_time'), (time) -> parseInt(time)
         @end_times = _.map _.pluck(@steps, 'end_time'), (time) -> parseInt(time)
@@ -24,6 +28,8 @@ define ["backbone"
         @render()
 
       render: ->
+        $(@el).html(@timelineTemplate)
+        console.log $(@el).html()
         @buildTimeline()
         @buildSteps
 

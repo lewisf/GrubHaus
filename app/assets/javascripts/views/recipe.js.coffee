@@ -8,13 +8,18 @@ define ["backbone"
 
     class RecipeView extends Backbone.View
       steps: []
-      timelineEl: "#timeline-container"
+      timelineEl: "#rcontainer"
 
       initialize: (params) ->
         @template = Handlebars.compile recipeTemplateHtml
         @model = new Recipe {_id: params.id}
         @model.fetch
           success: =>
+            # check for problems here. if you remove @steps = []
+            # and then click on a recipe, dashboard, then another
+            # recipe, the steps are stacking. This isn't right
+            # behavior .. something is lingering.
+            @steps = []
             _.each @model.attributes.steps, (step) =>
               @steps.push step
             @render()
