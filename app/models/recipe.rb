@@ -28,7 +28,8 @@ class Recipe
   before_save :check_publishable
 
   attr_accessible :name, :published, :description, :prep_time,
-                  :cook_time, :ready_in, :serving_size
+                  :cook_time, :ready_in, :serving_size, :recipe_ingredients,
+                  :steps, :cookware
 
   attr_accessible :photo, :photo_cache
 

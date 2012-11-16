@@ -1,10 +1,10 @@
-
 define ["backbone"
         "handlebars"
         "models/recipe"
         "views/recipeTimeline"
+        "views/recipeIngredients"
         "text!templates/recipe.html"],
-  (Backbone, Handlebars, Recipe, Timeline, recipeTemplateHtml) ->
+  (Backbone, Handlebars, Recipe, Timeline, IngredientList, recipeTemplateHtml) ->
 
     class RecipeView extends Backbone.View
       steps: []
@@ -24,6 +24,7 @@ define ["backbone"
               @steps.push step
             @render()
             @renderTimeline()
+            @renderIngredients()
 
       render: ->
         @$el.html @template @model.for_template()
@@ -31,3 +32,6 @@ define ["backbone"
 
       renderTimeline: ->
         timeLine = new Timeline(@steps)
+
+      renderIngredients: ->
+        ingredientsList = new IngredientList(@model.attributes.recipe_ingredients)

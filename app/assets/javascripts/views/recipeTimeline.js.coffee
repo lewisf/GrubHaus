@@ -29,33 +29,19 @@ define ["backbone"
 
       render: ->
         $(@el).html(@timelineTemplate)
-        console.log $(@el).html()
         @buildTimeline()
-        @buildSteps
 
       buildTimeline: ->
-        # $("#container").html "<ul id='#{@timeListId}'></ul><ul id='#{@stepListId}'></ul>"
-
-        #for i in [0..@num_units]
         for i in [0..@num_units]
           steps = _.filter @steps, (step) -> parseInt(step.start_time) is i
           time_markers = _.union @start_times, {} #, @end_times
           if i in time_markers
-            li = $("##{@timeListId}").append @circleTemplate
+            $("##{@timeListId}").append @circleTemplate
               circleText: i
               color: "#930202"
               text: (_.pluck steps, 'description').join(" ")
-            li = $("##{@timeListId}").append @lineTemplate
+            $("##{@timeListId}").append @lineTemplate
           else
             $("##{@timeListId}").append @lineTemplate
             $("##{@timeListId}").append @lineTemplate
               index: i
-
-      buildSteps: ->
-        for i in [0..@num_units]
-          _.each @steps, (step) =>
-            if parseInt step.start_time is i
-              @renderStepAt i, step
-
-      renderStepAt: (index, step) ->
-        $("#step-minute-#{index}").html step.description
