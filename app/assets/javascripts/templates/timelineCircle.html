@@ -1,9 +1,16 @@
 <li class="time-line start">
-    <div class='start-circle'>
-        <div class='inner-start-circle'>
+    <div class='start-circle' style="border-color: {{color}}">
+        <div class='inner-start-circle' style="background: {{color}}">
             <div id="start-text">
-                {{index}}
+                {{ circleText }}
             </div>
+        </div>
+    </div>
+    <div class="contents-container border-notch">
+        <b class="border-notch notch"></b>
+        <b class="notch"></b>
+        <div class='contents'>
+            {{ text }}
         </div>
     </div>
 </li>

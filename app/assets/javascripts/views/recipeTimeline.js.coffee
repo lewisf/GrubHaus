@@ -9,13 +9,18 @@ define ["backbone"
       num_units: null
       timeListId: "time-unit-list"
       stepListId: "step-unit-list"
+      start_times: []
+      end_times: []
 
       initialize: (steps) ->
         @lineTemplate = Handlebars.compile lineTemplate
         @circleTemplate = Handlebars.compile circleTemplate
+
         @steps = _.sortBy steps, (step) -> step.start_time
         @num_units = (_.max @steps, (step) -> step.end_time).end_time
-        console.log @num_units
+        @start_times = _.map _.pluck(@steps, 'start_time'), (time) -> parseInt(time)
+        @end_times = _.map _.pluck(@steps, 'end_time'), (time) -> parseInt(time)
+
         @render()
 
       render: ->
@@ -27,10 +32,16 @@ define ["backbone"
 
         #for i in [0..@num_units]
         for i in [0..@num_units]
-          if i % 10 is 0
+          steps = _.filter @steps, (step) -> parseInt(step.start_time) is i
+          time_markers = _.union @start_times, {} #, @end_times
+          if i in time_markers
             li = $("##{@timeListId}").append @circleTemplate
-              index: i
+              circleText: i
+              color: "#930202"
+              text: (_.pluck steps, 'description').join(" ")
+            li = $("##{@timeListId}").append @lineTemplate
           else
+            $("##{@timeListId}").append @lineTemplate
             $("##{@timeListId}").append @lineTemplate
               index: i
 
