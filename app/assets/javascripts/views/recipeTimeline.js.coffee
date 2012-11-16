@@ -11,8 +11,8 @@ define ["backbone"
       stepListId: "step-unit-list"
 
       initialize: (steps) ->
-        @lineTemplate = Handlebars.compile circleTemplate
-        @circleTemplate = Handlebars.compile lineTemplate
+        @lineTemplate = Handlebars.compile lineTemplate
+        @circleTemplate = Handlebars.compile circleTemplate
         @steps = _.sortBy steps, (step) -> step.start_time
         @num_units = (_.max @steps, (step) -> step.end_time).end_time
         console.log @num_units
@@ -27,8 +27,8 @@ define ["backbone"
 
         #for i in [0..@num_units]
         for i in [0..@num_units]
-          unless i % 10 is 0
-            $("##{@timeListId}").append @circleTemplate
+          if i % 10 is 0
+            li = $("##{@timeListId}").append @circleTemplate
               index: i
           else
             $("##{@timeListId}").append @lineTemplate
@@ -42,5 +42,3 @@ define ["backbone"
 
       renderStepAt: (index, step) ->
         $("#step-minute-#{index}").html step.description
-
-
