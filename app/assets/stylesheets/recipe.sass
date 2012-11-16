@@ -1,3 +1,13 @@
+.rheader-background
+  position: absolute
+  z-index: 0
+  top: 0
+  height: 355px
+  width: 100%
+  background: asset-data-url("paper.png")
+  background-repeat: repeat
+  border-bottom: 2px solid #ccc
+
 .recipe
   +grid(12)
   +alpha
@@ -6,6 +16,7 @@
   .haha
     overflow: hidden
     height: 360px
+    width: 100%
     .rheader
       +grid(11)
       +grid-suffix(1)
@@ -24,9 +35,9 @@
         left: 10px
 
         .img-circle 
-          width: 190px
-          height: 190px
-          border-radius: 105px
+          width: 250px
+          height: 250px
+          border-radius: 145px
           box-shadow: 0 0 4px #888
           border: 5px solid white
           position: absolute
@@ -48,6 +59,14 @@
           font-weight: normal
           font-style: italic
 
+      table
+        tbody
+          tr
+            td
+              width: 100px
+              &.label
+                font-weight: bold
+
   .rcontainer
     +grid(12)
     +alpha
@@ -55,15 +74,17 @@
     .timeline-content
       ul#time-unit-list
         margin: 0
-        margin-left: 80px
+        margin-left: 115px
         li.start
           width: 60px
 
           .start-circle
+            position: relative
             width: 45px
             height: 45px
             border-radius: 30px
             border: 3px solid #930202
+            z-index: 10
 
             .inner-start-circle
               position: relative
