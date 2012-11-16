@@ -107,7 +107,7 @@ p "Created Spaghetti and meatballs"
     10.times do
       recipe.recipe_ingredients.new do |ingredient|
         ingredient.name = Faker::Lorem.sentence(word_count = 1, supplemental = false)
-        ingredient.amount = ['1/4', '1/3', '1/2', '1', '3/2', '5/4', '4/3', '2'].sample
+        ingredient.amount = ['1/4', '1/3', '1/2', '1', '1 1/2', '1 1/4', '1 1/3', '2'].sample
         ingredient.unit = ['tbsp', 'tsp', 'cup', 'lb'].sample
       end
     end

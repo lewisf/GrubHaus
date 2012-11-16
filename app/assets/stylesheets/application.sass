@@ -1,12 +1,4 @@
-/*
- * application.sass
- *
- * Since we're using SASS, we don't wnt to use Sprocket's 'require' syntax. Instead we want to use
- * @import provided by SASS.
- */
-
-// Include some nice mixins
-@import "normalize"
+@import normalize
 @import "sassy-buttons"
 @import "960/grid"
 
@@ -15,4 +7,6 @@ $ninesixty-grid-width: 960px
 $ninesixty-gutter-width: 20px
 $ninesixty-class-separator: '_'
 
+@import "normalize"
 @import "base"
+@import "recipe"

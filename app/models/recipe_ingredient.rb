@@ -2,7 +2,7 @@ class RecipeIngredient
   include Mongoid::Document
 
   field :name, type: String
-  field :amount, type: Integer
+  field :amount, type: String
   field :unit, type: String
 
   embedded_in :recipe

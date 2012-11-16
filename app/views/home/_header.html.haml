@@ -1,15 +1,16 @@
 #header
-  #logo GrubHaus
-  #navigation
-    %ul
-      %li 
-        %a{:href=> "/recipes/create"}Submit a Recipe
-      %li
-        %a{:href=>"/recipes"}Dashboard
-      - if user_signed_in?
+  #header-content
+    #logo grub haus
+    #navigation
+      %ul
+        %li
+          Welcome, #{current_user.username}
         %li 
-          = current_user.username
-      %li 
-        %a{:href=>"/"}Homepage
-      %li
-        = link_to "Sign out", destroy_user_session_path, 'data-bypass' => true
+          %a{:href=> "/recipes/create"}Submit a Recipe
+        %li
+          %a{:href=>"/recipes"}Dashboard
+        %li 
+          %a{:href=>"/"}Homepage
+        %li
+          -if user_signed_in?
+            = link_to "Sign out", destroy_user_session_path, 'data-bypass' => true

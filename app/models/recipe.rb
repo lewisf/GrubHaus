@@ -3,6 +3,7 @@ class Recipe
 
   field :name, type: String
   field :published, type: Boolean, :default => false
+  #mount_uploader :photo, RecipePhotoUploader, mount_on: :photo_filename
   field :photo, type: String
   field :description, type: String
   field :prep_time, type: String
@@ -26,8 +27,10 @@ class Recipe
 
   before_save :check_publishable
 
-  attr_accessible :name, :published, :photo, :description, :prep_time,
+  attr_accessible :name, :published, :description, :prep_time,
                   :cook_time, :ready_in, :serving_size
+
+  attr_accessible :photo, :photo_cache
 
   private
   def check_publishable

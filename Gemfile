@@ -7,7 +7,8 @@ gem 'rails', '3.2.8'
 
 gem 'mongoid', '~> 3.0.0'
 gem 'devise'
-
+# gem 'carrierwave'
+# gem 'carrierwave-mongoid', :require => "carrierwave/mongoid"
 gem 'requirejs-rails'
 
 # Gems used only for assets and not required

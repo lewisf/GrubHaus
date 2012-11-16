@@ -1,0 +1,100 @@
+.recipe
+  +grid(12)
+  +alpha
+  +omega
+
+  .haha
+    overflow: hidden
+    height: 360px
+    .rheader
+      +grid(11)
+      +grid-suffix(1)
+      +alpha
+      +omega
+      position: relative
+      height: 300px
+      width: 100%
+      top: 50px
+      .one-col
+        height: 100%
+        +grid-prefix(1)
+        +grid(3)
+        +alpha
+        position: relative
+        left: 10px
+
+        .img-circle 
+          width: 190px
+          height: 190px
+          border-radius: 105px
+          box-shadow: 0 0 4px #888
+          border: 5px solid white
+          position: absolute
+          left: 0
+          bottom: 30px
+
+      .two-col
+        +grid(8)
+        +omega
+        position: relative
+        right: 0
+        top: 0
+        h1.title
+          font-size: 1.5em
+          margin-bottom: 0.3em
+        h2.description
+          margin: 0.5em 0
+          font-size: 1.2em
+          font-weight: normal
+          font-style: italic
+
+  .rcontainer
+    +grid(12)
+    +alpha
+    +omega
+    .timeline-content
+      ul#time-unit-list
+        margin: 0
+        margin-left: 80px
+        li.start
+          width: 60px
+
+          .start-circle
+            width: 45px
+            height: 45px
+            border-radius: 30px
+            border: 3px solid #930202
+
+            .inner-start-circle
+              position: relative
+              top: 0
+              margin: 0 auto
+              width: 35px
+              height: 35px
+              border-radius: 30px
+              border: 5px solid #fff
+              background: #930202
+              #start-text
+                color: white
+                text-shadow: 0 0 2px #222
+                font-family: lobster-two, serif
+                font-weight: bold
+                font-size: 1.2em
+                width: 15px
+                text-align: center
+                margin-top: 5px
+                width: 35px
+                height: 35px
+        li.unit
+          width: 50px
+          height: 20px
+          div.line
+            content: ""
+            width: 3px
+            height: 100%
+            margin: 0 auto
+            background: #930202
+
+            
+
+      ul#step-unit-list

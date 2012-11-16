@@ -1,20 +1,36 @@
 
 <div class="recipe">
-    <h1>{{name}}</h1>
-    <h2>{{description}}</h2>
-    <img src="{{photo}}"/>
-    <table>
-        <tr>
-            <td>Preptime</td>
-            <td>{{prep_time}}</td>
-        </tr>
-        <tr>
-            <td>Cooktime</td>
-            <td>{{cook_time}}</td>
-        </tr>
-        <tr>
-            <td>Readyin</td>
-            <td>{{ready_in}}</td>
-        </tr>
-    </table>
+    <div class="haha">
+        <div class="rheader">
+            <div class="one-col">
+                <div class="img-circle"></div>
+            </div>
+            <div class="two-col">
+                <h1 class="title">{{name}}</h1>
+                <h2 class="description">{{description}}</h2>
+                <table>
+                    <tr>
+                        <td>Preptime</td>
+                        <td>{{prep_time}}</td>
+                    </tr>
+                    <tr>
+                        <td>Cooktime</td>
+                        <td>{{cook_time}}</td>
+                    </tr>
+                    <tr>
+                        <td>Readyin</td>
+                        <td>{{ready_in}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="rcontainer">
+        <div class="timeline-content">
+            <ul id="time-unit-list">
+            </ul>
+            <ul id="step-unit-list">
+            </ul>
+        </div>
+    </div>
 </div>

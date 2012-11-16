@@ -20,9 +20,6 @@ define ["backbone"], (Backbone) ->
       serving_size: ['Text',
       	verbose: "Serving Size"
       ]
-      photo: ['Text',
-        verbose: "Photo"
-      ]
 
     permalink: ->
       "recipes/#{@id}"

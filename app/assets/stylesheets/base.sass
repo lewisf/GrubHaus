@@ -1,6 +1,7 @@
 html
 
 body 
+  font-family: "Myriad Pro", "Trebuchet MS", sans
 
 ul, ol
   list-style-type: none
@@ -10,37 +11,49 @@ h1
   font-size: 1.3em
 
 #wrap
-  .app-container
-    +grid-system(12)
-
-    #header
-      +grid(12)
-      +alpha
-      +omega
+  #header
+    #header-content 
       width: 960px
-      border-bottom: 3px solid black
-      margin-bottom: 20px
-
+      margin: 0 auto
       #logo
         +grid(4)
         +alpha
-        font-size: 1.6em
-        line-height: 2.0em
+        font-size: 1.8em
+        line-height: 1.8em
+        text-shadow: 0 0 2px #222
         font-weight: bold
+        color: #ffda75
+        font-family: lobster-two, serif
 
       #navigation
-        +grid-prefix(1)
-        +grid(7)
+        +grid(8)
         +omega
+        text-shadow: 0 0 2px #222
 
         ul
           overflow: hidden
+          float: right
 
           li
             float: left
             margin-left: 20px
             list-style-type: none
             line-height: 1.3em
+
+    position: absolute
+    width: 100%
+    top: 0
+    background: #930202
+    color: white
+    a, a:visited, a:hover, a:active
+      color: white
+      text-decoration: none
+      font-weight: bold
+    box-shadow: 0 0 4px #888
+    border-bottom: 5px solid white
+    margin-bottom: 20px
+  .app-container
+    +grid-system(12)
 
   ul.recipe-list
     margin: 0 auto
@@ -71,4 +84,18 @@ h1
           font-weight: bold
           opacity: 1.0
           text-shadow: 0 1px 3px #000
-      
+
+
+  #container
+    ul#time-unit-list
+      float: left
+      width: 45px
+      li
+        width: 45px
+        height: 45px
+      li.minute-marker
+        background: black
+    ul#step-unit-list
+      float: left
+      margin-left: 20px
+        

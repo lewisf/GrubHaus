@@ -40,7 +40,7 @@ define ["backbone"
         false
 
       render: ->
-        schema = _.omit Recipe::schema, "photo"
+        schema = Recipe::schema
         form_fields =
           for k, v of schema
             get_field k, v...
