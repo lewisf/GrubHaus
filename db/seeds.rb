@@ -139,11 +139,12 @@ end
 p "Created Spaghetti and meatballs"
 
 100.times do
+  px=(186..230).step(1).to_a.sample
   name = Faker::Lorem.sentence(word_count = 2, supplemental = true)
   @recipe = Recipe.create! do |recipe|
     recipe.name = name
     recipe.published = true
-    recipe.photo = "http://placekitten.com/190/190"
+    recipe.photo = "http://placekitten.com/#{px}/#{px}"
     recipe.description = Faker::Lorem.sentence(word_count = 4, supplemental = false)
     10.times do
       recipe.recipe_ingredients.new do |ingredient|
