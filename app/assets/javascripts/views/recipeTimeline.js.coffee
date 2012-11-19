@@ -13,6 +13,7 @@ define ["backbone"
       start_times: []
       end_times: []
       el: "#rcontainer"
+      scaling: true
 
       initialize: (steps) ->
         @timelineTemplate = Handlebars.compile timelineTemplate
@@ -37,11 +38,10 @@ define ["backbone"
           time_markers = _.union @start_times, {} #, @end_times
           if i in time_markers
             $("##{@timeListId}").append @circleTemplate
+              index: i
               circleText: i
               color: "#930202"
               text: (_.pluck steps, 'description').join(" ")
-            $("##{@timeListId}").append @lineTemplate
-          else
-            $("##{@timeListId}").append @lineTemplate
+          else if @scaling
             $("##{@timeListId}").append @lineTemplate
               index: i
