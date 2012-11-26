@@ -7,7 +7,7 @@ define ["backbone"
   (Backbone, RecipeView, RecipeListView, IndexView, CreateRecipeView) ->
     Router = Backbone.Router.extend
       routes: 
-        "": "showRecipes"
+        "": "index"
         "recipes": "showRecipes"
         "recipes/create": "createRecipe"
         "recipes/:id": "showRecipe"
@@ -16,8 +16,9 @@ define ["backbone"
         Backbone.history.start
           pushState: true
 
-      # index: ->
-      #   indexView = new IndexView()
+      index: ->
+        indexView = new IndexView()
+        $("section.container").html indexView.el
 
       showRecipe: (id) ->
         recipeView = new RecipeView {id: id}
