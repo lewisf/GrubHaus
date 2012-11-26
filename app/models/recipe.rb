@@ -3,7 +3,7 @@ class Recipe
 
   field :name, type: String
   field :published, type: Boolean, :default => false
-  #mount_uploader :photo, RecipePhotoUploader, mount_on: :photo_filename
+  # mount_uploader :photo, RecipePhotoUploader
   field :photo, type: String
   field :description, type: String
   field :prep_time, type: String

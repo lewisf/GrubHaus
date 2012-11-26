@@ -1,12 +1,20 @@
 define ["jquery", 
+        "simplemodal",
         "lodash", 
         "backbone",
         "handlebars",
         "router"],
-  ($, _, Backbone, Handlebars, Router) ->
+  ($, simplemodal, _, Backbone, Handlebars, Router) ->
 
     initialize = ->
+      setModalDefaults()
+      Backbone.emulateHTTP = true
+
       Router.initialize()
+
+    setModalDefaults = ->
+      $.modal.defaults.closeClass = "modalClose"
+      $.modal.defaults.overlayClose = true
 
     return {initialize: initialize, root: "/"}
 

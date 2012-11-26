@@ -31,6 +31,10 @@ define ["backbone"
         createRecipeView = new CreateRecipeView()
         $("section.container").html createRecipeView.el
 
+        # rendering here to avoid issue of model not being finished
+        # look into this problem later.
+        createRecipeView.render()
+
 
     initialize = ->
       router = new Router()

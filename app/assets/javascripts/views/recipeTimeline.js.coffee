@@ -20,9 +20,9 @@ define ["backbone"
         @lineTemplate = Handlebars.compile lineTemplate
         @circleTemplate = Handlebars.compile circleTemplate
 
-        @steps = _.sortBy steps, (step) -> step.start_time
+        @steps = _.sortBy steps, (step) -> parseInt(step.start_time)
 
-        @num_units = (_.max @steps, (step) -> step.end_time).end_time
+        @num_units = parseInt((_.max @steps, (step) -> parseInt(step.end_time)).end_time)
         @start_times = _.map _.pluck(@steps, 'start_time'), (time) -> parseInt(time)
         @end_times = _.map _.pluck(@steps, 'end_time'), (time) -> parseInt(time)
 

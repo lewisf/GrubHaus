@@ -27,6 +27,7 @@ define ["backbone"
             @renderIngredients()
 
       render: ->
+        console.log @model
         @$el.html @template @model.for_template()
         $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
 

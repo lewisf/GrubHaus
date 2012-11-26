@@ -1,3 +1,16 @@
+#wrap
+  #form-actions
+    position: absolute
+    top: 0
+    right: 0
+    padding: 20px
+    z-index: 1000
+    opacity: 0.7
+  #form-actions:hover
+    opacity: 1.0
+#wrap-push
+  margin-top: 70px
+
 .rlist-background
   position: fixed
   z-index: 0
@@ -179,8 +192,11 @@
         padding-top: 10px
         width: 250px
         box-shadow: 0 0 4px #222
+        min-height: 400px
         ol
           list-style-type: square
           list-style-position: inside
       
       
+.editable:hover
+  cursor: pointer

@@ -1,32 +1,34 @@
-define ["backbone"], (Backbone) ->
+define ["backbone"
+        "models/recipe_ingredient"
+        "models/step"],
+  (Backbone, RecipeIngredient, Step) ->
 
-  class Recipe extends Backbone.Model
-    idAttribute: "_id"
-    urlRoot: "/api/recipes"
+    class Recipe extends Backbone.Model
+      idAttribute: "_id"
+      urlRoot: "/api/recipes"
 
-    schema:
-      name: ['Text',
-        verbose: 'Name'
-      ]
-      description: ['Text',
-        verbose: 'Description'
-      ]
-      prep_time: ['Text',
-      	verbose: "Preparation Time"
-      ]
-      cook_time: ['Text',
-      	verbose: "Cook Time"
-      ]
-      serving_size: ['Text',
-      	verbose: "Serving Size"
-      ]
+      schema:
+        name: 'Text'
+        photo: 'Text'
+        description: 'Text'
+        "Prep time": 'Text'
+        "Cook time": 'Text'
+        "Ready In": 'Text'
+        serving_size: 'Text'
+        "Recipe Ingredients":
+          type: 'NestedModel'
+          model: RecipeIngredient
+        steps:
+          type: 'NestedModel'
+          model: Step
 
-    permalink: ->
-      "recipes/#{@id}"
 
-    initialize: ->
+      permalink: ->
+        "recipes/#{@id}"
 
-    for_template: ->
-      json = @toJSON()
-      json.url = @permalink()
-      json
+      initialize: ->
+
+      for_template: ->
+        json = @toJSON()
+        json.url = @permalink()
+        json
