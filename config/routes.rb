@@ -4,8 +4,10 @@ GrubHaus::Application.routes.draw do
 
   namespace :api do
     resources :users, :only => [:show]
-    resources :recipes, :except => [:edit, :new]
-    resource :comments, :except => [:edit, :new]
+      get 'recipes/search' => 'recipes#search'
+    resources :recipes, :except => [:edit, :new] do
+    end
+    resources :comments, :except => [:edit, :new]
   end
 
   root :to => "home#index"

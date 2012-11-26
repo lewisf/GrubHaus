@@ -6,8 +6,25 @@ class Api::RecipesController < ApplicationController
     @page = params[:page].to_i - 1
     @offset = @page * @amount
 
+    case params[:listing]
+    when "recent"
+      @recipes = Recipe.all
+    when "favorited"
+      @recipes = Recipe.all
+    else
+      @recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
+    end
+
     #@recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
     @recipes = Recipe.all
+
+    respond_to do |format|
+      format.json { render :json => @recipes }
+    end
+  end
+
+  def search
+    @recipes = Recipe.search params[:q]
 
     respond_to do |format|
       format.json { render :json => @recipes }

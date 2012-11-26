@@ -33,6 +33,31 @@ class Recipe
 
   attr_accessible :photo, :photo_cache
 
+
+  # Public: Return some recipes based on a query string
+  #
+  # q - The query string
+  #
+  # Examples
+  #
+  #   a = Recipe.search("spaghetti")
+  #   #  => <Mongoid::Criteria, ...
+  #
+  # Returns a Mongoid::Criteria object of recipes
+
+  def self.search(q)
+    Rails.logger.info q
+    if q.present?
+      begin
+        criteria.where(:name => /#{q}/i)
+      rescue
+        critieria.where(:name => (/#{Regexp.escape(q)}/))
+      end
+    else
+      criteria
+    end
+  end
+
   private
   def check_publishable
     name && photo && description && prep_time && 
