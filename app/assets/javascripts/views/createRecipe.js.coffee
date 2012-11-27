@@ -1,15 +1,10 @@
-define ["backbone"
-        "handlebars"
-        "lodash"
-        "jquery"
-        "simplemodal"
-        "models/recipe"
-        "collections/steps"
-        "models/step"
-        "views/recipeTimeline"
-        "views/recipeIngredients"
+define ["backbone", "handlebars", "lodash", "jquery", "simplemodal",
+        "models/recipe", "models/recipe_ingredient", "models/step",
+        "collections/steps", "collections/recipe_ingredients",
+        "views/recipeTimeline", "views/recipeIngredients",
         "text!templates/createRecipe.html"],
-  (Backbone, Handlebars, _, $, simplemodal, Recipe, StepList, Step, Timeline, IngredientList, createRecipeTemplate) ->
+  (Backbone, Handlebars, _, $, simplemodal, Recipe, RecipeIngredient, Step,
+   StepList, RecipeIngredients, Timeline, IngredientList, createRecipeTemplate) ->
 
     class CreateRecipeView extends Backbone.View
       events:
@@ -17,6 +12,7 @@ define ["backbone"
         'mouseover .editable': 'highlight'
         'mouseout .editable': 'unhighlight'
         'click #new-ingredient': 'createIngredient'
+        # 'click #ingredient-list li': 'editIngredient'
         'mouseover .contents-container .contents': 'highlight'
         'mouseout .contents-container .contents': 'unhighlight'
         'dblclick .contents-container .contents': 'editStep'
@@ -35,18 +31,10 @@ define ["backbone"
           cook_time: "0"
           ready_in: "0"
           serving_size: "0"
-          recipe_ingredients: []
+          recipe_ingredients: new RecipeIngredients
           steps: new StepList [
             new Step { description: "Click here to edit this step.", start_time: 0, end_time: 30 }
           ]
-
-      createRecipe: (e) ->
-        e.preventDefault()
-        form = $(e.currentTarget).serializeArray()
-        params = _(form).chain().map((x) -> _(x).values()).object().value()
-        recipe = new Recipe params
-        recipe.save()
-        false
 
       render: ->
         @$el.html @template @model.for_template()
@@ -57,8 +45,8 @@ define ["backbone"
           @renderFormActions()
 
       renderFormActions: ->
-        $("#wrap").prepend "<div id='form-actions'>
-          <a style='color: white' href='#' id='submit-create-recipe'>Save Recipe</a>
+        $("section.container").prepend "<div id='form-actions'>
+          <a href='#' id='submit-create-recipe'>Save Recipe</a>
         </div>"
         $("#submit-create-recipe").ready =>
           $("#submit-create-recipe").on "click", (e) =>
@@ -67,8 +55,11 @@ define ["backbone"
             false
 
       renderIngredients: ->
-        @ingredientsList = new IngredientList(@model.get "recipe_ingredients")
+        @ingredientsList = new IngredientList @model.get("recipe_ingredients")
+        console.log @ingredientsList
         $(".ingredient-contents").ready =>
+          $("#ingredient-list li").addClass "editable"
+          $("#ingredient-list li").addClass "ingredient"
           $("#ingredient-list").append "<li style='list-style-type: none;'>
                                       <a href='#' id='new-ingredient'>
                                       + Add Ingredient</a></li>"
@@ -99,11 +90,11 @@ define ["backbone"
         text = @model.get field
 
         if type is "textarea"
-          html += "<textarea name='edit' rows=5 cols=40>#{text}</textarea>
-                  <br /><br/><input type='submit'>"
+          html += "<textarea name='edit' rows=6 cols=60>#{text}</textarea>
+                  <br /><br/><input type='submit' class='submit-button'>"
         else
-          html +=  "<input type='text' name='edit' value='#{text}'/>
-                  <br /><br /><input type='submit'>"
+          html +=  "<input type='text' name='edit' value='#{text}' size=60/>
+                  <br /><br /><input type='submit' class='submit-button'>"
         html += "</form>"
 
         $.modal html, onShow: (dialog) =>
@@ -117,10 +108,9 @@ define ["backbone"
       createIngredient: (e) ->
         e.preventDefault()
         html = "<form id='create-ingredient-form'>
-                  <input type='text' name='amount' placeholder='amount'/><br/>
-                  <input type='text' name='unit' placeholder='unit'/><br/>
-                  <input type='text' name='name' placeholder='name'/><br/>
-                  <br/>
+                  <p><input type='text' name='amount' placeholder='Amount'/></p>
+                  <p><input type='text' name='unit' placeholder='Unit'/></p>
+                  <p><input type='text' name='name' placeholder='Name'/></p>
                   <input type='submit'>
                 </form>"
         $.modal html, onShow: (dialog) =>
@@ -130,15 +120,27 @@ define ["backbone"
             amount = $("input[name=amount]").val()
             unit = $("input[name=unit]").val()
             name = $("input[name=name]").val()
-            ings.push
+            rIng = new RecipeIngredient
               amount: amount
               unit: unit
               name: name
+            rIng.set "cid", rIng.cid
+            ings.push rIng
             @model.set "recipe_ingredients", ings
             $.modal.close()
             @renderIngredients()
             false
         false
+
+      editIngredient: (e) ->
+        e.preventDefault()
+        html = "<form id='create-ingredient-form'>
+                  <p><input type='text' name='amount' placeholder='Amount'/></p>
+                  <p><input type='text' name='unit' placeholder='Unit'/></p>
+                  <p><input type='text' name='name' placeholder='Name'/></p>
+                  <input type='submit'>
+                </form>"
+                  
 
       editStep: (e) ->
         e.preventDefault()
@@ -187,5 +189,4 @@ define ["backbone"
             @renderTimeline()
 
       saveRecipe: ->
-        console.log "HAHA"
         @model.save()

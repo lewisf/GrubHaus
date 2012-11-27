@@ -3,7 +3,7 @@ define ["lodash"
         "backbone"
         "models/recipe"], (_, Backbone, Recipe) ->
           
-  RecipesCollection = Backbone.Collection.extend 
+  RecipesCollection = Backbone.Collection.extend
     url: "/api/recipes#index"
     model: Recipe
 

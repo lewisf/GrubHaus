@@ -1,11 +1,23 @@
+#simplemodal-data
+  form
+    input[type=submit]
+      @include sassy-button
+    input[type=text]
+      padding: 5px
+      border-radius: 3px
 #wrap
   #form-actions
-    position: absolute
-    top: 0
-    right: 0
-    padding: 20px
+    position: fixed
+    top: 80px
+    right: 20px
+    padding: 10px 20px
     z-index: 1000
     opacity: 0.7
+    @include sassy-button
+    a, a:hover, a:visited
+      color: white
+      font-size: 1.3em
+      text-decoration: none
   #form-actions:hover
     opacity: 1.0
 #wrap-push
@@ -168,6 +180,8 @@
       ul#time-unit-list
         margin: 0
         margin-left: 115px
+        li:hover
+          cursor: pointer
         li.circle
           width: 60px
           .start-circle

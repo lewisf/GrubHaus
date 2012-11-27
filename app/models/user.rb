@@ -50,7 +50,7 @@ class User
   embeds_one :profile
   has_many :followers, :class_name => "User", :inverse_of => :following
   has_many :following, :class_name => "User", :inverse_of => :followers
-  has_many :favorites, :class_name => "Recipe", :inverse_of => :favorites
+  has_many :favorites, :class_name => "Recipe", :inverse_of => :favorited
   has_many :recipes, :inverse_of => :author
 
   # Overriding the default devise user query because we want to allow

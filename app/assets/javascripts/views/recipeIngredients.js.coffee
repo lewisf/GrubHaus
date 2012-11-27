@@ -4,7 +4,6 @@ define ["backbone"
         "text!templates/recipeIngredients.html"],
   (Backbone, Handlebars, Recipe, ingredientListTemplate) ->
     class RecipeIngredientListView extends Backbone.View
-      ingredients: []
       el: "#icontainer"
       initialize: (ingredients) ->
         @ingredients = ingredients
@@ -13,4 +12,4 @@ define ["backbone"
 
       render: ->
         $("#icontainer").html @template
-          ingredients: @ingredients
+          ingredients: @ingredients.toJSON()

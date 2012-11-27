@@ -7,11 +7,14 @@
           - if user_signed_in?
             Welcome, #{current_user.username}
         %li 
-          %a{:href=> "/recipes/create"}Submit a Recipe
+          - if user_signed_in?
+            %a{:href=> "/recipes/create"}Submit a Recipe
         %li
-          %a{:href=>"/recipes"}Dashboard
+          - if user_signed_in?
+            %a{:href=>"/recipes"}Dashboard
         %li 
-          %a{:href=>"/"}Homepage
+          - if user_signed_in?
+            %a{:href=>"/"}Search Recipes
         %li
           - if user_signed_in?
             = link_to "Sign out", destroy_user_session_path, 'data-bypass' => true

@@ -3,7 +3,7 @@
         <h3>Ingredients:</h3>
         <ol id="ingredient-list">
             {{#each ingredients}}
-                <li>
+                <li data-cid={{ this.cid }}>
                     {{ this.amount }} {{ this.unit }} <b>{{ this.name }}</b>
                 </li>
             {{/each}}

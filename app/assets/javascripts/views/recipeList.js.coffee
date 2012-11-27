@@ -4,7 +4,7 @@ define ["jquery"
         "backbone"
         "handlebars"
         "collections/recipes"
-        "text!templates/recipeList.html"], 
+        "text!templates/recipeList.html"],
   ($, _, Backbone, Handlebars, RecipesCollection, recipeListTemplate) ->
     RecipeListView = Backbone.View.extend
       initialize: ->
@@ -16,4 +16,4 @@ define ["jquery"
             @render()
 
       render: ->
-        @$el.html @template {recipes: @collection.for_template()} 
+        @$el.html @template {recipes: @collection.for_template()}
