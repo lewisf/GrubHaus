@@ -6,8 +6,9 @@ define ["backbone"
         "views/createRecipe"], 
   (Backbone, RecipeView, RecipeListView, IndexView, CreateRecipeView) ->
     Router = Backbone.Router.extend
-      routes: 
+      routes:
         "": "index"
+        "recipes/search/:q": "index"
         "recipes": "showRecipes"
         "recipes/create": "createRecipe"
         "recipes/:id": "showRecipe"
@@ -16,8 +17,11 @@ define ["backbone"
         Backbone.history.start
           pushState: true
 
-      index: ->
-        indexView = new IndexView()
+      index: (q)->
+        if q?
+          indexView = new IndexView q
+        else
+          indexView = new IndexView()
         $("section.container").html indexView.el
 
       showRecipe: (id) ->
@@ -38,7 +42,7 @@ define ["backbone"
 
 
     initialize = ->
-      router = new Router()
-      router.start()
+      window.router = new Router()
+      window.router.start()
 
     {initialize: initialize}
