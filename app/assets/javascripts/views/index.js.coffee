@@ -39,11 +39,11 @@ define ["backbone"
         if e?
           e.preventDefault()
           @query = $("input[name=q]").val()
-        window.router.navigate "recipes/search/#{@query}"
+          window.router.navigate "recipes/search/#{@query}"
         baseUrl = '/api/recipes/search.json'
         url = "#{baseUrl}?q=#{@query}"
         $.getJSON url, (data) =>
-          @renderResults(data)
+          @renderResults(data) unless _.isEmpty data
           @updateQueryIndicator(@query)
         false
 
