@@ -40,12 +40,13 @@ define ["backbone"
           e.preventDefault()
           @query = $("input[name=q]").val()
           window.router.navigate "recipes/search/#{@query}"
-        baseUrl = '/api/recipes/search.json'
-        url = "#{baseUrl}?q=#{@query}"
-        $.getJSON url, (data) =>
-          @renderResults(data) unless _.isEmpty data
-          @updateQueryIndicator(@query)
-        false
+        unless _.isEmpty @query
+          baseUrl = '/api/recipes/search.json'
+          url = "#{baseUrl}?q=#{@query}"
+          $.getJSON url, (data) =>
+            @renderResults data
+            @updateQueryIndicator @query
+          false
 
       updateQueryIndicator: (queryString) ->
         $("span#q-ind").text queryString
