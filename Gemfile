@@ -11,7 +11,6 @@ gem 'fog', "~> 1.3.1"
 gem 'requirejs-rails'
 gem 'heroku'
 gem 'haml-rails'
-gem 'haml'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -53,6 +52,7 @@ gem 'jquery-rails'
 
 group :production do
   gem 'thin'
+  gem 'haml'
 end
 
 # To use ActiveModel has_secure_password
