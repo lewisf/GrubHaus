@@ -1,0 +1,46 @@
+<div class="rheader-background"></div>
+<div class="recipe">
+    <div class="haha">
+        <div class="rheader">
+            <div class="one-col">
+                <div class="img-circle"></div>
+            </div>
+            <div class="two-col">
+                <h1 class="title">{{name}}</h1>
+                <h2 class="description">{{description}}</h2>
+                <table>
+                    <tr>
+                        <td class="label">Prep Time</td>
+                        <td class="prep-time">{{prep_time}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Cook Time</td>
+                        <td class="cook-time">{{cook_time}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Ready In</td>
+                        <td class="ready-in">{{ready_in}}</td>
+                    </tr>
+                </table>
+                <br />
+                <table>
+                    <tr>
+                        <td class="label">Serves</td>
+                        <td class="serving">{{ serving_size }}</td>
+                    </tr>
+                </table>
+                <div id="recipe-actions">
+                    {{#if is_favorited_by_user}}
+                        <a href="#" id="unfavorite-recipe-button">Unfavorite</a>
+                    {{else}}
+                        <a href="#" id="favorite-recipe-button">Favorite</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="rcontainer">
+    </div>
+    <div id="icontainer">
+    </div>
+</div>
