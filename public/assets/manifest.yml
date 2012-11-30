@@ -4,7 +4,7 @@ paper.png: paper-bfeb40d36fc694f2769b106ea69aad53.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
 rulelines.jpg: rulelines-2a7130680496267097435e220442b6ff.jpg
 x.png: x-8ca07f6145e472a2cf464f8d018a9db6.png
-application.js: application-65ebaa7eaf21a57eb2861289eb81bb34.js
+application.js: application-66c5c9c2a39619705b57e7872896a468.js
 collections/recipe_ingredients.js: collections/recipe_ingredients-9c70e3bdea5e58b6a5ff9a63aef13ca1.js
 collections/recipes.js: collections/recipes-27c85d968cb2243d88695b5e23f824ee.js
 collections/steps.js: collections/steps-2d79f419fb7be417d1d25dba18636d83.js
@@ -37,7 +37,7 @@ test/qunit.html: test/qunit-8a582490524b795af3d669cc7a29df17.html
 test/qunit/tests/example.js: test/qunit/tests/example-7b28847039a6de6d7dab5b8089d51201.js
 test/qunit/vendor/qunit.css: test/qunit/vendor/qunit-c258e3ac306c8313c9eef8b9b4e9f578.css
 test/qunit/vendor/qunit.js: test/qunit/vendor/qunit-dcbddebeb0642decd988db9fefa3ce4d.js
-views/createRecipe.js: views/createRecipe-42bb466196f4c862c70b27189254a883.js
+views/createRecipe.js: views/createRecipe-35c86ffaf372e52fc9917e5d7c299ded.js
 views/recipe.js: views/recipe-73f0406e609165db9b7f2ef61f6aeabb.js
 views/recipeIngredients.js: views/recipeIngredients-9cdf24b4e361e2ba27daa9170660164f.js
 views/recipeList.js: views/recipeList-ee161cc2c99563233ed978d8078d1bed.js
@@ -53,6 +53,7 @@ recipe.css: recipe-dafedf6866e3c3e2ced1b9eadcb99d20.css
 almond.js: almond-6a982bcb9128d7dd78f48b495bd48d7c.js
 backbone-forms.min.js: backbone-forms.min-3447b3f8529b8a829ef34499313122ae.js
 backbone-min.js: backbone-min-c8aaaa86001fac73123ddd6777615412.js
+handlebars.js: handlebars-6408ebec3383f78214375c4d76760c4b.js
 jquery.cookie.js: jquery.cookie-2b782555610a1b4e877c636a3b7aba9f.js
 jquery.js: jquery-59b63ac6aa9e42915ad70a8ff6c651d3.js
 jquery.simplemodal.js: jquery.simplemodal-018ddc20029277256f29269a50695535.js

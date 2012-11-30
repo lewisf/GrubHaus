@@ -1,5 +1,5 @@
 define ["jquery", 
-        "simplemodal",
+        "jquery.simplemodal",
         "lodash", 
         "backbone",
         "handlebars",

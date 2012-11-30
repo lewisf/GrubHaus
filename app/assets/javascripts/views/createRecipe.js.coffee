@@ -1,4 +1,4 @@
-define ["backbone", "handlebars", "lodash", "jquery", "simplemodal",
+define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         "models/recipe", "models/recipe_ingredient", "models/step",
         "collections/steps", "collections/recipe_ingredients",
         "views/recipeTimeline", "views/recipeIngredients",
