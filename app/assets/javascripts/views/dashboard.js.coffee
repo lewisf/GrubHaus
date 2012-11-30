@@ -10,9 +10,10 @@ define ["jquery"
    recipeListTemplate, dashboardTemplate, ) ->
     Dashboard = Backbone.View.extend
       initialize: ->
-        @favorites = new RecipesCollection({ url: "/api/recipes/favorites.json" })
-        @published = new RecipesCollection({ url: "/api/recipes/published.json" })
-        @unpublished = new RecipesCollection({ url: "/api/recipes/unpublished.json" })
+        @favorites = new RecipesCollection { url: "/api/recipes/favorites.json" }
+        @published = new RecipesCollection { url: "/api/recipes/published.json" }
+        @unpublished = new RecipesCollection { url: "/api/recipes/unpublished.json" }
+        @all = new RecipesCollection
         @dashHtml = Handlebars.compile dashboardTemplate
         @recipeListHtml = Handlebars.compile recipeListTemplate
 
@@ -20,18 +21,19 @@ define ["jquery"
 
         favorites = @favorites.fetch
           success: =>
-            console.log "Favorites"
             @renderFavorites()
 
         published = @published.fetch
           success: =>
-            console.log "Published"
             @renderPublished()
 
         unpublished = @unpublished.fetch
           success: =>
-            console.log "Unpublished"
             @renderUnpublished()
+
+        all = @all.fetch
+          success: =>
+            @renderall()
       
       render: ->
         @$el.html @dashHtml
@@ -47,3 +49,7 @@ define ["jquery"
       renderUnpublished: ->
         $("#unpublished-container").html @recipeListHtml
           recipes: @unpublished.for_template()
+      
+      renderall: ->
+        $("#all-container").html @recipeListHtml
+          recipes: @all.for_template()
