@@ -60,9 +60,9 @@ class Recipe
     Rails.logger.info q
     if q.present?
       begin
-        criteria.where(:name => /#{q}/i)
+        criteria.where(:published => true, :name => /#{q}/i)
       rescue
-        critieria.where(:name => (/#{Regexp.escape(q)}/))
+        critieria.where(:published => true, :name => (/#{Regexp.escape(q)}/))
       end
     else
       criteria
