@@ -52,6 +52,7 @@ gem 'jquery-rails'
 
 group :production do
   gem 'thin'
+  gem 'haml-rails'
 end
 
 # To use ActiveModel has_secure_password
