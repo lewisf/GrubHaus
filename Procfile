@@ -1,3 +1,3 @@
-db: mongod
+# db: mongod
 # guard: guard
-web: rails s
+# web: rails s
