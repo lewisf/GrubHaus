@@ -66,4 +66,11 @@ class User
     end
   end
 
+  def add_favorite(recipe)
+    favorites << recipe
+  end
+
+  def delete_favorite(recipe)
+  end
+
 end
