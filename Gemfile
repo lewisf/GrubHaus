@@ -21,6 +21,7 @@ gem 'sassy-buttons'
 gem 'uglifier'
 gem 'carrierwave'
 gem 'carrierwave-mongoid'
+gem 'faker'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -41,7 +42,6 @@ group :test, :development do
   gem 'terminal-notifier-guard'
   gem 'foreman'
   gem 'colorize'
-  gem 'faker'
 end
 
 group :test do
