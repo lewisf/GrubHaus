@@ -11,6 +11,8 @@ gem 'fog', "~> 1.3.1"
 gem 'requirejs-rails'
 gem 'heroku'
 gem 'haml-rails'
+gem 'carrierwave'
+gem 'carrierwave-mongoid'
 
 # Gems used only for assets and not required
 # in production environments by default.
