@@ -11,23 +11,23 @@ gem 'fog', "~> 1.3.1"
 gem 'requirejs-rails'
 gem 'heroku'
 gem 'haml-rails'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'compass-rails'
+gem 'compass-colors'
+gem 'compass-960-plugin'
+gem 'sassy-buttons'
+gem 'uglifier'
 gem 'carrierwave'
 gem 'carrierwave-mongoid'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'compass-rails', '~> 1.0.0.rc.2'
-  gem 'compass-colors'
-  gem 'compass-960-plugin'
-  gem 'sassy-buttons'
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
 end
 
 group :test, :development do
