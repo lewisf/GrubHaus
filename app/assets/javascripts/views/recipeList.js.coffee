@@ -16,4 +16,4 @@ define ["jquery"
             @render()
 
       render: ->
-        @$el.html @template { recipes: @collection.for_template() }
+        @$el.html @template {recipes: @collection.for_template()}

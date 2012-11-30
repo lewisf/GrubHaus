@@ -8,13 +8,11 @@ define ["backbone", "handlebars", "lodash", "jquery", "simplemodal",
 
     class CreateRecipeView extends Backbone.View
       events:
+        'dblclick .editable': 'edit'
         'mouseover .editable': 'highlight'
         'mouseout .editable': 'unhighlight'
-        'mouseover li.ingredient-editable': 'highlight'
-        'mouseout li.ingredient-editable': 'unhighlight'
         'click #new-ingredient': 'createIngredient'
-        'dblclick #ingredient-list li.ingredient-editable': 'editIngredient'
-        'dblclick .editable': 'edit'
+        # 'click #ingredient-list li': 'editIngredient'
         'mouseover .contents-container .contents': 'highlight'
         'mouseout .contents-container .contents': 'unhighlight'
         'dblclick .contents-container .contents': 'editStep'
@@ -60,7 +58,8 @@ define ["backbone", "handlebars", "lodash", "jquery", "simplemodal",
         @ingredientsList = new IngredientList @model.get("recipe_ingredients")
         console.log @ingredientsList
         $(".ingredient-contents").ready =>
-          $("#ingredient-list li").addClass "ingredient-editable"
+          $("#ingredient-list li").addClass "editable"
+          $("#ingredient-list li").addClass "ingredient"
           $("#ingredient-list").append "<li style='list-style-type: none;'>
                                       <a href='#' id='new-ingredient'>
                                       + Add Ingredient</a></li>"
@@ -106,30 +105,6 @@ define ["backbone", "handlebars", "lodash", "jquery", "simplemodal",
             @render()
             false
 
-      editIngredient: (e) ->
-        e.preventDefault()
-        html = "<form id='edit-ingredient-form'>
-                  <p><input type='text' name='amount' placeholder='Amount'/></p>
-                  <p><input type='text' name='unit' placeholder='Unit'/></p>
-                  <p><input type='text' name='name' placeholder='Name'/></p>
-                  <input type='submit'>
-                </form>"
-        $.modal html, onShow: (dialog) =>
-          recipe_ingredients = @model.get "recipe_ingredients"
-          ingredient = recipe_ingredients.getByCid $(e.target).closest('.ingredient-editable').attr("data-cid")
-          console.log ingredient
-          $('input[name=amount]').val ingredient.get 'amount'
-          $('input[name=unit]').val ingredient.get 'unit'
-          $('input[name=name]').val ingredient.get 'name'
-          $("#edit-ingredient-form").on 'submit', (e) =>
-            e.preventDefault()
-            ingredient.set "amount", $('input[name=amount]').val()
-            ingredient.set "unit", $('input[name=unit]').val()
-            ingredient.set "name", $('input[name=name]').val()
-            $.modal.close()
-            @renderIngredients()
-            false
-
       createIngredient: (e) ->
         e.preventDefault()
         html = "<form id='create-ingredient-form'>
@@ -156,6 +131,16 @@ define ["backbone", "handlebars", "lodash", "jquery", "simplemodal",
             @renderIngredients()
             false
         false
+
+      editIngredient: (e) ->
+        e.preventDefault()
+        html = "<form id='create-ingredient-form'>
+                  <p><input type='text' name='amount' placeholder='Amount'/></p>
+                  <p><input type='text' name='unit' placeholder='Unit'/></p>
+                  <p><input type='text' name='name' placeholder='Name'/></p>
+                  <input type='submit'>
+                </form>"
+                  
 
       editStep: (e) ->
         e.preventDefault()
