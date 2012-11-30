@@ -1,4 +1,4 @@
-<ul class="recipe-list">
+<ul class="recipe-list" id={{ listId }}>
     {{#each recipes}}
         <li>
             <a href="{{this.url}}">
@@ -10,5 +10,7 @@
                 </span>
             </div>
         </li>
+    {{else}}
+        <i>Nothing here</i>
     {{/each}}
 </ul>

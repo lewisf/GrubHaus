@@ -4,7 +4,7 @@
 #simplemodal-data
   form
     input[type=submit]
-      @include sassy-button
+      +sassy-button
     input[type=text]
       padding: 5px
       border-radius: 3px
@@ -16,7 +16,7 @@
     padding: 10px 20px
     z-index: 1000
     opacity: 0.7
-    @include sassy-button
+    +sassy-button
     a, a:hover, a:visited
       color: white
       font-size: 1.3em
@@ -63,7 +63,7 @@
       border-color: #930202
       border-width: 3px
     #search-form input[type=submit]
-      @include sassy-button
+      +sassy-button
       display: inline
       margin-left: 20px
   #results-container
@@ -106,7 +106,7 @@
   z-index: 0
   top: 0
   left: 0
-  height: 355px
+  height: 405px
   width: 100%
   background: asset-data-url("paper.png")
   background-repeat: repeat
@@ -114,16 +114,13 @@
 
 .recipe-list-container
   margin-top: 80px
-  ul.recipe-list
-    li
-      a
-        img
-          border: 5px solid white
 
-
-  h1
+  h1, i
     position: relative
     z-index: 50
+  
+  h1
+    text-decoration: underline
 
 .recipe
   +grid(12)
@@ -132,7 +129,7 @@
 
   .haha
     overflow: hidden
-    height: 360px
+    height: 410px
     width: 100%
     .rheader
       +grid(11)
@@ -140,7 +137,7 @@
       +alpha
       +omega
       position: relative
-      height: 300px
+      height: 350px
       width: 100%
       top: 50px
       .one-col
@@ -159,10 +156,10 @@
           border: 5px solid white
           position: absolute
           left: 0
-          bottom: 30px
+          bottom: 60px
 
       .two-col
-        +grid(8)
+        +grid(6)
         +omega
         position: relative
         right: 0
@@ -177,14 +174,25 @@
           font-weight: normal
           font-style: italic
 
-      table
-        tbody
-          font-size: 1.1em
-          tr
-            td
-              width: 100px
-              &.label
-                font-weight: bold
+        table
+          tbody
+            font-size: 1.1em
+            tr
+              td
+                width: 100px
+                &.label
+                  font-weight: bold
+
+        #recipe-actions
+          width: 260px
+          height: 40px
+          margin-top: 10px
+          a
+            +sassy-button
+            text-decoration: none
+
+            &:visited, &:hover
+              color: white
 
   #rcontainer
     +grid(9)

@@ -41,15 +41,19 @@ define ["jquery"
       renderFavorites: ->
         $("#favorites-container").html @recipeListHtml
           recipes: @favorites.for_template()
+          listId: "favorited-recipe"
 
       renderPublished: ->
         $("#published-container").html @recipeListHtml
           recipes: @published.for_template()
+          listId: "published-recipe"
 
       renderUnpublished: ->
         $("#unpublished-container").html @recipeListHtml
           recipes: @unpublished.for_template()
+          listId: "unpublished-recipe"
       
       renderall: ->
         $("#all-container").html @recipeListHtml
           recipes: @all.for_template()
+          listId: "normal-recipe"

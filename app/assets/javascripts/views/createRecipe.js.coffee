@@ -47,14 +47,10 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           @renderFormActions()
 
       renderFormActions: ->
-        $("section.container").prepend "<div id='form-actions'>
-          <a href='#' id='submit-create-recipe'>Save Recipe</a>
-        </div>"
-        $("#submit-create-recipe").ready =>
-          $("#submit-create-recipe").on "click", (e) =>
-            e.preventDefault()
-            @saveRecipe()
-            false
+        $("#submit-create-recipe").on "click", (e) =>
+          e.preventDefault()
+          @saveRecipe()
+          false
 
       renderIngredients: ->
         @ingredientsList = new IngredientList @model.get("recipe_ingredients")
