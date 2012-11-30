@@ -4,14 +4,14 @@ paper.png: paper-bfeb40d36fc694f2769b106ea69aad53.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
 rulelines.jpg: rulelines-2a7130680496267097435e220442b6ff.jpg
 x.png: x-8ca07f6145e472a2cf464f8d018a9db6.png
-app.js: app-65ebaa7eaf21a57eb2861289eb81bb34.js
+application.js: application-65ebaa7eaf21a57eb2861289eb81bb34.js
 collections/recipe_ingredients.js: collections/recipe_ingredients-9c70e3bdea5e58b6a5ff9a63aef13ca1.js
 collections/recipes.js: collections/recipes-27c85d968cb2243d88695b5e23f824ee.js
 collections/steps.js: collections/steps-2d79f419fb7be417d1d25dba18636d83.js
 favicon.ico: favicon-288cd9d796855377f109e8fb79f1d6dc.ico
 grunt.js: grunt-ec3919a60ec99d15c7b87ddf0a75d9d7.js
 index.html: index-3bd3fd5c523bf670010cfbb257f0bf67.html
-main.js: main-a8571f75de125579fd6025d227306c9e.js
+main.js: main-41604a5dd7047be33d73608abccb25fd.js
 models/recipe.js: models/recipe-b1fff022b2c65a8f972c1f0651c95f90.js
 models/recipe_ingredient.js: models/recipe_ingredient-f80e73f88cdb28a49219b863d5908c3c.js
 models/step.js: models/step-d05b9e79d40d90e5c130d3625e4eb3eb.js

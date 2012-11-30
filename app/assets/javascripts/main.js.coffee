@@ -1,4 +1,4 @@
-require ["app", "backbone"], (App) ->
+require ["application", "backbone"], (App) ->
   App.initialize()
 
   $(document).on "click", "a:not([data-bypass])", (e) ->

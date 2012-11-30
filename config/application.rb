@@ -76,7 +76,7 @@ module GrubHaus
     # Moped.logger.level = Logger::DEBUG
 
     # Heroku config, uncomment if not running on Heroku
-    config.assets.initialize_on_precompile = false
+    config.assets.initialize_on_precompile = true
 
   end
 end
