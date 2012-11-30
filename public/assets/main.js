@@ -1,0 +1,1 @@
+(function(){require(["app","backbone"],function(e){return e.initialize(),$(document).on("click","a:not([data-bypass])",function(t){var n,r;n={prop:$(this).prop("href"),attr:$(this).attr("href")},r=""+location.protocol+"//"+location.host+e.root;if(n.prop&&n.prop.slice(0,r.length)===r)return t.preventDefault(),Backbone.history.navigate(n.attr,!0)})})}).call(this);
