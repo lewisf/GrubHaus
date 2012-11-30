@@ -77,6 +77,7 @@ class Api::RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
+    Rails.logger.info session
 
     respond_to do |format|
       if @recipe
@@ -105,6 +106,59 @@ class Api::RecipesController < ApplicationController
     @recipe.destroy
     respond_to do |format|
       format.json { render :json => [] }
+    end
+  end
+
+  def favorites
+    user = User.find(session["warden.user.user.key"][1][0])
+    @favorites = user.favorites
+    respond_to do |format|
+      format.json { render :json => @favorites }
+    end
+  end
+
+  def unpublished
+    user = User.find(session["warden.user.user.key"][1][0])
+    @recipes = user.recipes.where(:published => false)
+    respond_to do |format|
+      format.json { render :json => @recipes }
+    end
+  end
+
+  def published
+    user = User.find(session["warden.user.user.key"][1][0])
+    @recipes = user.recipes.where(:published => true)
+    respond_to do |format|
+      format.json { render :json => @recipes }
+    end
+  end
+
+  def favorite
+    @user = User.find(session["warden.user.user.key"][1][0])
+    @recipe = Recipe.where(author: current_user).find(params[:id])
+
+    user.favorites << @recipe
+
+    respond_to do |format|
+      if @user.save
+        format.json { render :json => @recipe }
+      else
+        format.json { render :json => [] }
+      end
+    end
+  end
+
+  def publish
+    @user = User.find(session["warden.user.user.key"][1][0])
+    @recipe = Recipe.where(author: current_user).find(params[:id])
+    
+    @recipe.published = true
+    respond_to do |format|
+      if @recipe.author == @user and @recipe.save
+        format.json { render :json => @recipe }
+      else
+        format.json { render :json => [] }
+      end
     end
   end
 
