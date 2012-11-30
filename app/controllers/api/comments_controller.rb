@@ -57,6 +57,7 @@ class Api::CommentsController < ApplicationController
       if @comment.update_attribute(params[:comments])
         format.json { render :json => [] }
       end
+    end
   end
 
 end
