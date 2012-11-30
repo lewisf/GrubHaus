@@ -1,1 +1,0 @@
-(function(){define(["lodash","backbone","models/recipe"],function(e,t,n){var r;return r=t.Collection.extend({url:"/api/recipes#index",model:n,initialize:function(e){if(e)return this.url=e.url},for_template:function(){return e.map(this.models,function(e){return e.for_template()})}})})}).call(this);

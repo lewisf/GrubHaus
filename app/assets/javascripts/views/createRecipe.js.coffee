@@ -23,6 +23,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         'click a#unfavorite-recipe-button': 'unfavorite'
         'click a#publish-recipe-button': 'publish'
         'click a#unpublish-recipe-button': 'unpublish'
+        'click a#delete-recipe-button': 'delete'
         # currently not working because element is created after
         # the rendering
         # 'click #submit-create-recipe': 'saveRecipe'
@@ -283,6 +284,16 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         @model.save null
           success: =>
             $("#unpublish-recipe-button").text("Publish").attr("id", "publish-recipe-button")
+          error: =>
+            alert "Error!"
+        false
+
+      delete: (e) ->
+        e.preventDefault()
+        @model.destroy
+          success: =>
+            window.router.navigate "/recipes",
+              trigger: true
           error: =>
             alert "Error!"
         false

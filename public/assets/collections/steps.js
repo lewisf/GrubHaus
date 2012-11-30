@@ -1,1 +1,0 @@
-(function(){define(["lodash","backbone","models/step"],function(e,t,n){var r;return r=t.Collection.extend({model:n})})}).call(this);

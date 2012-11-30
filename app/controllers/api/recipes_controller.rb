@@ -65,7 +65,8 @@ class Api::RecipesController < ApplicationController
         end
       end
     end
-    @recipe.save!
+    @user = current_user
+    @user.recipes << @recipe
     respond_to do |format|
       if @recipe.save
         format.json { render :json => @recipe }
@@ -105,7 +106,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def destroy
-    @recipe = Recipe.where(author: current_user).find(params[:id])
+    @recipe = Recipe.find(params[:id])
     @recipe.destroy
     respond_to do |format|
       format.json { render :json => [] }
