@@ -1,0 +1,16 @@
+<ul class="recipe-list" id={{ listId }}>
+    {{#each recipes}}
+        <li>
+            <a href="{{this.url}}">
+                <img src="{{this.photo}}"/>
+            </a>
+            <div class="name-background">
+                <span class="name-text">
+                    {{this.name}}
+                </span>
+            </div>
+        </li>
+    {{else}}
+        <i>Nothing here</i>
+    {{/each}}
+</ul>
