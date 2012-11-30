@@ -1,7 +1,7 @@
 
 define ["backbone"
         "handlebars"
-        "text!templates/index.html"
+        "text!templates/search.html"
         "text!templates/search_result_container.html"
         "text!templates/search_result.html"],
   (Backbone, Handlebars, indexTemplateHtml, searchResultContainerHtml, searchResultHtml) ->

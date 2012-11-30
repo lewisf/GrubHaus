@@ -2,8 +2,8 @@
 define ["backbone"
         "views/recipe"
         "views/recipeList"
-        "views/index"
-        "views/createRecipe"], 
+        "views/search"
+        "views/createRecipe"],
   (Backbone, RecipeView, RecipeListView, IndexView, CreateRecipeView) ->
     Router = Backbone.Router.extend
       routes:

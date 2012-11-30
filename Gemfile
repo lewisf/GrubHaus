@@ -11,6 +11,7 @@ gem 'carrierwave'
 gem 'carrierwave-mongoid', :require => "carrierwave/mongoid"
 gem 'fog', "~> 1.3.1"
 gem 'requirejs-rails'
+gem 'heroku'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -50,6 +51,10 @@ group :test do
 end
 
 gem 'jquery-rails'
+
+group :production do
+  gem 'thin'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
