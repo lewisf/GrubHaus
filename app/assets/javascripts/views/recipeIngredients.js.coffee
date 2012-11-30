@@ -1,12 +1,17 @@
 define ["backbone"
         "handlebars"
         "models/recipe"
+        "collections/recipe_ingredients"
         "text!templates/recipeIngredients.html"],
-  (Backbone, Handlebars, Recipe, ingredientListTemplate) ->
+  (Backbone, Handlebars, Recipe, Ingredients, ingredientListTemplate) ->
     class RecipeIngredientListView extends Backbone.View
       el: "#icontainer"
       initialize: (ingredients) ->
-        @ingredients = ingredients
+        if ingredients.toJSON?
+          @ingredients = ingredients
+        else
+          @ingredients = new Ingredients ingredients
+        console.log @ingredients
         @template = Handlebars.compile ingredientListTemplate
         @render()
 

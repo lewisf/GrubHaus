@@ -35,4 +35,4 @@ define ["backbone"
         timeLine = new Timeline(@steps)
 
       renderIngredients: ->
-        ingredientsList = new IngredientList(@model.attributes.recipe_ingredients)
+        ingredientsList = new IngredientList @model.get("recipe_ingredients")
