@@ -77,11 +77,12 @@ class Api::RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
-    Rails.logger.info session
+    user = User.find(session["warden.user.user.key"][1][0])
+    @recipe.current_user = current_user
 
     respond_to do |format|
       if @recipe
-        format.json { render :json => @recipe }
+        format.json { render :json => @recipe.to_json(:methods => :is_favorited_by_user) }
       else
         # raise MongoidErrors::DocumentNotFound
       end
@@ -137,7 +138,22 @@ class Api::RecipesController < ApplicationController
     @user = User.find(session["warden.user.user.key"][1][0])
     @recipe = Recipe.where(author: current_user).find(params[:id])
 
-    user.favorites << @recipe
+    @user.favorites << @recipe
+
+    respond_to do |format|
+      if @user.save
+        format.json { render :json => @recipe }
+      else
+        format.json { render :json => [] }
+      end
+    end
+  end
+
+  def unfavorite
+    @user = User.find(session["warden.user.user.key"][1][0])
+    @recipe = Recipe.where(author: current_user).find(params[:id])
+
+    @user.favorites.delete @recipe
 
     respond_to do |format|
       if @user.save

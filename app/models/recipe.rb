@@ -22,7 +22,7 @@ class Recipe
   # Not sure if we're using this relation yet
   belongs_to :parent, :class_name => "Recipe", :inverse_of => :children
   has_many :children, :class_name => "Recipe", :inverse_of => :parent
-  has_many :favorited, :class_name => "User", :inverse_of => :favorites
+  has_and_belongs_to_many :favorited, :class_name => "User", :inverse_of => :favorites
   has_many :tags
 
   before_save :check_publishable
@@ -32,6 +32,13 @@ class Recipe
                   :steps, :cookware
 
   attr_accessible :photo, :photo_cache
+
+  # virtual attributes for use on controllers
+  attr_accessor :current_user
+
+  def is_favorited_by_user
+    favorited.include? current_user
+  end
 
 
   # Public: Return some recipes based on a query string

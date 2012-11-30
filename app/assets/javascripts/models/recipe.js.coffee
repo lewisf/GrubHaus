@@ -22,7 +22,6 @@ define ["backbone"
           type: 'NestedModel'
           model: Step
 
-
       permalink: ->
         "recipes/#{@id}"
 

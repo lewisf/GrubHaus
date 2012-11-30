@@ -10,6 +10,10 @@ define ["backbone"
       steps: []
       timelineEl: "#rcontainer"
 
+      events:
+        'click a#favorite-recipe-button': 'favorite'
+        'click a#unfavorite-recipe-button': 'unfavorite'
+
       initialize: (params) ->
         @template = Handlebars.compile recipeTemplateHtml
         @model = new Recipe {_id: params.id}
@@ -36,3 +40,33 @@ define ["backbone"
 
       renderIngredients: ->
         ingredientsList = new IngredientList @model.get("recipe_ingredients")
+
+      favorite: (e) ->
+        e.preventDefault()
+        $.ajax
+          type: 'POST'
+          url: "/api/recipes/favorite/#{@model.get '_id'}"
+          dataType: "json"
+          data:
+            authenticity_token: $("meta[name='csrf-token']").attr "content"
+          success: =>
+            $("#favorite-recipe-button").text("Unfavorite").attr("id", "unfavorite-recipe-button")
+            @model.set "is_favorited_by_user?", true
+          error: ->
+            alert "Error!"
+        false
+
+      unfavorite: (e) ->
+        e.preventDefault()
+        $.ajax
+          type: 'POST'
+          url: "/api/recipes/unfavorite/#{@model.get '_id'}"
+          dataType: "json"
+          data:
+            authenticity_token: $("meta[name='csrf-token']").attr "content"
+          success: =>
+            $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
+            @model.set "is_favorited_by_user?", false
+          error: ->
+            alert "Error!"
+        false

@@ -9,8 +9,9 @@ GrubHaus::Application.routes.draw do
     get 'recipes/unpublished' => 'recipes#unpublished'
     get 'recipes/published' => 'recipes#published'
     get 'recipes/favorites' => 'recipes#favorites'
-    put 'recipes/publish/:id' => 'recipes#publish'
-    put 'recipes/favorite/:id' => 'recipes#favorite'
+    post 'recipes/publish/:id' => 'recipes#publish'
+    post 'recipes/favorite/:id' => 'recipes#favorite'
+    post 'recipes/unfavorite/:id' => 'recipes#unfavorite'
     resources :recipes, :except => [:edit, :new] do
     end
 
