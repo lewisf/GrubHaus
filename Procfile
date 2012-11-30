@@ -1,3 +1,1 @@
-db: mongod
-# guard: guard
-web: rails s
+web: bundle exec rails server thin -p $PORT -e $RACK_ENV
