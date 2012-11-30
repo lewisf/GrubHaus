@@ -3,7 +3,7 @@ modules:
 
 deps:
   - "main"
-  - "appliation"
+  - "application"
 
 paths:
   libs: "javascripts/libs"
