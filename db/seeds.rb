@@ -213,7 +213,7 @@ Recipe.create do |recipe|
 end
 p "Created Spaghetti and meatballs"
 
-100.times do
+15.times do
   px=(186..230).step(1).to_a.sample
   name = Faker::Lorem.sentence(word_count = 2, supplemental = true)
   @recipe = Recipe.create! do |recipe|
