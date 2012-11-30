@@ -11,7 +11,6 @@ define ["backbone"
           @ingredients = ingredients
         else
           @ingredients = new Ingredients ingredients
-        console.log @ingredients
         @template = Handlebars.compile ingredientListTemplate
         @render()
 

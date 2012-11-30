@@ -40,6 +40,10 @@ class Recipe
     favorited.include? current_user
   end
 
+  def is_authored_by_user
+    author == current_user
+  end
+
 
   # Public: Return some recipes based on a query string
   #

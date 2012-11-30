@@ -24,14 +24,13 @@ define ["backbone"
             # recipe, the steps are stacking. This isn't right
             # behavior .. something is lingering.
             @steps = []
-            _.each @model.attributes.steps, (step) =>
+            _.each @model.get("steps").toJSON(), (step) =>
               @steps.push step
             @render()
             @renderTimeline()
             @renderIngredients()
 
       render: ->
-        console.log @model
         @$el.html @template @model.for_template()
         $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
 

@@ -13,7 +13,7 @@ define ["jquery"
         @favorites = new RecipesCollection { url: "/api/recipes/favorites.json" }
         @published = new RecipesCollection { url: "/api/recipes/published.json" }
         @unpublished = new RecipesCollection { url: "/api/recipes/unpublished.json" }
-        @all = new RecipesCollection
+        # @all = new RecipesCollection
         @dashHtml = Handlebars.compile dashboardTemplate
         @recipeListHtml = Handlebars.compile recipeListTemplate
 
@@ -31,9 +31,9 @@ define ["jquery"
           success: =>
             @renderUnpublished()
 
-        all = @all.fetch
-          success: =>
-            @renderall()
+        # all = @all.fetch
+        #   success: =>
+        #     @renderall()
       
       render: ->
         @$el.html @dashHtml
@@ -53,7 +53,7 @@ define ["jquery"
           recipes: @unpublished.for_template()
           listId: "unpublished-recipe"
       
-      renderall: ->
-        $("#all-container").html @recipeListHtml
-          recipes: @all.for_template()
-          listId: "normal-recipe"
+      # renderall: ->
+      #   $("#all-container").html @recipeListHtml
+      #     recipes: @all.for_template()
+      #     listId: "normal-recipe"

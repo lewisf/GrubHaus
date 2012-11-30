@@ -82,7 +82,7 @@ class Api::RecipesController < ApplicationController
 
     respond_to do |format|
       if @recipe
-        format.json { render :json => @recipe.to_json(:methods => :is_favorited_by_user) }
+        format.json { render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user]) }
       else
         # raise MongoidErrors::DocumentNotFound
       end
@@ -90,7 +90,9 @@ class Api::RecipesController < ApplicationController
   end
 
   def update
-    @recipe = Recipe.where(author: current_user).find(params[:id])
+    Rails.logger.info "UPDATE FOUND"
+    Rails.logger.info params[:id]
+    @recipe = Recipe.find(params[:id])
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
     respond_to do |format|
@@ -113,30 +115,34 @@ class Api::RecipesController < ApplicationController
   def favorites
     user = User.find(session["warden.user.user.key"][1][0])
     @favorites = user.favorites
+    @favorites.each { |x| x.current_user = current_user }
+
     respond_to do |format|
-      format.json { render :json => @favorites }
+      format.json { render :json => @favorites.to_json(:methods => :is_authored_by_user) }
     end
   end
 
   def unpublished
     user = User.find(session["warden.user.user.key"][1][0])
     @recipes = user.recipes.where(:published => false)
+    @recipes.each { |x| x.current_user = current_user }
     respond_to do |format|
-      format.json { render :json => @recipes }
+      format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
     end
   end
 
   def published
     user = User.find(session["warden.user.user.key"][1][0])
     @recipes = user.recipes.where(:published => true)
+    @recipes.each { |x| x.current_user = current_user }
     respond_to do |format|
-      format.json { render :json => @recipes }
+      format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
     end
   end
 
   def favorite
     @user = User.find(session["warden.user.user.key"][1][0])
-    @recipe = Recipe.where(author: current_user).find(params[:id])
+    @recipe = Recipe.find(params[:id])
 
     @user.favorites << @recipe
 
@@ -151,7 +157,7 @@ class Api::RecipesController < ApplicationController
 
   def unfavorite
     @user = User.find(session["warden.user.user.key"][1][0])
-    @recipe = Recipe.where(author: current_user).find(params[:id])
+    @recipe = Recipe.find(params[:id])
 
     @user.favorites.delete @recipe
 

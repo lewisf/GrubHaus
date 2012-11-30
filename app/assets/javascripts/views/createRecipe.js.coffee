@@ -19,24 +19,32 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         'mouseout .contents-container .contents': 'unhighlight'
         'dblclick .contents-container .contents': 'editStep'
         'click .unit': 'addStep'
+        'click a#favorite-recipe-button': 'favorite'
+        'click a#unfavorite-recipe-button': 'unfavorite'
         # currently not working because element is created after
         # the rendering
         # 'click #submit-create-recipe': 'saveRecipe'
 
       initialize: (params) ->
         @template = Handlebars.compile createRecipeTemplate
-        @model = new Recipe
-          name: "Double click here to edit the recipe name."
-          photo: "http://freecoloringpagesite.com/coloring-pics/blue-coloring-2.png"
-          description: "Double click here to edit the recipe description. Additionally, you can double click any thing on this recipe to edit it."
-          prep_time: "0"
-          cook_time: "0"
-          ready_in: "0"
-          serving_size: "0"
-          recipe_ingredients: new RecipeIngredients
-          steps: new StepList [
-            new Step { description: "Click here to edit this step.", start_time: 0, end_time: 30 }
-          ]
+        if params? && params.id?
+          @model = new Recipe { _id: params.id }
+          @model.fetch
+            success: =>
+              @render()
+        else
+          @model = new Recipe
+            name: "Double click here to edit the recipe name."
+            photo: "http://freecoloringpagesite.com/coloring-pics/blue-coloring-2.png"
+            description: "Double click here to edit the recipe description. Additionally, you can double click any thing on this recipe to edit it."
+            prep_time: "0"
+            cook_time: "0"
+            ready_in: "0"
+            serving_size: "0"
+            recipe_ingredients: new RecipeIngredients
+            steps: new StepList [
+              new Step { description: "Click here to edit this step.", start_time: 0, end_time: 30 }
+            ]
 
       render: ->
         @$el.html @template @model.for_template()
@@ -53,8 +61,11 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           false
 
       renderIngredients: ->
-        @ingredientsList = new IngredientList @model.get("recipe_ingredients")
-        console.log @ingredientsList
+        console.log "Rendered Ingredients"
+        ingredients = @model.get "recipe_ingredients"
+        _.each ingredients.models, (ing) ->
+          ing.set "cid", ing.cid
+        @ingredientsList = new IngredientList ingredients
         $(".ingredient-contents").ready =>
           $("#ingredient-list li").addClass "ingredient-editable"
           $("#ingredient-list").append "<li style='list-style-type: none;'>
@@ -62,8 +73,11 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
                                       + Add Ingredient</a></li>"
 
       renderTimeline: ->
-        steps = @model.get("steps").toJSON()
-        @timeline = new Timeline steps
+        steps = @model.get("steps")
+        if steps.toJSON?
+          @timeline = new Timeline steps.toJSON()
+        else
+          @timeline = new Timeline steps
 
       highlight: (e) ->
         if $(e.target).hasClass "img-circle"
@@ -112,8 +126,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
                 </form>"
         $.modal html, onShow: (dialog) =>
           recipe_ingredients = @model.get "recipe_ingredients"
+          console.log recipe_ingredients
           ingredient = recipe_ingredients.getByCid $(e.target).closest('.ingredient-editable').attr("data-cid")
-          console.log ingredient
+
           $('input[name=amount]').val ingredient.get 'amount'
           $('input[name=unit]').val ingredient.get 'unit'
           $('input[name=name]').val ingredient.get 'name'
@@ -200,4 +215,41 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
             @renderTimeline()
 
       saveRecipe: ->
-        @model.save()
+        recipe_collection = @model.get "recipe_collection"
+        steps = @model.get "steps"
+        @model.save null,
+          success: =>
+            console.log "Saved"
+            @renderIngredients()
+          error: ->
+            console.log "Error"
+
+      favorite: (e) ->
+        e.preventDefault()
+        $.ajax
+          type: 'POST'
+          url: "/api/recipes/favorite/#{@model.get '_id'}"
+          dataType: "json"
+          data:
+            authenticity_token: $("meta[name='csrf-token']").attr "content"
+          success: =>
+            $("#favorite-recipe-button").text("Unfavorite").attr("id", "unfavorite-recipe-button")
+            @model.set "is_favorited_by_user?", true
+          error: ->
+            alert "Error!"
+        false
+
+      unfavorite: (e) ->
+        e.preventDefault()
+        $.ajax
+          type: 'POST'
+          url: "/api/recipes/unfavorite/#{@model.get '_id'}"
+          dataType: "json"
+          data:
+            authenticity_token: $("meta[name='csrf-token']").attr "content"
+          success: =>
+            $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
+            @model.set "is_favorited_by_user?", false
+          error: ->
+            alert "Error!"
+        false

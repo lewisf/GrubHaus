@@ -1,7 +1,9 @@
 define ["backbone"
         "models/recipe_ingredient"
+        "collections/recipe_ingredients"
+        "collections/steps"
         "models/step"],
-  (Backbone, RecipeIngredient, Step) ->
+  (Backbone, RecipeIngredient, RecipeIngredients, Steps, Step) ->
 
     class Recipe extends Backbone.Model
       idAttribute: "_id"
@@ -29,5 +31,17 @@ define ["backbone"
 
       for_template: ->
         json = @toJSON()
-        json.url = @permalink()
+        if json.is_authored_by_user
+          json.url = "recipes/edit/#{@id}"
+        else
+          json.url = "recipes/#{@id}"
         json
+
+      parse: (response, xhr) ->
+        console.log response
+        response.steps = new Steps response.steps
+
+        ings = new RecipeIngredients response.recipe_ingredients
+        response.recipe_ingredients = ings
+
+        return response

@@ -11,6 +11,7 @@ define ["backbone"
         "recipes/search/:q": "index"
         "recipes": "showDashboard"
         "recipes/create": "createRecipe"
+        "recipes/edit/:id": "editRecipe"
         "recipes/:id": "showRecipe"
 
       start: ->
@@ -39,6 +40,10 @@ define ["backbone"
         # rendering here to avoid issue of model not being finished
         # look into this problem later.
         createRecipeView.render()
+
+      editRecipe: (id) ->
+        editRecipeView = new CreateRecipeView {id: id}
+        $("section.container").html editRecipeView.el
 
 
     initialize = ->

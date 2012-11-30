@@ -12,7 +12,7 @@ GrubHaus::Application.routes.draw do
     post 'recipes/publish/:id' => 'recipes#publish'
     post 'recipes/favorite/:id' => 'recipes#favorite'
     post 'recipes/unfavorite/:id' => 'recipes#unfavorite'
-    resources :recipes, :except => [:edit, :new] do
+    resources :recipes, :except => [:new] do
     end
 
     resources :comments, :except => [:edit, :new]
