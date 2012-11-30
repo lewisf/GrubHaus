@@ -11,6 +11,7 @@ GrubHaus::Application.routes.draw do
     get 'recipes/favorites' => 'recipes#favorites'
     post 'recipes/favorite/:id' => 'recipes#favorite'
     post 'recipes/unfavorite/:id' => 'recipes#unfavorite'
+    post 'recipes/fork/:id' => 'recipes#fork'
     resources :recipes, :except => [:new] do
     end
 

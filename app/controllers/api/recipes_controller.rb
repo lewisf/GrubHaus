@@ -106,7 +106,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def destroy
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find params[:id] 
     @recipe.destroy
     respond_to do |format|
       format.json { render :json => [] }
@@ -147,7 +147,7 @@ class Api::RecipesController < ApplicationController
 
   def favorite
     @user = User.find(session["warden.user.user.key"][1][0])
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find params[:id]
 
     @user.favorites << @recipe
 
@@ -161,8 +161,8 @@ class Api::RecipesController < ApplicationController
   end
 
   def unfavorite
-    @user = User.find(session["warden.user.user.key"][1][0])
-    @recipe = Recipe.find(params[:id])
+    @user = User.find session["warden.user.user.key"][1][0]
+    @recipe = Recipe.find params[:id]
 
     @user.favorites.delete @recipe
 
@@ -176,8 +176,8 @@ class Api::RecipesController < ApplicationController
   end
 
   def publish
-    @user = User.find(session["warden.user.user.key"][1][0])
-    @recipe = Recipe.where(author: current_user).find(params[:id])
+    @user = User.find session["warden.user.user.key"][1][0]
+    @recipe = Recipe.where(author: current_user).find params[:id]
     
     @recipe.published = true
     respond_to do |format|
@@ -187,6 +187,16 @@ class Api::RecipesController < ApplicationController
         format.json { render :json => [] }
       end
     end
+  end
+
+  def fork
+    @user = User.find session["warden.user.user.key"][1][0]
+    @recipe = Recipe.find params[:id]
+    @new_recipe = @recipe.fork_to @user
+    respond_to do |format|
+      format.json { render :json => @new_recipe }
+    end
+    
   end
 
 end

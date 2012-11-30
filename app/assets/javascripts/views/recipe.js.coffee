@@ -13,6 +13,7 @@ define ["backbone"
       events:
         'click a#favorite-recipe-button': 'favorite'
         'click a#unfavorite-recipe-button': 'unfavorite'
+        'click a#fork-recipe-button': 'fork'
 
       initialize: (params) ->
         @template = Handlebars.compile recipeTemplateHtml
@@ -68,5 +69,20 @@ define ["backbone"
             @model.set "is_favorited_by_user?", false
           error: ->
             alert "Error!"
+        false
+
+      fork: (e) ->
+        e.preventDefault()
+        $.ajax
+          type: 'POST'
+          url: "/api/recipes/fork/#{@model.get '_id'}"
+          dataType: "json"
+          data:
+            authenticity_token: $("meta[name='csrf-token']").attr "content"
+          success: (data) ->
+            window.router.navigate "/recipes/edit/#{data._id}",
+              trigger: true
+          error: =>
+            alert "Error"
         false
 

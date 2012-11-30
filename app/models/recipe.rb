@@ -1,5 +1,6 @@
 class Recipe
   include Mongoid::Document
+  include Mongoid::Copyable
 
   field :name, type: String
   field :published, type: Boolean, :default => false
@@ -67,6 +68,12 @@ class Recipe
     else
       criteria
     end
+  end
+
+  def fork_to(user)
+    new_recipe = self.clone
+    user.recipes << new_recipe
+    new_recipe
   end
 
   private

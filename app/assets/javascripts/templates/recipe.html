@@ -35,6 +35,10 @@
                     {{else}}
                         <a href="#" id="favorite-recipe-button">Favorite</a>
                     {{/if}}
+                    {{#if is_authored_by_user}}
+                    {{ else}}
+                        <a href="#" id="fork-recipe-button">Fork</a>
+                    {{/if}}
                 </div>
             </div>
         </div>
