@@ -21,6 +21,8 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         'click .unit': 'addStep'
         'click a#favorite-recipe-button': 'favorite'
         'click a#unfavorite-recipe-button': 'unfavorite'
+        'click a#publish-recipe-button': 'publish'
+        'click a#unpublish-recipe-button': 'unpublish'
         # currently not working because element is created after
         # the rendering
         # 'click #submit-create-recipe': 'saveRecipe'
@@ -251,5 +253,36 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
             $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
             @model.set "is_favorited_by_user?", false
           error: ->
+            alert "Error!"
+        false
+
+      publish: (e) ->
+        e.preventDefault()
+        @model.set "published", true
+        @model.save null
+          success: =>
+            $("#publish-recipe-button").text("Unpublish").attr("id", "unpublish-recipe-button")
+          error: =>
+            alert "Error!"
+        # $.ajax
+        #   type: 'POST'
+        #   url: "/api/recipes/publish/#{@model.get '_id'}"
+        #   dataType: "json"
+        #   data:
+        #     authenticity_token: $("meta[name='csrf-token']").attr "content"
+        #   success: =>
+        #     $("#publish-recipe-button").text("Unpublish").attr("id", "unpublish-recipe-button")
+        #     @model.set "published", true
+        #   error: ->
+        #     alert "Error!"
+        false
+
+      unpublish: (e) ->
+        e.preventDefault()
+        @model.set "published", false
+        @model.save null
+          success: =>
+            $("#unpublish-recipe-button").text("Publish").attr("id", "publish-recipe-button")
+          error: =>
             alert "Error!"
         false

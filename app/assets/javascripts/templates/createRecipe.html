@@ -30,12 +30,21 @@
                     </tr>
                 </table>
                 <div id="recipe-actions">
-                    {{#if is_favorited_by_user}}
-                    <a href="#" id="unfavorite-recipe-button">Unfavorite</a>
-                    {{else}}
-                    <a href="#" id="favorite-recipe-button">Favorite</a>
+                    {{#if published}}
+                        {{#if is_favorited_by_user}}
+                            <a href="#" id="unfavorite-recipe-button">Unfavorite</a>
+                        {{else}}
+                            <a href="#" id="favorite-recipe-button">Favorite</a>
+                        {{/if}}
                     {{/if}}
-                    <a href="#" id="submit-create-recipe">Save</a>
+                    {{#if is_authored_by_user}}
+                        <a href="#" id="submit-create-recipe">Save</a>
+                        {{#if published}}
+                            <a href="#" id="unpublish-recipe-button">Unpublish</a>
+                        {{else}}
+                            <a href="#" id="publish-recipe-button">Publish</a>
+                        {{/if}}
+                    {{/if}}
                 </div>
             </div>
         </div>

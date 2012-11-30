@@ -114,7 +114,7 @@ class Api::RecipesController < ApplicationController
 
   def favorites
     user = User.find(session["warden.user.user.key"][1][0])
-    @favorites = user.favorites
+    @favorites = user.favorites.all.entries
     @favorites.each { |x| x.current_user = current_user }
 
     respond_to do |format|
@@ -124,8 +124,10 @@ class Api::RecipesController < ApplicationController
 
   def unpublished
     user = User.find(session["warden.user.user.key"][1][0])
-    @recipes = user.recipes.where(:published => false)
+    Rails.logger.info user
+    @recipes = user.recipes.where(:published => false).entries
     @recipes.each { |x| x.current_user = current_user }
+
     respond_to do |format|
       format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
     end
@@ -133,8 +135,10 @@ class Api::RecipesController < ApplicationController
 
   def published
     user = User.find(session["warden.user.user.key"][1][0])
-    @recipes = user.recipes.where(:published => true)
+    Rails.logger.info user
+    @recipes = user.recipes.where(:published => true).entries
     @recipes.each { |x| x.current_user = current_user }
+
     respond_to do |format|
       format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
     end
