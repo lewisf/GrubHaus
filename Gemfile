@@ -10,6 +10,7 @@ gem 'devise'
 gem 'fog', "~> 1.3.1"
 gem 'requirejs-rails'
 gem 'heroku'
+gem 'haml-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -19,7 +20,6 @@ group :assets do
   gem 'compass-960-plugin'
   gem 'sassy-buttons'
   gem 'sass-rails',   '~> 3.2.3'
-  gem 'haml-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -52,7 +52,6 @@ gem 'jquery-rails'
 
 group :production do
   gem 'thin'
-  gem 'haml-rails'
 end
 
 # To use ActiveModel has_secure_password
