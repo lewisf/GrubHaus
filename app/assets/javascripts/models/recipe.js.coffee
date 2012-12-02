@@ -38,7 +38,6 @@ define ["backbone"
         json
 
       parse: (response, xhr) ->
-        console.log response
         response.steps = new Steps response.steps
 
         ings = new RecipeIngredients response.recipe_ingredients
