@@ -75,7 +75,7 @@ class Api::RecipesController < ApplicationController
     @recipe.current_user = current_user
 
     if @recipe
-      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user])
+      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name])
   end
 
   def update

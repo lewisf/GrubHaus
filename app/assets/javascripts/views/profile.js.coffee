@@ -15,8 +15,8 @@ define ["backbone"
         @publishedUrl = "/api/recipes/published"
         if params? && params.id?
           @model = new UserProfile {_id: params.id}
-          favoritesUrl += "/#{params.id}"
-          publishedUrl += "/#{params.id}"
+          @favoritesUrl += "/#{params.id}"
+          @publishedUrl += "/#{params.id}"
         else
           @model = new UserProfile
 
@@ -24,6 +24,7 @@ define ["backbone"
         @published = new RecipesCollection { url: @publishedUrl }
         @model.fetch
           success: =>
+            console.log @model
             @render()
             @favorites.fetch
               success: =>
@@ -31,6 +32,8 @@ define ["backbone"
             @published.fetch
               success: =>
                 @renderPublishedRecipes()
+          error: (data) =>
+            console.log "Error"
                 
 
       render: ->
