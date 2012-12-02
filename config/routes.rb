@@ -8,7 +8,9 @@ GrubHaus::Application.routes.draw do
 
     get 'recipes/search' => 'recipes#search'
     get 'recipes/unpublished' => 'recipes#unpublished'
+    get 'recipes/published/:id' => 'recipes#published'
     get 'recipes/published' => 'recipes#published'
+    get 'recipes/favorites/:id' => 'recipes#favorites'
     get 'recipes/favorites' => 'recipes#favorites'
     post 'recipes/favorite/:id' => 'recipes#favorite'
     post 'recipes/unfavorite/:id' => 'recipes#unfavorite'

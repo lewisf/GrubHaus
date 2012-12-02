@@ -79,8 +79,6 @@ class Api::RecipesController < ApplicationController
   end
 
   def update
-    Rails.logger.info "UPDATE FOUND"
-    Rails.logger.info params[:id]
     @recipe = Recipe.find(params[:id])
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
@@ -97,7 +95,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def favorites
-    user = User.find(session["warden.user.user.key"][1][0])
+    user = params[:id].present? ? User.find(params[:id]) : current_user
     @favorites = user.favorites.all.entries
     @favorites.each { |x| x.current_user = current_user }
 
@@ -105,17 +103,14 @@ class Api::RecipesController < ApplicationController
   end
 
   def unpublished
-    user = User.find(session["warden.user.user.key"][1][0])
-    Rails.logger.info user
-    @recipes = user.recipes.where(:published => false).entries
+    @recipes = current_user.recipes.where(:published => false).entries
     @recipes.each { |x| x.current_user = current_user }
 
     render :json => @recipes.to_json(:methods => :is_authored_by_user)
   end
 
   def published
-    user = User.find(session["warden.user.user.key"][1][0])
-    Rails.logger.info user
+    user = params[:id].present? ? User.find(params[:id]) : current_user
     @recipes = user.recipes.where(:published => true).entries
     @recipes.each { |x| x.current_user = current_user }
 
@@ -123,9 +118,8 @@ class Api::RecipesController < ApplicationController
   end
 
   def favorite
-    @user = User.find(session["warden.user.user.key"][1][0])
+    @user = current_user
     @recipe = Recipe.find params[:id]
-
     @user.favorites << @recipe
 
     if @user.save
@@ -136,7 +130,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def unfavorite
-    @user = User.find session["warden.user.user.key"][1][0]
+    @user = current_user
     @recipe = Recipe.find params[:id]
 
     @user.favorites.delete @recipe
@@ -149,7 +143,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def publish
-    @user = User.find session["warden.user.user.key"][1][0]
+    @user = current_user
     @recipe = Recipe.where(author: current_user).find params[:id]
     
     @recipe.published = true
@@ -161,7 +155,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def fork
-    @user = User.find session["warden.user.user.key"][1][0]
+    @user = current_user
     @recipe = Recipe.find params[:id]
     @new_recipe = @recipe.fork_to @user
     render :json => @new_recipe

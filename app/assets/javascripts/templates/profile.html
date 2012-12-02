@@ -1,6 +1,6 @@
 <div class="pheader-background"></div>
 <div class="profile">
-    <div class="gaga">
+    <!--div class="gaga">
         <div class="pheader">
             <div class="img-container">
                 <div class="img-circle" style="background: url('{{ profile.photo }}')"</div>
@@ -12,6 +12,27 @@
             <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
             <h3>Tagline: {{ profile.tagline }}</h3>
             <h2>{{ username }}</h2>
+        </div>
+    </div-->
+    <div class="gaga">
+        <div class="pcol-1">
+            <div class="img-container">
+                <div class="img-circle" style="background: url('{{ profile.photo }}')"></div>
+            </div>
+            <div id="profile-content">
+                <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+                <h2>{{ username }}</h2>
+                <h3><b>Tagline:</b> {{ profile.tagline }}</h3>
+            </div>
+        </div>
+        <div class="pcol-2">
+            <h1>Activity</h1>
+            <h1>Published Recipes</h1>
+            <div id="profile-published-container">
+            <div>
+            <h1>Favorite Recipes</h1>
+            <div id="profile-favorited-container">
+            <div>
         </div>
     </div>
 </div>
