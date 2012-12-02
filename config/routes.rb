@@ -3,6 +3,7 @@ GrubHaus::Application.routes.draw do
   devise_for :users
 
   namespace :api do
+    get 'user' => 'users#show'
     resources :users, :only => [:show]
 
     get 'recipes/search' => 'recipes#search'

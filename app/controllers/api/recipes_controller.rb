@@ -18,17 +18,14 @@ class Api::RecipesController < ApplicationController
     #@recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
     @recipes = Recipe.all
 
-    respond_to do |format|
-      format.json { render :json => @recipes }
-    end
+    render :json => @recipes
   end
 
   def search
     @recipes = Recipe.search params[:q]
 
-    respond_to do |format|
-      format.json { render :json => @recipes }
-    end
+    
+    render :json => @recipes
   end
 
   def create
@@ -67,12 +64,8 @@ class Api::RecipesController < ApplicationController
     end
     @user = current_user
     @user.recipes << @recipe
-    respond_to do |format|
-      if @recipe.save
-        format.json { render :json => @recipe }
-      else
-        # raise MongoidErrors::UnsavedDocument
-      end
+    if @recipe.save
+      render :json => @recipe
     end
   end
 
@@ -81,13 +74,8 @@ class Api::RecipesController < ApplicationController
     user = User.find(session["warden.user.user.key"][1][0])
     @recipe.current_user = current_user
 
-    respond_to do |format|
-      if @recipe
-        format.json { render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user]) }
-      else
-        # raise MongoidErrors::DocumentNotFound
-      end
-    end
+    if @recipe
+      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user])
   end
 
   def update
@@ -96,21 +84,16 @@ class Api::RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    respond_to do |format|
-      if @recipe.update_attributes!(params[:recipe])
-        format.json { render :json => @recipe }
-      else
-         # raise MongoidErrors::UnsavedDocument
-      end
+    if @recipe.update_attributes!(params[:recipe])
+      render :json => @recipe
+    end
     end
   end
 
   def destroy
     @recipe = Recipe.find params[:id] 
     @recipe.destroy
-    respond_to do |format|
-      format.json { render :json => [] }
-    end
+    render :json => []
   end
 
   def favorites
@@ -118,9 +101,7 @@ class Api::RecipesController < ApplicationController
     @favorites = user.favorites.all.entries
     @favorites.each { |x| x.current_user = current_user }
 
-    respond_to do |format|
-      format.json { render :json => @favorites.to_json(:methods => :is_authored_by_user) }
-    end
+    render :json => @favorites.to_json(:methods => :is_authored_by_user)
   end
 
   def unpublished
@@ -129,9 +110,7 @@ class Api::RecipesController < ApplicationController
     @recipes = user.recipes.where(:published => false).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    respond_to do |format|
-      format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
-    end
+    render :json => @recipes.to_json(:methods => :is_authored_by_user)
   end
 
   def published
@@ -140,9 +119,7 @@ class Api::RecipesController < ApplicationController
     @recipes = user.recipes.where(:published => true).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    respond_to do |format|
-      format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
-    end
+    render :json => @recipes.to_json(:methods => :is_authored_by_user)
   end
 
   def favorite
@@ -151,12 +128,10 @@ class Api::RecipesController < ApplicationController
 
     @user.favorites << @recipe
 
-    respond_to do |format|
-      if @user.save
-        format.json { render :json => @recipe }
-      else
-        format.json { render :json => [] }
-      end
+    if @user.save
+      render :json => @recipe
+    else
+      render :json => []
     end
   end
 
@@ -166,12 +141,10 @@ class Api::RecipesController < ApplicationController
 
     @user.favorites.delete @recipe
 
-    respond_to do |format|
-      if @user.save
-        format.json { render :json => @recipe }
-      else
-        format.json { render :json => [] }
-      end
+    if @user.save
+      render :json => @recipe
+    else
+      render :json => []
     end
   end
 
@@ -180,12 +153,10 @@ class Api::RecipesController < ApplicationController
     @recipe = Recipe.where(author: current_user).find params[:id]
     
     @recipe.published = true
-    respond_to do |format|
-      if @recipe.author == @user and @recipe.save
-        format.json { render :json => @recipe }
-      else
-        format.json { render :json => [] }
-      end
+    if @recipe.author == @user and @recipe.save
+      render :json => @recipe
+    else
+      render :json => []
     end
   end
 
@@ -193,10 +164,7 @@ class Api::RecipesController < ApplicationController
     @user = User.find session["warden.user.user.key"][1][0]
     @recipe = Recipe.find params[:id]
     @new_recipe = @recipe.fork_to @user
-    respond_to do |format|
-      format.json { render :json => @new_recipe }
-    end
-    
+    render :json => @new_recipe
   end
 
 end

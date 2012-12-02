@@ -1,15 +1,10 @@
 class Api::UsersController < ApplicationController
 
   def show
-    @user = User.find(params[:id])
+    @user = if params[:id] then User.find params[:id] else current_user end
+    Rails.logger.info @user.username
 
-    respond_to do |format|
-      if @user
-        format.json { render :json => @user }
-      else
-        # raise MongoidErrors::DocumentNotFound
-      end
-    end
+    render :json => @user if @user
   end
 
 end 
