@@ -7,4 +7,6 @@ class Comment
 
   validates_presence_of :content
 
+  belongs_to :author, :class_name => "User", :inverse_of => :comments
+
 end

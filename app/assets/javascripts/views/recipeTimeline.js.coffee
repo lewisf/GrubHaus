@@ -1,10 +1,11 @@
 define ["backbone"
         "handlebars"
         "models/recipe"
+        "collections/steps"
         "text!templates/timeline.html"
         "text!templates/timelineCircle.html"
         "text!templates/timelineLine.html"],
-  (Backbone, Handlebars, Recipe, timelineTemplate, circleTemplate, lineTemplate) ->
+  (Backbone, Handlebars, Recipe, StepsCollection, timelineTemplate, circleTemplate, lineTemplate) ->
     class RecipeTimelineView extends Backbone.View
       steps: []
       num_units: null
@@ -15,33 +16,37 @@ define ["backbone"
       el: "#rcontainer"
       scaling: true
 
-      initialize: (steps) ->
+      initialize: (recipe) ->
+        @recipe = recipe
         @timelineTemplate = Handlebars.compile timelineTemplate
         @lineTemplate = Handlebars.compile lineTemplate
-        @circleTemplate = Handlebars.compile circleTemplate
 
-        @steps = _.sortBy steps, (step) -> parseInt(step.start_time)
+        @steps = @recipe.get "steps"
 
-        @num_units = parseInt((_.max @steps, (step) -> parseInt(step.end_time)).end_time)
-        @start_times = _.map _.pluck(@steps, 'start_time'), (time) -> parseInt(time)
-        @end_times = _.map _.pluck(@steps, 'end_time'), (time) -> parseInt(time)
+        @start_times = _.map @steps.pluck("start_time"), (time) -> parseInt(time)
+        @end_times = _.map @steps.pluck("end_time"), (time) -> parseInt(time)
+        @num_units = _.max @end_times
 
         @render()
 
       render: ->
-        $(@el).html(@timelineTemplate)
+        $(@el).html @timelineTemplate
+
+        @steps.render {with_template: circleTemplate}
         @buildTimeline()
 
       buildTimeline: ->
         for i in [0..@num_units]
-          steps = _.filter @steps, (step) -> parseInt(step.start_time) is i
+          steps = @steps.filter (step) -> parseInt(step.get "start_time") is i
           time_markers = _.union @start_times, {} #, @end_times
           if i in time_markers
-            $("##{@timeListId}").append @circleTemplate
-              index: i
-              circleText: i
-              color: "#930202"
-              text: (_.pluck steps, 'description').join(" ")
+            for step in steps
+              stepView = @steps.get_view step
+              $("##{@timeListId}").append stepView.render
+                index: i
+                circleText: i
+                color: "#930202"
+                text: step.description
           else if @scaling
             $("##{@timeListId}").append @lineTemplate
               index: i
