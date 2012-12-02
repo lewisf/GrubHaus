@@ -5,6 +5,8 @@ class Step
   field :start_time, type: Integer
   field :end_time, type: Integer
 
+  embeds_many :comments, as: :commentable
+
   attr_accessible :description, :start_time, :end_time
   validates_presence_of :description
   

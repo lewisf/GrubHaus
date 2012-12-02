@@ -1,1 +1,0 @@
-(function(){define(["jquery","jquery.simplemodal","lodash","backbone","handlebars","router"],function(e,t,n,r,i,s){var o,u;return o=function(){return u(),r.emulateHTTP=!0,s.initialize()},u=function(){return e.modal.defaults.closeClass="modalClose",e.modal.defaults.overlayClose=!0},{initialize:o,root:"/"}})}).call(this);
