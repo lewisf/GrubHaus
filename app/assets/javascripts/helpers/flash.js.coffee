@@ -8,7 +8,7 @@ define ["jquery"],
       $(el).slideDown 'fast', ->
         window.ntimeout = setTimeout ->
           $(el).slideUp('fast')
-        , 1000
+        , 2000
 
     alert: (msg) =>
       el = $("p.alert").first()
@@ -17,7 +17,7 @@ define ["jquery"],
       $(el).slideDown 'fast', ->
         window.atimeout = setTimeout ->
           $(el).slideUp('fast')
-        , 1000
+        , 2000
 
     success: (msg) =>
       el = $("p.success").first()
@@ -26,7 +26,7 @@ define ["jquery"],
       $(el).slideDown 'fast', ->
         window.stimeout = setTimeout ->
           $(el).slideUp('fast')
-        , 1000
+        , 2000
 
     error: (msg) =>
       el = $("p.error").first()
@@ -35,7 +35,7 @@ define ["jquery"],
       $(el).slideDown 'fast', ->
         window.etimeout = setTimeout ->
           $(el).slideUp 'fast'
-        , 1000
+        , 2000
 
     info: (msg) =>
       el = $("p.info").first()
@@ -44,4 +44,4 @@ define ["jquery"],
       $(el).slideDown 'fast', ->
         window.itimeout = setTimeout ->
           $(el).slideUp 'fast'
-        , 1000
+        , 2000
