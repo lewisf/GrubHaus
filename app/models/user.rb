@@ -43,7 +43,7 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
 
-  attr_accessor :login
+  attr_accessor :login, :current_user
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
   attr_accessible :login
 
@@ -64,6 +64,10 @@ class User
     else
       super  # do normal is 'login' is not passed in the conditions
     end
+  end
+
+  def editable_by_user
+    self == current_user
   end
 
 end
