@@ -2,8 +2,9 @@ define ["backbone"
         "handlebars"
         "models/user_profile",
         "text!templates/profile_info.html"
+        "helpers/flash"
         "jquery.simplemodal"],
-  (Backbone, Handlebars, UserProfile, profileInfoHtml) ->
+  (Backbone, Handlebars, UserProfile, profileInfoHtml, flash) ->
 
     class ProfileInfoView extends Backbone.View
 
@@ -58,7 +59,11 @@ define ["backbone"
             profile = @model.get "profile"
             profile.photo = $("input[name=photo]").val()
             @model.set "profile", profile
-            @model.save()
+            @model.save null,
+              success: =>
+                flash.success "Success! We saved your new photo. Looking good!"
+              error: =>
+                flash.error "Something went wrong!"
             $.modal.close()
             @render()
 
@@ -79,7 +84,12 @@ define ["backbone"
             profile.first_name = $("input[name=first_name]").val()
             profile.last_name = $("input[name=last_name]").val()
             @model.set "profile", profile
-            @model.save()
+            @model.save null,
+              success: =>
+                flash.success "Success! We updated your name."
+              error: =>
+                flash.error "Something went wrong!"
+
             $.modal.close()
             @render()
 
@@ -112,7 +122,11 @@ define ["backbone"
             e.preventDefault()
             @model.set "username", $("input[name=username]").val()
             $.modal.close()
-            @model.save()
+            @model.save null,
+              success: =>
+                flash.success "Success! We updated your username."
+              error: =>
+                flash.error "Something went wrong!"
             @render()
 
       editTagline: (e) ->
@@ -130,6 +144,10 @@ define ["backbone"
             profile.tagline = $("input[name=tagline]").val()
             @model.set "profile", profile
             $.modal.close()
-            @model.save()
+            @model.save null,
+              success: =>
+                flash.success "Success! We updated your tagline."
+              error: =>
+                flash.error "Something went wrong!"
             @render()
 

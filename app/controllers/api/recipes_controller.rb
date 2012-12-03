@@ -75,8 +75,7 @@ class Api::RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
-    user = User.find(session["warden.user.user.key"][1][0])
+    @recipe = Recipe.find params[:id]
     @recipe.current_user = current_user
 
     if @recipe

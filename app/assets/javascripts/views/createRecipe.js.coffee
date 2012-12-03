@@ -225,7 +225,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
             @renderIngredients()
             flash.success "Saved!"
           error: ->
-            console.log "Error"
+            flash.error "Could not save :("
 
       favorite: (e) ->
         e.preventDefault()
@@ -238,8 +238,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           success: =>
             $("#favorite-recipe-button").text("Unfavorite").attr("id", "unfavorite-recipe-button")
             @model.set "is_favorited_by_user?", true
+            flash.success "Favorited!"
           error: ->
-            alert "Error!"
+            flash.error "Ugh, something went wrong."
         false
 
       unfavorite: (e) ->
@@ -253,8 +254,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           success: =>
             $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
             @model.set "is_favorited_by_user?", false
+            flash.success "Unfavorited. :("
           error: ->
-            alert "Error!"
+            flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
         false
 
       publish: (e) ->
@@ -263,8 +265,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         @model.save null
           success: =>
             $("#publish-recipe-button").text("Unpublish").attr("id", "unpublish-recipe-button")
+            flash.success "Congratulations, you have published your recipe to fellow grubbers!"
           error: =>
-            alert "Error!"
+            flash.error "Uh oh, we coudn't publish your recipe. Are you sure you filled everything out?"
         # $.ajax
         #   type: 'POST'
         #   url: "/api/recipes/publish/#{@model.get '_id'}"
@@ -284,8 +287,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         @model.save null
           success: =>
             $("#unpublish-recipe-button").text("Publish").attr("id", "publish-recipe-button")
+            flash.success "Unpublished. :("
           error: =>
-            alert "Error!"
+            flash.error "Uh oh, we couldn't unpublish your recipe. Try again later!"
         false
 
       delete: (e) ->
@@ -294,6 +298,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           success: =>
             window.router.navigate "/recipes",
               trigger: true
+            flash.success "Delete successful."
           error: =>
-            alert "Error!"
+            flash.error "We couldn't delete this recipe. Try again later!"
         false
