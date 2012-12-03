@@ -27,12 +27,13 @@ define ["backbone"
         @end_times = _.map @steps.pluck("end_time"), (time) -> parseInt(time)
         @num_units = _.max @end_times
 
+        @steps.render {with_template: circleTemplate}
+
         @render()
 
       render: ->
         $(@el).html @timelineTemplate
 
-        @steps.render {with_template: circleTemplate}
         @buildTimeline()
 
       buildTimeline: ->
@@ -42,11 +43,12 @@ define ["backbone"
           if i in time_markers
             for step in steps
               stepView = @steps.get_view step
-              $("##{@timeListId}").append stepView.render
+              piece = $("##{@timeListId}").append("<div class='recipe-step'></div>")
+              stepView.setElement(".recipe-step:last").render
                 index: i
                 circleText: i
                 color: "#930202"
-                text: step.description
+                text: step.get "description"
           else if @scaling
             $("##{@timeListId}").append @lineTemplate
               index: i
