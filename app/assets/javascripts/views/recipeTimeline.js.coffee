@@ -43,8 +43,8 @@ define ["backbone"
           if i in time_markers
             for step in steps
               stepView = @steps.get_view step
-              piece = $("##{@timeListId}").append("<div class='recipe-step'></div>")
-              stepView.setElement(".recipe-step:last").render
+              piece = $("##{@timeListId}").append("<div class='recipe-step #{step.id}'></div>")
+              stepView.setElement(".recipe-step.#{step.id}").render
                 index: i
                 circleText: i
                 color: "#930202"

@@ -1,16 +1,17 @@
 define ["backbone",
-        "models/comment"], (Backbone, Comment) ->
-  
-  class Step extends Backbone.Model
-    idAttribute: "_id"
-    schema:
-      description: 'Text'
-      start_time: 'Text'
-      end_time: 'Text'
-      comments:
-        type: "NestedModel"
-        model: Comment
+        "models/comment"
+        "collections/comments"], 
+  (Backbone, Comment, CommentsCollection) ->
+    class Step extends Backbone.Model
+      idAttribute: "_id"
+      schema:
+        description: 'Text'
+        start_time: 'Text'
+        end_time: 'Text'
 
-    for_template: ->
-      @toJSON()
+      initialize: ->
+        @comments = new CommentsCollection()
+
+      for_template: ->
+        @toJSON()
 
