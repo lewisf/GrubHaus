@@ -10,6 +10,9 @@
     #wrap
       = render "home/header"
       .app-container
-        //%p.notice= notice
-        //%p.alert= alert
+        %p.notice{:style => "display: none;"}
+        %p.alert{:style => "display: none;"}
+        %p.success{:style => "display: none;"}
+        %p.error{:style => "display: none;"}
+        %p.info{:style => "display: none;"}
         = yield

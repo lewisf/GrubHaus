@@ -1,10 +1,10 @@
 define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         "models/recipe", "models/recipe_ingredient", "models/step",
         "collections/steps", "collections/recipe_ingredients",
-        "views/recipeTimeline", "views/recipeIngredients",
+        "views/recipeTimeline", "views/recipeIngredients", "helpers/flash",
         "text!templates/createRecipe.html"],
   (Backbone, Handlebars, _, $, simplemodal, Recipe, RecipeIngredient, Step,
-   StepList, RecipeIngredients, Timeline, IngredientList, createRecipeTemplate) ->
+   StepList, RecipeIngredients, Timeline, IngredientList, flash, createRecipeTemplate) ->
 
     class CreateRecipeView extends Backbone.View
       events:
@@ -222,8 +222,8 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         steps = @model.get "steps"
         @model.save null,
           success: =>
-            console.log "Saved"
             @renderIngredients()
+            flash.success "Saved!"
           error: ->
             console.log "Error"
 
