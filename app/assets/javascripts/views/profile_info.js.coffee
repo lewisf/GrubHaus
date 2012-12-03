@@ -14,13 +14,13 @@ define ["backbone"
         'mouseout  .profile-editable h1': 'unhighlight'
         'mouseout  .profile-editable h2': 'unhighlight'
         'mouseout  .profile-editable h3': 'unhighlight'
-        'mouseover .img-circle': 'highlight'
-        'mouseout .img-circle': 'unhighlight'
+        'mouseover .profile-editable.img-circle': 'highlight'
+        'mouseout .profile-editable.img-circle': 'unhighlight'
         'dblclick .profile-editable #name': 'editName'
         'dblclick .profile-editable #username': 'editUsername'
         'dblclick .profile-editable #tagline': 'editTagline'
         'dblclick .profile-editable #email': 'editEmail'
-        'dblclick .img-circle': 'editPhoto'
+        'dblclick .profile-editable.img-circle': 'editPhoto'
 
       initialize: (params) ->
         @template = Handlebars.compile profileInfoHtml
