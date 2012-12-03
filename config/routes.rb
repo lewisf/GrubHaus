@@ -4,7 +4,7 @@ GrubHaus::Application.routes.draw do
 
   namespace :api do
     get 'user' => 'users#show'
-    resources :users, :only => [:show]
+    resources :users, :only => [:show, :update]
 
     get 'recipes/search' => 'recipes#search'
     get 'recipes/unpublished' => 'recipes#unpublished'

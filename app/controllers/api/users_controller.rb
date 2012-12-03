@@ -9,4 +9,14 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = if params[:id] then User.find params[:id] else current_user end
+    @profile = @user.profile
+    Rails.logger.info params[:user][:profile]
+
+    if @user.update_attributes params[:user] and @profile.update_attributes params[:profile]
+      render :json => @user
+    end
+  end
+
 end 

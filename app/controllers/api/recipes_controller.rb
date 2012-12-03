@@ -76,15 +76,15 @@ class Api::RecipesController < ApplicationController
 
     if @recipe
       render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name])
+    end
   end
 
   def update
     @recipe = Recipe.find(params[:id])
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    if @recipe.update_attributes!(params[:recipe])
+    if @recipe.update_attributes! params[:recipe]
       render :json => @recipe
-    end
     end
   end
 

@@ -48,10 +48,12 @@ class User
   attr_accessible :login
 
   embeds_one :profile
+  accepts_nested_attributes_for :profile
   has_many :followers, :class_name => "User", :inverse_of => :following
   has_many :following, :class_name => "User", :inverse_of => :followers
   has_and_belongs_to_many :favorites, :class_name => "Recipe", :inverse_of => :favorited
   has_many :recipes, :inverse_of => :author
+
 
   # Overriding the default devise user query because we want to allow
   # logging in with both username or email.
