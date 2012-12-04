@@ -126,15 +126,22 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
                   <p><input type='text' name='unit' placeholder='Unit'/></p>
                   <p><input type='text' name='name' placeholder='Name'/></p>
                   <input type='submit'>
+                  <button href='#' id='delete-ingredient' class='red-button'>Delete</button>
                 </form>"
         $.modal html, onShow: (dialog) =>
           recipe_ingredients = @model.get "recipe_ingredients"
-          console.log recipe_ingredients
           ingredient = recipe_ingredients.getByCid $(e.target).closest('.ingredient-editable').attr("data-cid")
 
           $('input[name=amount]').val ingredient.get 'amount'
           $('input[name=unit]').val ingredient.get 'unit'
           $('input[name=name]').val ingredient.get 'name'
+          $("#delete-ingredient").on 'click', (e) =>
+            e.preventDefault()
+            recipe_ingredients.remove ingredient
+            $.modal.close()
+            flash.success "We've removed the ingredient, but remember to click save!"
+            false
+            
           $("#edit-ingredient-form").on 'submit', (e) =>
             e.preventDefault()
             ingredient.set "amount", $('input[name=amount]').val()
