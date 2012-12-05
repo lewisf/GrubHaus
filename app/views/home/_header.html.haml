@@ -1,20 +1,28 @@
 #header
   #header-content
-    #logo grub haus
+    #logo
+      = link_to "grub haus", root_url, 'data-bypass' =>true
     #navigation
       %ul
         %li
           - if user_signed_in?
-            Welcome, #{current_user.username}
-        %li 
-          - if user_signed_in?
-            %a{:href=> "/recipes/create"}Submit a Recipe
+            Welcome, #{link_to current_user.username, '/users/profile'}
+        %li
+          &nbsp;&nbsp;
         %li
           - if user_signed_in?
             %a{:href=>"/recipes"}Dashboard
         %li 
           - if user_signed_in?
-            %a{:href=>"/"}Search Recipes
+            %a{:href=> "/recipes/create"}Create
+        %li 
+          - if user_signed_in?
+            %a{:href=>"/"}Search
+        %li 
+          - if user_signed_in?
+            %a{:href=>"/recipes/browse"}Browse
+        %li
+          &nbsp;&nbsp;
         %li
           - if user_signed_in?
             = link_to "Sign out", destroy_user_session_path, 'data-bypass' => true

@@ -38,7 +38,6 @@ define ["backbone"
         json
 
       parse: (response, xhr) ->
-        console.log response
         stepsCollection = new StepsCollection()
         _.each response.steps, (step) -> stepsCollection.add step
         response.steps = stepsCollection

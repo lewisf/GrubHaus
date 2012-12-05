@@ -1,0 +1,18 @@
+<div class="img-container">
+{{#if editable_by_user}}
+    <div class="img-circle profile-editable" style="background: url('{{ profile.photo }}'); background-size: 190px 190px;" id="profile-photo">
+{{else}}
+    <div class="img-circle" style="background: url('{{ profile.photo }}'); background-size: 190px 190px;" id="profile-photo">
+{{/if}}
+</div>
+</div>
+{{#if editable_by_user}}
+<div id="profile-content" class="profile-editable">
+{{else}}
+<div id="profile-content">
+{{/if}}
+    <h1 id="name">{{ profile.first_name }} {{ profile.last_name }}</h1>
+    <h2 id="username">{{ username }}</h2>
+    <h3 id="email">{{ email }}</h3>
+    <h3 id="tagline"><b>Tagline:</b> {{ profile.tagline }}</h3>
+</div>

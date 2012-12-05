@@ -12,23 +12,20 @@ class Api::RecipesController < ApplicationController
     when "favorited"
       @recipes = Recipe.all
     else
-      @recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
+      @recipes = Recipe.where(published: true)
     end
 
     #@recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
     @recipes = Recipe.all
 
-    respond_to do |format|
-      format.json { render :json => @recipes }
-    end
+    render :json => @recipes
   end
 
   def search
     @recipes = Recipe.search params[:q]
 
-    respond_to do |format|
-      format.json { render :json => @recipes }
-    end
+    
+    render :json => @recipes
   end
 
   def create
@@ -42,161 +39,130 @@ class Api::RecipesController < ApplicationController
     serving_size = params[:serving_size]
     recipe_ingredients = params[:recipe_ingredients]
     steps = params[:steps]
-    @recipe = Recipe.new do |r|
-      r.name = name
-      r.photo = photo
-      r.description = description
-      r.prep_time = prep_time
-      r.cook_time = cook_time
-      r.ready_in = ready_in
-      r.serving_size = serving_size
-      recipe_ingredients.each do |ing|
-        r.recipe_ingredients.new do |re_ing|
-          re_ing.name = ing['name']
-          re_ing.amount = ing['amount']
-          re_ing.unit = ing['unit']
+    Rails.logger.info name
+    unless name == "Double click here to edit the recipe name."
+      @recipe = Recipe.new do |r|
+        r.name = name
+        r.photo = photo
+        r.description = description
+        r.prep_time = prep_time
+        r.cook_time = cook_time
+        r.ready_in = ready_in
+        r.serving_size = serving_size
+        recipe_ingredients.each do |ing|
+          r.recipe_ingredients.new do |re_ing|
+            re_ing.name = ing['name']
+            re_ing.amount = ing['amount']
+            re_ing.unit = ing['unit']
+          end
+        end
+        steps.each do |step|
+          r.steps.new do |x|
+            x.description = step['description']
+            x.start_time = step['start_time']
+            x.end_time = step['end_time']
+          end
         end
       end
-      steps.each do |step|
-        r.steps.new do |x|
-          x.description = step['description']
-          x.start_time = step['start_time']
-          x.end_time = step['end_time']
-        end
-      end
+      @user = current_user
+      @user.recipes << @recipe
+    else
+      @recipe = "Invalid recipe."
     end
-    @user = current_user
-    @user.recipes << @recipe
-    respond_to do |format|
-      if @recipe.save
-        format.json { render :json => @recipe }
-      else
-        # raise MongoidErrors::UnsavedDocument
-      end
+    if @recipe == "Invalid recipe." || @recipe.save 
+      render :json => @recipe
     end
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
-    user = User.find(session["warden.user.user.key"][1][0])
+    @recipe = Recipe.find params[:id]
     @recipe.current_user = current_user
 
-    respond_to do |format|
-      if @recipe
-        format.json { render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user]) }
-      else
-        # raise MongoidErrors::DocumentNotFound
-      end
+    if @recipe
+      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name])
     end
   end
 
   def update
-    Rails.logger.info "UPDATE FOUND"
-    Rails.logger.info params[:id]
     @recipe = Recipe.find(params[:id])
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    respond_to do |format|
-      if @recipe.update_attributes!(params[:recipe])
-        format.json { render :json => @recipe }
-      else
-         # raise MongoidErrors::UnsavedDocument
-      end
+    if @recipe.update_attributes! params[:recipe]
+      render :json => @recipe
     end
   end
 
   def destroy
     @recipe = Recipe.find params[:id] 
     @recipe.destroy
-    respond_to do |format|
-      format.json { render :json => [] }
-    end
+    render :json => []
   end
 
   def favorites
-    user = User.find(session["warden.user.user.key"][1][0])
+    user = params[:id].present? ? User.find(params[:id]) : current_user
     @favorites = user.favorites.all.entries
     @favorites.each { |x| x.current_user = current_user }
 
-    respond_to do |format|
-      format.json { render :json => @favorites.to_json(:methods => :is_authored_by_user) }
-    end
+    render :json => @favorites.to_json(:methods => :is_authored_by_user)
   end
 
   def unpublished
-    user = User.find(session["warden.user.user.key"][1][0])
-    Rails.logger.info user
-    @recipes = user.recipes.where(:published => false).entries
+    @recipes = current_user.recipes.where(:published => false).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    respond_to do |format|
-      format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
-    end
+    render :json => @recipes.to_json(:methods => :is_authored_by_user)
   end
 
   def published
-    user = User.find(session["warden.user.user.key"][1][0])
-    Rails.logger.info user
+    user = params[:id].present? ? User.find(params[:id]) : current_user
     @recipes = user.recipes.where(:published => true).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    respond_to do |format|
-      format.json { render :json => @recipes.to_json(:methods => :is_authored_by_user) }
-    end
+    render :json => @recipes.to_json(:methods => :is_authored_by_user)
   end
 
   def favorite
-    @user = User.find(session["warden.user.user.key"][1][0])
+    @user = current_user
     @recipe = Recipe.find params[:id]
-
     @user.favorites << @recipe
 
-    respond_to do |format|
-      if @user.save
-        format.json { render :json => @recipe }
-      else
-        format.json { render :json => [] }
-      end
+    if @user.save
+      render :json => @recipe
+    else
+      render :json => []
     end
   end
 
   def unfavorite
-    @user = User.find session["warden.user.user.key"][1][0]
+    @user = current_user
     @recipe = Recipe.find params[:id]
 
     @user.favorites.delete @recipe
 
-    respond_to do |format|
-      if @user.save
-        format.json { render :json => @recipe }
-      else
-        format.json { render :json => [] }
-      end
+    if @user.save
+      render :json => @recipe
+    else
+      render :json => []
     end
   end
 
   def publish
-    @user = User.find session["warden.user.user.key"][1][0]
+    @user = current_user
     @recipe = Recipe.where(author: current_user).find params[:id]
     
     @recipe.published = true
-    respond_to do |format|
-      if @recipe.author == @user and @recipe.save
-        format.json { render :json => @recipe }
-      else
-        format.json { render :json => [] }
-      end
+    if @recipe.author == @user and @recipe.save
+      render :json => @recipe
+    else
+      render :json => []
     end
   end
 
   def fork
-    @user = User.find session["warden.user.user.key"][1][0]
+    @user = current_user
     @recipe = Recipe.find params[:id]
     @new_recipe = @recipe.fork_to @user
-    respond_to do |format|
-      format.json { render :json => @new_recipe }
-    end
-    
+    render :json => @new_recipe
   end
 
 end

@@ -10,9 +10,9 @@ define ["jquery"
    recipeListTemplate, dashboardTemplate, ) ->
     Dashboard = Backbone.View.extend
       initialize: ->
-        @favorites = new RecipesCollection { url: "/api/recipes/favorites.json" }
-        @published = new RecipesCollection { url: "/api/recipes/published.json" }
-        @unpublished = new RecipesCollection { url: "/api/recipes/unpublished.json" }
+        @favorites = new RecipesCollection { url: "/api/recipes/favorites" }
+        @published = new RecipesCollection { url: "/api/recipes/published" }
+        @unpublished = new RecipesCollection { url: "/api/recipes/unpublished" }
         # @all = new RecipesCollection
         @dashHtml = Handlebars.compile dashboardTemplate
         @recipeListHtml = Handlebars.compile recipeListTemplate

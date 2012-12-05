@@ -3,8 +3,9 @@ define ["backbone"
         "models/recipe"
         "views/recipeTimeline"
         "views/recipeIngredients"
-        "text!templates/recipe.html"],
-  (Backbone, Handlebars, Recipe, Timeline, IngredientList, recipeTemplateHtml) ->
+        "text!templates/recipe.html"
+        "helpers/flash"],
+  (Backbone, Handlebars, Recipe, Timeline, IngredientList, recipeTemplateHtml, flash) ->
 
     class RecipeView extends Backbone.View
       timelineEl: "#rcontainer"
@@ -52,8 +53,9 @@ define ["backbone"
           success: =>
             $("#favorite-recipe-button").text("Unfavorite").attr("id", "unfavorite-recipe-button")
             @model.set "is_favorited_by_user?", true
+            flash.success "Favorited!"
           error: ->
-            alert "Error!"
+            flash.error "Ugh, something went wrong."
         false
 
       unfavorite: (e) ->
@@ -67,8 +69,9 @@ define ["backbone"
           success: =>
             $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
             @model.set "is_favorited_by_user?", false
+            flash.success "Unfavorited. :("
           error: ->
-            alert "Error!"
+            flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
         false
 
       fork: (e) ->
@@ -82,7 +85,8 @@ define ["backbone"
           success: (data) ->
             window.router.navigate "/recipes/edit/#{data._id}",
               trigger: true
+            flash.success "Cool, we forked the recipe. This is now something you can edit and publish!"
           error: =>
-            alert "Error"
+            flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
         false
 

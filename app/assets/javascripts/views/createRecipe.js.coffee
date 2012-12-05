@@ -1,10 +1,10 @@
 define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         "models/recipe", "models/recipe_ingredient", "models/step",
         "collections/steps", "collections/recipe_ingredients",
-        "views/recipeTimeline", "views/recipeIngredients",
+        "views/recipeTimeline", "views/recipeIngredients", "helpers/flash",
         "text!templates/createRecipe.html"],
   (Backbone, Handlebars, _, $, simplemodal, Recipe, RecipeIngredient, Step,
-   StepList, RecipeIngredients, Timeline, IngredientList, createRecipeTemplate) ->
+   StepList, RecipeIngredients, Timeline, IngredientList, flash, createRecipeTemplate) ->
 
     class CreateRecipeView extends Backbone.View
       events:
@@ -123,15 +123,22 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
                   <p><input type='text' name='unit' placeholder='Unit'/></p>
                   <p><input type='text' name='name' placeholder='Name'/></p>
                   <input type='submit'>
+                  <button href='#' id='delete-ingredient' class='red-button'>Delete</button>
                 </form>"
         $.modal html, onShow: (dialog) =>
           recipe_ingredients = @model.get "recipe_ingredients"
-          console.log recipe_ingredients
           ingredient = recipe_ingredients.getByCid $(e.target).closest('.ingredient-editable').attr("data-cid")
 
           $('input[name=amount]').val ingredient.get 'amount'
           $('input[name=unit]').val ingredient.get 'unit'
           $('input[name=name]').val ingredient.get 'name'
+          $("#delete-ingredient").on 'click', (e) =>
+            e.preventDefault()
+            recipe_ingredients.remove ingredient
+            $.modal.close()
+            flash.success "We've removed the ingredient, but remember to click save!"
+            false
+            
           $("#edit-ingredient-form").on 'submit', (e) =>
             e.preventDefault()
             ingredient.set "amount", $('input[name=amount]').val()
@@ -218,10 +225,10 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         recipe_collection = @model.get "recipe_collection"
         @model.save null,
           success: =>
-            console.log "Saved"
             @renderIngredients()
+            flash.success "Saved!"
           error: ->
-            console.log "Error"
+            flash.error "Could not save :("
 
       favorite: (e) ->
         e.preventDefault()
@@ -234,8 +241,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           success: =>
             $("#favorite-recipe-button").text("Unfavorite").attr("id", "unfavorite-recipe-button")
             @model.set "is_favorited_by_user?", true
+            flash.success "Favorited!"
           error: ->
-            alert "Error!"
+            flash.error "Ugh, something went wrong."
         false
 
       unfavorite: (e) ->
@@ -249,8 +257,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           success: =>
             $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
             @model.set "is_favorited_by_user?", false
+            flash.success "Unfavorited. :("
           error: ->
-            alert "Error!"
+            flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
         false
 
       publish: (e) ->
@@ -259,8 +268,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         @model.save null
           success: =>
             $("#publish-recipe-button").text("Unpublish").attr("id", "unpublish-recipe-button")
+            flash.success "Congratulations, you have published your recipe to fellow grubbers!"
           error: =>
-            alert "Error!"
+            flash.error "Uh oh, we coudn't publish your recipe. Are you sure you filled everything out?"
         # $.ajax
         #   type: 'POST'
         #   url: "/api/recipes/publish/#{@model.get '_id'}"
@@ -280,8 +290,9 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         @model.save null
           success: =>
             $("#unpublish-recipe-button").text("Publish").attr("id", "publish-recipe-button")
+            flash.success "Unpublished. :("
           error: =>
-            alert "Error!"
+            flash.error "Uh oh, we couldn't unpublish your recipe. Try again later!"
         false
 
       delete: (e) ->
@@ -290,6 +301,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           success: =>
             window.router.navigate "/recipes",
               trigger: true
+            flash.success "Delete successful."
           error: =>
-            alert "Error!"
+            flash.error "We couldn't delete this recipe. Try again later!"
         false
