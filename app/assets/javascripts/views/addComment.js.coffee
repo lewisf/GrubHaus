@@ -10,15 +10,14 @@ define ["backbone"
         @model = Comment
 
         @commentTemplate = Handlebars.compile addCommentTemplate
-        @render()
 
       render: ->
         @$el.html @commentTemplate @parent
         @
 
       save: ->
-        content = $("input[name=content]").val()
-        comment = new Comment {content: content}
-        comments = @parent.get("comments")
+        content = $("textarea[name=content]").val()
+        comment = new Comment {content: content, parent: @parent.id}
+        comments = @parent.get "comments"
         comments.add comment
-        comments.save()
+        comment.save()

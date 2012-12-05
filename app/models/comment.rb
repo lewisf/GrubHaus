@@ -8,5 +8,8 @@ class Comment
   validates_presence_of :content
 
   belongs_to :author, :class_name => "User", :inverse_of => :comments
+  belongs_to :parent, :class_name => "Step", :inverse_of => :comments
+
+  attr_accessible :content
 
 end

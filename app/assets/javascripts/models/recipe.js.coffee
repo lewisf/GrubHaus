@@ -39,6 +39,7 @@ define ["backbone"
 
       parse: (response, xhr) ->
         stepsCollection = new StepsCollection()
+        debugger
         _.each response.steps, (step) -> stepsCollection.add step
         response.steps = stepsCollection
 
