@@ -25,10 +25,11 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:comment])
-    step = Step.find(params[:parent])
+    @comment = Comment.new params[:comment]
+    recipe = Recipe.where("steps._id" => Moped::BSON::ObjectId(params[:parent])).first
+    step = recipe.steps.find(params[:parent])
     step.comments << @comment
-    step.save()
+    recipe.save
 
     respond_to do |format|
       if @comment.save

@@ -9,5 +9,5 @@ class Step
 
   attr_accessible :description, :start_time, :end_time
   validates_presence_of :description
-  
+
 end
