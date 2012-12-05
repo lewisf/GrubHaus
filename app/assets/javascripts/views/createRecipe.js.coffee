@@ -53,6 +53,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         @$el.html @template @model.for_template()
         $(".recipe").ready => # check random element in template to make sure this exists
           $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
+          $(".img-circle").first().css "background-size", "cover"
           @renderIngredients()
           @renderTimeline()
           @renderFormActions()

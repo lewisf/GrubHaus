@@ -35,6 +35,7 @@ define ["backbone"
       render: ->
         @$el.html @template @model.for_template()
         $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
+        $(".img-circle").first().css "background-size", "cover"
 
       renderTimeline: ->
         timeLine = new Timeline(@steps)
