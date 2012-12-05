@@ -6,12 +6,7 @@ define ["lodash"
 
     CommentsCollection = Backbone.Collection.extend
       model: Comment
-      el: "#comments"
-
-      initialize: ->
-        @_commentViews = []
-        @render()
-
+      
       render: ({with_template}={}) ->
         $(@el).html "<div></div>"
         @each (comment) =>
