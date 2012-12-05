@@ -12,11 +12,10 @@ class Api::RecipesController < ApplicationController
     when "favorited"
       @recipes = Recipe.all
     else
-      @recipes = Recipe.where(published: true)
+      @recipes = Recipe.where(published: true).entries
     end
 
     #@recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
-    @recipes = Recipe.all
 
     render :json => @recipes
   end
