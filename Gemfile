@@ -8,6 +8,8 @@ gem 'rails', '3.2.8'
 
 gem 'mongoid', '~> 3.0.0'
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
 gem 'fog', "~> 1.3.1"
 gem 'requirejs-rails'
 gem 'heroku'
