@@ -15,6 +15,7 @@ define ["backbone"
         'click a#favorite-recipe-button': 'favorite'
         'click a#unfavorite-recipe-button': 'unfavorite'
         'click a#fork-recipe-button': 'fork'
+        'click a#edit-recipe-button': 'gotoEditRecipe'
 
       initialize: (params) ->
         @template = Handlebars.compile recipeTemplateHtml
@@ -36,12 +37,18 @@ define ["backbone"
         @$el.html @template @model.for_template()
         $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
         $(".img-circle").first().css "background-size", "cover"
+        if @model.get "is_authored_by_user"
+          @renderEditButton()
 
       renderTimeline: ->
         timeLine = new Timeline(@steps)
 
       renderIngredients: ->
         ingredientsList = new IngredientList @model.get("recipe_ingredients")
+
+      renderEditButton: ->
+        console.log "HAHA"
+        $("#recipe-actions").append "<a href='#' id='edit-recipe-button'>Edit</a>"
 
       favorite: (e) ->
         e.preventDefault()
@@ -89,5 +96,10 @@ define ["backbone"
             flash.success "Cool, we forked the recipe. This is now something you can edit and publish!"
           error: =>
             flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
+        false
+
+      gotoEditRecipe: (e) ->
+        e.preventDefault()
+        window.router.navigate "/recipes/edit/#{@model.get "_id"}", {trigger: true}
         false
 
