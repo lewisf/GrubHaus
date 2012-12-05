@@ -3,8 +3,9 @@ define ["backbone"
         "models/recipe"
         "views/recipeTimeline"
         "views/recipeIngredients"
-        "text!templates/recipe.html"],
-  (Backbone, Handlebars, Recipe, Timeline, IngredientList, recipeTemplateHtml) ->
+        "text!templates/recipe.html"
+        "helpers/flash"],
+  (Backbone, Handlebars, Recipe, Timeline, IngredientList, recipeTemplateHtml, flash) ->
 
     class RecipeView extends Backbone.View
       steps: []
@@ -14,6 +15,7 @@ define ["backbone"
         'click a#favorite-recipe-button': 'favorite'
         'click a#unfavorite-recipe-button': 'unfavorite'
         'click a#fork-recipe-button': 'fork'
+        'click a#edit-recipe-button': 'gotoEditRecipe'
 
       initialize: (params) ->
         @template = Handlebars.compile recipeTemplateHtml
@@ -34,12 +36,19 @@ define ["backbone"
       render: ->
         @$el.html @template @model.for_template()
         $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
+        $(".img-circle").first().css "background-size", "cover"
+        if @model.get "is_authored_by_user"
+          @renderEditButton()
 
       renderTimeline: ->
         timeLine = new Timeline(@steps)
 
       renderIngredients: ->
         ingredientsList = new IngredientList @model.get("recipe_ingredients")
+
+      renderEditButton: ->
+        console.log "HAHA"
+        $("#recipe-actions").append "<a href='#' id='edit-recipe-button'>Edit</a>"
 
       favorite: (e) ->
         e.preventDefault()
@@ -52,8 +61,9 @@ define ["backbone"
           success: =>
             $("#favorite-recipe-button").text("Unfavorite").attr("id", "unfavorite-recipe-button")
             @model.set "is_favorited_by_user?", true
+            flash.success "Favorited!"
           error: ->
-            alert "Error!"
+            flash.error "Ugh, something went wrong."
         false
 
       unfavorite: (e) ->
@@ -67,8 +77,9 @@ define ["backbone"
           success: =>
             $("#unfavorite-recipe-button").text("Favorite").attr("id", "favorite-recipe-button")
             @model.set "is_favorited_by_user?", false
+            flash.success "Unfavorited. :("
           error: ->
-            alert "Error!"
+            flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
         false
 
       fork: (e) ->
@@ -82,7 +93,13 @@ define ["backbone"
           success: (data) ->
             window.router.navigate "/recipes/edit/#{data._id}",
               trigger: true
+            flash.success "Cool, we forked the recipe. This is now something you can edit and publish!"
           error: =>
-            alert "Error"
+            flash.error "Weird, we couldn't unfavorite this recipe. Please try again later."
+        false
+
+      gotoEditRecipe: (e) ->
+        e.preventDefault()
+        window.router.navigate "/recipes/edit/#{@model.get "_id"}", {trigger: true}
         false
 

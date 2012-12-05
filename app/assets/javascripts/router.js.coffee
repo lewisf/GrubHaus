@@ -4,13 +4,15 @@ define ["backbone"
         "views/dashboard"
         "views/search"
         "views/createRecipe"
-        "views/profile"],
-  (Backbone, RecipeView, DashboardView, IndexView, CreateRecipeView, ProfileView) ->
+        "views/profile"
+        "views/browse"],
+  (Backbone, RecipeView, DashboardView, IndexView, CreateRecipeView, ProfileView, BrowseView) ->
     Router = Backbone.Router.extend
       routes:
         "": "index"
         "recipes/search/:q": "index"
         "recipes": "showDashboard"
+        "recipes/browse": "browseRecipes"
         "recipes/create": "createRecipe"
         "recipes/edit/:id": "editRecipe"
         "recipes/:id": "showRecipe"
@@ -51,6 +53,10 @@ define ["backbone"
       profile: (id) ->
         profileView = new ProfileView {id: id}
         $("section.container").html profileView.el
+
+      browseRecipes: ->
+        browseView = new BrowseView()
+        $("section.container").html browseView.el
 
 
     initialize = ->
