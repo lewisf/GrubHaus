@@ -24,6 +24,7 @@ p "Creating users..."
     p.first_name = "Lewis"
     p.last_name = "Chung"
     p.tagline = "Life is goooooood."
+    p.photo = "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/c48.101.600.600/s320x320/526216_3940449702968_633450969_n.jpg"
   end
 end
 @lewis.save!
@@ -31,7 +32,8 @@ p "Created Lewis"
 
 @jon_p = Profile.new(first_name: "Jon",
                      last_name: "Wong",
-                     tagline: "Wat")
+                     tagline: "Wat",
+                     photo: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/c66.109.414.414/s320x320/401177_2732335942086_1030813790_n.jpg")
 
 @jon = User.new do |u|
   u.username = "jnwng"
@@ -46,7 +48,8 @@ p "Created Jon"
 
 @wes_p = Profile.new(first_name: "Wes",
                      last_name: "Vetter",
-                     tagline: "Im gonna shoot you!")
+                     tagline: "Im gonna shoot you!",
+                     photo: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/c0.2.467.467/s320x320/540104_4744647499267_985791849_n.jpg")
 
 @wes = User.new do |u| 
   u.username = "wes.vetter"
@@ -60,7 +63,8 @@ p "Created Wes"
 
 @phi_p = Profile.new(first_name: "Phi",
                      last_name: "Le",
-                     tagline: "Booooooooooooo")
+                     tagline: "Booooooooooooo",
+                     photo: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc7/c50.50.621.621/s320x320/409713_10150962347161366_1415538589_n.jpg")
 
 @phi = User.new do |u| 
   u.username = "vietataru"
