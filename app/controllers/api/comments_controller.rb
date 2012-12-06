@@ -5,7 +5,9 @@ class Api::CommentsController < ApplicationController
     @page = params[:page].to_i - 1
     @offset = @page * @amount
 
-    @comments = Comment.where(:parent => params[:parent]).limit(@amount).offset(@offset)
+    @comments = Comment.where(:parent => params[:parent]).
+                        order_by('created_at asc').
+                        limit(@amount).offset(@offset)
 
     respond_to do |format|
       format.json { render :json => @comments }

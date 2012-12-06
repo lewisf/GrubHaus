@@ -21,3 +21,4 @@ define ["backbone"
         comments = @parent.get "comments"
         comments.add comment
         comment.save()
+        @render()

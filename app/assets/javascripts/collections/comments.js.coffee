@@ -13,7 +13,3 @@ define ["lodash"
 
       for_template: ->
         _.map @models, (comment) -> comment.for_template()
-
-      get_view:(_model) ->
-        _.find @_commentViews, (view) -> view.model is _model
-
