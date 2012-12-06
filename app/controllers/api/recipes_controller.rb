@@ -81,7 +81,7 @@ class Api::RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find params[:id]
-    @recipe.current_user = current_user
+    @recipe.current_user = current_user || User.new
 
     if @recipe
       render :json => @recipe.to_json(:methods => [:is_favorited_by_user,
