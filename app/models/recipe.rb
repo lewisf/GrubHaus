@@ -84,7 +84,6 @@ class Recipe
   # Returns a Mongoid::Criteria object of recipes
 
   def self.search(q)
-    Rails.logger.info q
     if q.present?
       begin
         criteria.where(:published => true, :name => /#{q}/i)

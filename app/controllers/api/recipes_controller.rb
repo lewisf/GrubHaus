@@ -2,9 +2,9 @@ class Api::RecipesController < ApplicationController
   include ActiveModel::MassAssignmentSecurity
 
   def index
-    @amount = params[:amount].to_i || 25
-    @page = params[:page].to_i - 1
-    @offset = @page * @amount
+    # @amount = params[:amount].to_i || 25
+    # @page = params[:page].to_i - 1
+    # @offset = @page * @amount
 
     case params[:listing]
     when "recent"
@@ -22,9 +22,14 @@ class Api::RecipesController < ApplicationController
 
   def search
     @recipes = Recipe.search params[:q]
-
+    @tag = Tag.where(:name => params[:q]).first
+    unless @tag.nil?
+      @combined_recipes = @recipes.entries.concat @tag.recipes.entries 
+    else
+      @combined_recipes = @recipes
+    end
     
-    render :json => @recipes
+    render :json => @combined_recipes
   end
 
   def create
