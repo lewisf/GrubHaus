@@ -37,7 +37,7 @@
                             <a href="#" id="favorite-recipe-button">Favorite</a>
                         {{/if}}
                     {{/if}}
-                    {{#if is_authored_by_user}}
+                    {{#ifOr is_authored_by_user current_user_is_admin }}
                         {{#if published}}
                             <a href="#" id="unpublish-recipe-button">Unpublish</a>
                         {{else}}
@@ -45,7 +45,7 @@
                         {{/if}}
                         <a href="#" id="tags-button">Edit Tags</a>
                         <a href="#" id="delete-recipe-button" class="red-button">Delete</a>
-                    {{/if}}
+                    {{/ifOr}}
                     <a href="#" id="submit-create-recipe" class="green-button">Save</a>
                 </div>
             </div>

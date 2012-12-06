@@ -31,6 +31,11 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         # 'click #submit-create-recipe': 'saveRecipe'
 
       initialize: (params) ->
+        Handlebars.registerHelper 'ifOr', (v1, v2, options) ->
+          if v1 or v2
+            return options.fn @
+          return options.inverse @
+
         @template = Handlebars.compile createRecipeTemplate
         if params? && params.id?
           @model = new Recipe { _id: params.id }
