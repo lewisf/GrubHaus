@@ -1,14 +1,9 @@
 <ul class="comment-list">
-    {{#each comments}}
-        <li class="comment-box">
-            <span class="username">
-            {{ this.author.username }} commented:
-            </span>
-            <div class="comment-content">
-                {{ this.content }}
-            </div>
-        </li>
+    <li>
+    {{#each commentTemplates }}
+        {{{ this }}}
     {{else}}
         <i>Nothing here</i>
     {{/each}}
+    </li>
 </ul>

@@ -12,20 +12,21 @@ define ["backbone"
 
       initialize: ({with_template}) ->
         @template = Handlebars.compile with_template
+        @addStepCommentTemplate = Handlebars.compile addStepCommentTemplate
+
 
       render: (context={}) ->
         $(@el).html @template context
 
       addComment: ->
-        addStepCommentTemplate = Handlebars.compile addStepCommentTemplate
-
         commentListView = new CommentListView 
           collection: @model.get "comments"
 
         addCommentView = new AddCommentView 
           parent: @model
 
-        template = addStepCommentTemplate 
+        template = @addStepCommentTemplate 
+          description: @model.get 'description'
           comments: commentListView.render().el.innerHTML
           comment_form: addCommentView.render().el.innerHTML
 

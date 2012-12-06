@@ -12,7 +12,9 @@
         <div class='contents'>
             {{ text }}
         </div>
-        <a class="add-comment-button">cmm</a>
+        {{#unless creating }}
+            <a class="add-comment-button">comment</a>
+        {{/unless}}
     </div>
 </li>
 <li class="unit spacer">

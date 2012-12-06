@@ -21,5 +21,6 @@ define ["backbone"
         commentBox.val ''
         
         comment = new Comment {content: content, parent: @parent.id}
-        comments = @parent.get "comments"
-        comments.add comment
+        comment.save {}, success: =>
+          comments = @parent.get "comments"
+          comments.add comment

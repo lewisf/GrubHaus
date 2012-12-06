@@ -86,7 +86,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
 
       renderTimeline: ->
         steps = @model.get("steps")
-        @timeline = new Timeline @model
+        @timeline = new Timeline @model, true
 
       highlight: (e) ->
         if $(e.target).hasClass "img-circle"

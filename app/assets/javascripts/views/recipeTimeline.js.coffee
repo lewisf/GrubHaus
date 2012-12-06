@@ -16,8 +16,9 @@ define ["backbone"
       el: "#rcontainer"
       scaling: true
 
-      initialize: (recipe) ->
+      initialize: (recipe, creating=false) ->
         @recipe = recipe
+        @creating = creating
         @timelineTemplate = Handlebars.compile timelineTemplate
         @lineTemplate = Handlebars.compile lineTemplate
 
@@ -27,7 +28,7 @@ define ["backbone"
         @end_times = _.map @steps.pluck("end_time"), (time) -> parseInt(time)
         @num_units = _.max @end_times
 
-        @steps.render {with_template: circleTemplate}
+        @steps.render {with_template: circleTemplate, creating: creating}
 
         @render()
 
@@ -49,6 +50,7 @@ define ["backbone"
                 circleText: i
                 color: "#930202"
                 text: step.get "description"
+                creating: @creating
           else if @scaling
             $("##{@timeListId}").append @lineTemplate
               index: i
