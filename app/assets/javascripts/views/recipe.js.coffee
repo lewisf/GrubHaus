@@ -8,7 +8,6 @@ define ["backbone"
   (Backbone, Handlebars, Recipe, Timeline, IngredientList, recipeTemplateHtml, flash) ->
 
     class RecipeView extends Backbone.View
-      steps: []
       timelineEl: "#rcontainer"
 
       events:
@@ -26,9 +25,10 @@ define ["backbone"
             # and then click on a recipe, dashboard, then another
             # recipe, the steps are stacking. This isn't right
             # behavior .. something is lingering.
-            @steps = []
-            _.each @model.get("steps").toJSON(), (step) =>
-              @steps.push step
+            # @steps = []
+            # debugger
+            # _.each @model.get("steps").toJSON(), (step) =>
+            #   @steps.push step
             @render()
             @renderTimeline()
             @renderIngredients()
@@ -41,7 +41,7 @@ define ["backbone"
           @renderEditButton()
 
       renderTimeline: ->
-        timeLine = new Timeline(@steps)
+        timeLine = new Timeline @model
 
       renderIngredients: ->
         ingredientsList = new IngredientList @model.get("recipe_ingredients")

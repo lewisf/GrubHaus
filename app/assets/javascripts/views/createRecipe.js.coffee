@@ -85,10 +85,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
 
       renderTimeline: ->
         steps = @model.get("steps")
-        if steps.toJSON?
-          @timeline = new Timeline steps.toJSON()
-        else
-          @timeline = new Timeline steps
+        @timeline = new Timeline @model
 
       highlight: (e) ->
         if $(e.target).hasClass "img-circle"
@@ -244,17 +241,16 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
             start_time = $("input[name=start_time]").val()
             end_time = $("input[name=end_time]").val()
             steps = @model.get "steps"
-            steps.push new Step
+            steps.add new Step
               description: description
               start_time: start_time
               end_time: end_time
-            @model.set "steps", steps
+            @model.save()
             $.modal.close()
             @renderTimeline()
 
       saveRecipe: ->
         recipe_collection = @model.get "recipe_collection"
-        steps = @model.get "steps"
         @model.save null,
           success: =>
             window.router.navigate("/recipes/edit/#{@model.get('_id')}",{trigger: true})
