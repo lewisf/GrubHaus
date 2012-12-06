@@ -31,10 +31,7 @@ define ["backbone"
 
       for_template: ->
         json = @toJSON()
-        if json.is_authored_by_user
-          json.url = "recipes/edit/#{@id}"
-        else
-          json.url = "recipes/#{@id}"
+        json.url = "recipes/#{@id}"
         json
 
       parse: (response, xhr) ->
