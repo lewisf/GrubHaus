@@ -1,5 +1,6 @@
 class Recipe
   include Mongoid::Document
+  include Mongoid::Timestamps
   include Mongoid::Copyable
 
   field :name, type: String
@@ -24,7 +25,7 @@ class Recipe
   belongs_to :parent, :class_name => "Recipe", :inverse_of => :children
   has_many :children, :class_name => "Recipe", :inverse_of => :parent
   has_and_belongs_to_many :favorited, :class_name => "User", :inverse_of => :favorites
-  has_many :tags
+  has_and_belongs_to_many :tags
 
   before_save :check_publishable
 
@@ -49,6 +50,28 @@ class Recipe
     author.username
   end
 
+  def current_user_is_admin
+    current_user.admin
+  end
+
+  def all_tags
+    @tags = self.tags.collect! { |tag| tag.name }
+    @tags.join(", ")
+  end
+
+  def update_tags(tag_names)
+    @tag_names = tag_names.split(",")
+    @tag_names.collect! { |tag_name| tag_name.strip }
+    tags.destroy
+    @tag_names.each do |tag_name|
+      if tags.where(:name => tag_name).count > 0
+      else
+        tags << Tag.find_or_create_by(:name => tag_name)
+        save
+      end
+    end
+  end
+
 
   # Public: Return some recipes based on a query string
   #
@@ -62,7 +85,6 @@ class Recipe
   # Returns a Mongoid::Criteria object of recipes
 
   def self.search(q)
-    Rails.logger.info q
     if q.present?
       begin
         criteria.where(:published => true, :name => /#{q}/i)

@@ -3,7 +3,7 @@ class User
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable,
          :authentication_keys => [:login]
 
@@ -28,7 +28,9 @@ class User
   field :last_sign_in_at,    :type => Time
   field :current_sign_in_ip, :type => String
   field :last_sign_in_ip,    :type => String
-
+  
+  field :provider, :type => String
+  field :uid,      :type => String
   ## Confirmable
   # field :confirmation_token,   :type => String
   # field :confirmed_at,         :type => Time
@@ -43,9 +45,12 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
 
+  # Admin
+  field :admin, :type => Boolean, :default => false
+
   attr_accessor :login, :current_user
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
-  attr_accessible :login
+  attr_accessible :login, :provider, :uid
 
   embeds_one :profile
   accepts_nested_attributes_for :profile
@@ -66,6 +71,27 @@ class User
     else
       super  # do normal is 'login' is not passed in the conditions
     end
+  end
+  
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    Rails.logger.info("Find for Facebook OAuth")
+	Rails.logger.info auth
+	user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      user = User.create(provider:auth.provider,
+                           uid:auth.uid,
+                           email:auth.info.email,
+                           password:Devise.friendly_token[0,20],
+						   username: auth.info.nickname
+                           )
+	  user.profile = Profile.new do |profile|
+	    profile.first_name = auth.info.first_name
+	    profile.last_name = auth.info.last_name
+        profile.photo = auth.info.image.sub("square", "large")
+	  end
+	  user.save
+    end
+    user
   end
 
   def editable_by_user

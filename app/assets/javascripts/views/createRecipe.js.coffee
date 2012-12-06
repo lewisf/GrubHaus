@@ -3,6 +3,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         "collections/steps", "collections/recipe_ingredients",
         "views/recipeTimeline", "views/recipeIngredients", "helpers/flash",
         "text!templates/createRecipe.html"],
+
   (Backbone, Handlebars, _, $, simplemodal, Recipe, RecipeIngredient, Step,
    StepList, RecipeIngredients, Timeline, IngredientList, flash, createRecipeTemplate) ->
 
@@ -24,11 +25,17 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         'click a#publish-recipe-button': 'publish'
         'click a#unpublish-recipe-button': 'unpublish'
         'click a#delete-recipe-button': 'delete'
+        'click a#tags-button': 'editTags'
         # currently not working because element is created after
         # the rendering
         # 'click #submit-create-recipe': 'saveRecipe'
 
       initialize: (params) ->
+        Handlebars.registerHelper 'ifOr', (v1, v2, options) ->
+          if v1 or v2
+            return options.fn @
+          return options.inverse @
+
         @template = Handlebars.compile createRecipeTemplate
         if params? && params.id?
           @model = new Recipe { _id: params.id }
@@ -48,11 +55,13 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
             steps: new StepList [
               new Step { description: "Click here to edit this step.", start_time: 0, end_time: 30 }
             ]
+            all_tags: ""
 
       render: ->
         @$el.html @template @model.for_template()
         $(".recipe").ready => # check random element in template to make sure this exists
           $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
+          $(".img-circle").first().css "background-size", "cover"
           @renderIngredients()
           @renderTimeline()
           @renderFormActions()
@@ -115,6 +124,26 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
             $.modal.close()
             @render()
             false
+
+      editTags: (e) ->
+        e.preventDefault()
+        html = "<form id='edit-tags-form'>"
+        html += "<textarea name='tags' rows=6 cols=60>#{@model.get("all_tags")}</textarea>
+                <br /><br /><input type='submit' class='submit-button'>"
+        html += "</form>"
+
+        # We're dealing with tags as a comma separated list
+        # so would be nice to have front end validation
+        $.modal html, onShow: (dialog) =>
+          $("#edit-tags-form").on 'submit', (e) =>
+            e.preventDefault()
+            @model.set "all_tags", $("textarea[name=tags]").val()
+            $.modal.close()
+            @render()
+            false
+        
+        false
+
 
       editIngredient: (e) ->
         e.preventDefault()

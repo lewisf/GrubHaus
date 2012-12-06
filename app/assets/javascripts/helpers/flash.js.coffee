@@ -1,6 +1,9 @@
 define ["jquery"],
   ($) ->
 
+    $("p.notice, p.success, p.alert, p.error, p.info").on "click", (e) ->
+      $(e.target).slideUp 'fast'
+
     notice: (msg) =>
       el = $("p.notice").first()
       $(el).html msg
@@ -45,3 +48,4 @@ define ["jquery"],
         window.itimeout = setTimeout ->
           $(el).slideUp 'fast'
         , 2000
+

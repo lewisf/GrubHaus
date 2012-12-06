@@ -2,9 +2,9 @@ class Api::RecipesController < ApplicationController
   include ActiveModel::MassAssignmentSecurity
 
   def index
-    @amount = params[:amount].to_i || 25
-    @page = params[:page].to_i - 1
-    @offset = @page * @amount
+    # @amount = params[:amount].to_i || 25
+    # @page = params[:page].to_i - 1
+    # @offset = @page * @amount
 
     case params[:listing]
     when "recent"
@@ -12,20 +12,24 @@ class Api::RecipesController < ApplicationController
     when "favorited"
       @recipes = Recipe.all
     else
-      @recipes = Recipe.where(published: true)
+      @recipes = Recipe.where(published: true).entries
     end
 
     #@recipes = Recipe.where(published: true).limit(@amount).offset(@offset)
-    @recipes = Recipe.all
 
     render :json => @recipes
   end
 
   def search
     @recipes = Recipe.search params[:q]
-
+    @tag = Tag.where(:name => params[:q]).first
+    unless @tag.nil?
+      @combined_recipes = @recipes.entries.concat @tag.recipes.entries 
+    else
+      @combined_recipes = @recipes
+    end
     
-    render :json => @recipes
+    render :json => @combined_recipes
   end
 
   def create
@@ -39,7 +43,7 @@ class Api::RecipesController < ApplicationController
     serving_size = params[:serving_size]
     recipe_ingredients = params[:recipe_ingredients]
     steps = params[:steps]
-    Rails.logger.info name
+    tags = params[:all_tags]
     unless name == "Double click here to edit the recipe name."
       @recipe = Recipe.new do |r|
         r.name = name
@@ -66,6 +70,7 @@ class Api::RecipesController < ApplicationController
       end
       @user = current_user
       @user.recipes << @recipe
+      @recipe.update_tags tags
     else
       @recipe = "Invalid recipe."
     end
@@ -76,26 +81,36 @@ class Api::RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find params[:id]
-    @recipe.current_user = current_user
+    @recipe.current_user = current_user || User.new
 
     if @recipe
-      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name])
+      render :json => @recipe.to_json(:methods => [:is_favorited_by_user,
+                                                   :is_authored_by_user,
+                                                   :author_name,
+                                                   :current_user_is_admin,
+                                                   :all_tags])
     end
   end
 
   def update
     @recipe = Recipe.find(params[:id])
+    tags = params[:all_tags]
+    @recipe.update_tags tags
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    if @recipe.update_attributes! params[:recipe]
-      render :json => @recipe
+    if current_user == @recipe.author || current_user.admin
+      if @recipe.update_attributes! params[:recipe]
+        render :json => @recipe
+      end
     end
   end
 
   def destroy
     @recipe = Recipe.find params[:id] 
-    @recipe.destroy
-    render :json => []
+    if current_user == @recipe.author || current_user.admin
+      @recipe.destroy
+      render :json => []
+    end
   end
 
   def favorites
@@ -103,14 +118,14 @@ class Api::RecipesController < ApplicationController
     @favorites = user.favorites.all.entries
     @favorites.each { |x| x.current_user = current_user }
 
-    render :json => @favorites.to_json(:methods => :is_authored_by_user)
+    render :json => @favorites.to_json(:methods => [:is_authored_by_user, :current_user_is_admin])
   end
 
   def unpublished
     @recipes = current_user.recipes.where(:published => false).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    render :json => @recipes.to_json(:methods => :is_authored_by_user)
+    render :json => @recipes.to_json(:methods => [:is_authored_by_user, :current_user_is_admin])
   end
 
   def published
@@ -118,7 +133,7 @@ class Api::RecipesController < ApplicationController
     @recipes = user.recipes.where(:published => true).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    render :json => @recipes.to_json(:methods => :is_authored_by_user)
+    render :json => @recipes.to_json(:methods => [:is_authored_by_user, :current_user_is_admin])
   end
 
   def favorite
@@ -128,8 +143,6 @@ class Api::RecipesController < ApplicationController
 
     if @user.save
       render :json => @recipe
-    else
-      render :json => []
     end
   end
 
@@ -141,20 +154,6 @@ class Api::RecipesController < ApplicationController
 
     if @user.save
       render :json => @recipe
-    else
-      render :json => []
-    end
-  end
-
-  def publish
-    @user = current_user
-    @recipe = Recipe.where(author: current_user).find params[:id]
-    
-    @recipe.published = true
-    if @recipe.author == @user and @recipe.save
-      render :json => @recipe
-    else
-      render :json => []
     end
   end
 

@@ -104,10 +104,16 @@ define ["backbone"
         $.modal html, onShow: (dialog) =>
           $("#edit-profile-email-form").on "submit", (e) =>
             e.preventDefault()
+            curr_email = @model.get "email"
             @model.set "email", $("input[name=email]").val()
-            @model.save()
+            @model.save null,
+              success: =>
+                flash.success "Success! We updated your email."
+                @render()
+              error: =>
+                flash.error "Sorry! The entered email is either taken or invalid."
+                @model.set "email", curr_email
             $.modal.close()
-            @render()
 
       editUsername: (e) ->
         e.preventDefault()
@@ -120,14 +126,16 @@ define ["backbone"
         $.modal html, onShow: (dialog) =>
           $("#edit-profile-username-form").on "submit", (e) =>
             e.preventDefault()
+            curr_username = @model.get "username"
             @model.set "username", $("input[name=username]").val()
-            $.modal.close()
             @model.save null,
               success: =>
                 flash.success "Success! We updated your username."
+                @render()
               error: =>
-                flash.error "Something went wrong!"
-            @render()
+                flash.error "Sorry! The entered username is taken or contains invalid characters."
+                @model.set "username", curr_username
+            $.modal.close()
 
       editTagline: (e) ->
         e.preventDefault()
