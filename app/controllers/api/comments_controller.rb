@@ -10,7 +10,9 @@ class Api::CommentsController < ApplicationController
                         limit(@amount).offset(@offset)
 
     respond_to do |format|
-      format.json { render :json => @comments }
+      format.json { 
+        render :json => @comments.to_json(:include => { :author => { :only => :username }}) 
+      }
     end
   end
 

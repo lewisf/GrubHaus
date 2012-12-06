@@ -1,7 +1,12 @@
 <ul class="comment-list">
     {{#each comments}}
-        <li>
-            {{ this.content }}
+        <li class="comment-box">
+            <span class="username">
+            {{ this.author.username }} commented:
+            </span>
+            <div class="comment-content">
+                {{ this.content }}
+            </div>
         </li>
     {{else}}
         <i>Nothing here</i>

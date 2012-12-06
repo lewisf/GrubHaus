@@ -16,9 +16,10 @@ define ["backbone"
         @
 
       save: ->
-        content = $("textarea[name=content]").val()
+        commentBox = $("textarea[name=content]")
+        content = commentBox.val()
+        commentBox.val ''
+        
         comment = new Comment {content: content, parent: @parent.id}
         comments = @parent.get "comments"
         comments.add comment
-        comment.save()
-        @render()
