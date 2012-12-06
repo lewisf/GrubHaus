@@ -73,7 +73,6 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
           false
 
       renderIngredients: ->
-        console.log "Rendered Ingredients"
         ingredients = @model.get "recipe_ingredients"
         _.each ingredients.models, (ing) ->
           ing.set "cid", ing.cid
@@ -258,7 +257,7 @@ define ["backbone", "handlebars", "lodash", "jquery", "jquery.simplemodal",
         steps = @model.get "steps"
         @model.save null,
           success: =>
-            @renderIngredients()
+            window.router.navigate("/recipes/edit/#{@model.get('_id')}",{trigger: true})
             flash.success "Saved!"
           error: ->
             flash.error "Could not save :("
