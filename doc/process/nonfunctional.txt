@@ -1,0 +1,4 @@
+Nonfunctional Requirements:
+
+Assuming a good internet connection & browser:
+- pages must load quickly (<2 seconds)
