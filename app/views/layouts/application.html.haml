@@ -6,7 +6,7 @@
     = requirejs_include_tag "application"
     = csrf_meta_tag
     %meta{:id => "current_user",:user => (@user.username unless @user.nil?)}
-    %meta{:id => "current_photo",:photo => (@user.profile.photo unless @user.nil?)}
+    %meta{:id => "current_photo",:photo => (@user.profile.photo unless @user.nil? or @user.profile.nil?)}
     %script{:src => "http://use.edgefonts.net/lobster-two.js"}
   %body
     #wrap
