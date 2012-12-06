@@ -47,6 +47,10 @@ group :test, :development do
   gem 'colorize'
 end
 
+group :development do
+  gem 'railroady'
+end
+
 group :test do
   gem 'database_cleaner'
   gem 'cucumber-rails', :require => false
