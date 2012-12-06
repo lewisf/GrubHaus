@@ -98,7 +98,7 @@ class Api::RecipesController < ApplicationController
     @recipe.update_tags tags
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    if current_user.admin || current_user == @recipe.author
+    if current_user == @recipe.author || current_user.admin
       if @recipe.update_attributes! params[:recipe]
         render :json => @recipe
       end
@@ -107,8 +107,10 @@ class Api::RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find params[:id] 
-    @recipe.destroy
-    render :json => []
+    if current_user == @recipe.author || current_user.admin
+      @recipe.destroy
+      render :json => []
+    end
   end
 
   def favorites
@@ -151,16 +153,6 @@ class Api::RecipesController < ApplicationController
     @user.favorites.delete @recipe
 
     if @user.save
-      render :json => @recipe
-    end
-  end
-
-  def publish
-    @user = current_user
-    @recipe = Recipe.where(author: current_user).find params[:id]
-    
-    @recipe.published = true
-    if @recipe.author == @user and @recipe.save
       render :json => @recipe
     end
   end
