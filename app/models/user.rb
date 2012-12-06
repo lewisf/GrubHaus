@@ -87,6 +87,7 @@ class User
 	  user.profile = Profile.new do |profile|
 	    profile.first_name = auth.info.first_name
 	    profile.last_name = auth.info.last_name
+        profile.photo = auth.info.image.sub("square", "large")
 	  end
 	  user.save
     end
