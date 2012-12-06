@@ -6,7 +6,7 @@
       %ul
         %li
           - if user_signed_in?
-            Welcome, #{link_to (@user.admin? ? "admin" : current_user.username), '/users/profile'}
+            Hallo, #{link_to (@user.admin? ? "admin" : current_user.username), '/users/profile'}
         %li
           &nbsp;&nbsp;
         %li
