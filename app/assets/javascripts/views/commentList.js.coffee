@@ -27,8 +27,7 @@ define ["jquery"
       onCommentAdded: (addedModel) ->
         json = addedModel.for_template()
         username = $("meta#current_user").attr 'user'
+        json.photo = $("meta#current_photo").attr 'photo'
         json.author = {username: username}
         @$('ul').append @commentTemplate json
         @$('ul').scrollTop $('ul.comment-list')[0].scrollHeight
-
-

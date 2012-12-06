@@ -11,4 +11,8 @@ class Comment
 
   attr_accessible :content, :parent
 
+  def photo
+    author.profile.photo
+  end
+
 end

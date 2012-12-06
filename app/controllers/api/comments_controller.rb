@@ -11,7 +11,7 @@ class Api::CommentsController < ApplicationController
 
     respond_to do |format|
       format.json { 
-        render :json => @comments.to_json(:include => { :author => { :only => :username }}) 
+        render :json => @comments.to_json(:include => { :author => { :only => :username }}, :methods => :photo) 
       }
     end
   end

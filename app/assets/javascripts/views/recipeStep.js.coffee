@@ -34,7 +34,8 @@ define ["backbone"
           commentListView.setElement "#comments"
           addCommentView.setElement "#comment-form"
           $("#add-step-comment-form").on 'submit', (e) =>
-            e.preventDefault()          
+            e.preventDefault()
             addCommentView.save()
+            @$('ul').scrollTop $('ul.comment-list')[0].scrollHeight
             false
         false

@@ -9,10 +9,23 @@ ul.comment-list
 
 div.comment-box
     border-top: 1px solid black
-    padding-top: 3px
+    padding: 5px
+    padding-top: 10px
+    width: 500px
+    min-height: 80px
 
-div.comment-content
-    text-align: right
+    .comment-photo, .username, .comment-content
+        float: left
+    .comment-photo
+        img
+            border: 3px solid white
+            box-shadow: 0 0 4px #ccc
+    .username
+        margin-left: 10px
+        display: block
+    .comment-content
+        width: 200px
+        display: block
 
 div#step-detail
     font-size: 1.2em
