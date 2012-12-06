@@ -5,10 +5,14 @@ class Api::CommentsController < ApplicationController
     @page = params[:page].to_i - 1
     @offset = @page * @amount
 
-    @comments = Comment.limit(@amount).offset(@offset)
+    @comments = Comment.where(:parent => params[:parent]).
+                        order_by('created_at asc').
+                        limit(@amount).offset(@offset)
 
     respond_to do |format|
-      format.json { render :json => @comments }
+      format.json { 
+        render :json => @comments.to_json(:include => { :author => { :only => :username }}) 
+      }
     end
   end
 
@@ -25,7 +29,13 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new params[:comment]
+    @comment.author = current_user
+    recipe = Recipe.where("steps._id" => Moped::BSON::ObjectId(params[:parent])).first
+    step = recipe.steps.find(params[:parent])
+    step.comments << @comment
+    recipe.save
+
     respond_to do |format|
       if @comment.save
         format.json { render :json => @comment }
