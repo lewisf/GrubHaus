@@ -1,4 +1,4 @@
-#header
+#header{:style => (@user && @user.admin? ? "background: #000;" : "background: #930202")}
   #header-content
     #logo
       = link_to "grub haus", root_url, 'data-bypass' =>true
@@ -6,7 +6,7 @@
       %ul
         %li
           - if user_signed_in?
-            Welcome, #{link_to current_user.username, '/users/profile'}
+            Welcome, #{link_to (@user.admin? ? "admin" : current_user.username), '/users/profile'}
         %li
           &nbsp;&nbsp;
         %li

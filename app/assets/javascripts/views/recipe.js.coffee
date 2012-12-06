@@ -37,7 +37,7 @@ define ["backbone"
         @$el.html @template @model.for_template()
         $(".img-circle").first().css "background", "url('#{@model.attributes.photo}')"
         $(".img-circle").first().css "background-size", "cover"
-        if @model.get "is_authored_by_user"
+        if @model.get("is_authored_by_user") or @model.get("current_user_is_admin")
           @renderEditButton()
 
       renderTimeline: ->
@@ -47,7 +47,6 @@ define ["backbone"
         ingredientsList = new IngredientList @model.get("recipe_ingredients")
 
       renderEditButton: ->
-        console.log "HAHA"
         $("#recipe-actions").append "<a href='#' id='edit-recipe-button'>Edit</a>"
 
       favorite: (e) ->

@@ -49,6 +49,10 @@ class Recipe
     author.username
   end
 
+  def current_user_is_admin
+    current_user.admin
+  end
+
 
   # Public: Return some recipes based on a query string
   #

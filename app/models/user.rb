@@ -45,6 +45,9 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
 
+  # Admin
+  field :admin, :type => Boolean, :default => false
+
   attr_accessor :login, :current_user
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
   attr_accessible :login, :provider, :uid

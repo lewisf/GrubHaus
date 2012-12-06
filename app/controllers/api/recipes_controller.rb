@@ -78,7 +78,7 @@ class Api::RecipesController < ApplicationController
     @recipe.current_user = current_user
 
     if @recipe
-      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name])
+      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name, :current_user_is_admin])
     end
   end
 
@@ -86,8 +86,10 @@ class Api::RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    if @recipe.update_attributes! params[:recipe]
-      render :json => @recipe
+    if current_user.admin || current.user == @recipe.author
+      if @recipe.update_attributes! params[:recipe]
+        render :json => @recipe
+      end
     end
   end
 
@@ -102,14 +104,14 @@ class Api::RecipesController < ApplicationController
     @favorites = user.favorites.all.entries
     @favorites.each { |x| x.current_user = current_user }
 
-    render :json => @favorites.to_json(:methods => :is_authored_by_user)
+    render :json => @favorites.to_json(:methods => [:is_authored_by_user, :current_user_is_admin])
   end
 
   def unpublished
     @recipes = current_user.recipes.where(:published => false).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    render :json => @recipes.to_json(:methods => :is_authored_by_user)
+    render :json => @recipes.to_json(:methods => [:is_authored_by_user, :current_user_is_admin])
   end
 
   def published
@@ -117,7 +119,7 @@ class Api::RecipesController < ApplicationController
     @recipes = user.recipes.where(:published => true).entries
     @recipes.each { |x| x.current_user = current_user }
 
-    render :json => @recipes.to_json(:methods => :is_authored_by_user)
+    render :json => @recipes.to_json(:methods => [:is_authored_by_user, :current_user_is_admin])
   end
 
   def favorite
