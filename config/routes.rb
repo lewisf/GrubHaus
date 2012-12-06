@@ -15,8 +15,13 @@ GrubHaus::Application.routes.draw do
     post 'recipes/favorite/:id' => 'recipes#favorite'
     post 'recipes/unfavorite/:id' => 'recipes#unfavorite'
     post 'recipes/fork/:id' => 'recipes#fork'
+
     resources :recipes, :except => [:new] do
     end
+    
+    get 'tags/:recipe_id' => 'tags#index'
+    post 'tags/:recipe_id' => 'tags#create'
+    delete 'tags/:recipe_id' => 'tags#destroy'
 
     resources :comments, :except => [:edit, :new]
   end

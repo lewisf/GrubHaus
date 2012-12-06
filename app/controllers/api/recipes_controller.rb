@@ -38,7 +38,7 @@ class Api::RecipesController < ApplicationController
     serving_size = params[:serving_size]
     recipe_ingredients = params[:recipe_ingredients]
     steps = params[:steps]
-    Rails.logger.info name
+    tags = params[:all_tags]
     unless name == "Double click here to edit the recipe name."
       @recipe = Recipe.new do |r|
         r.name = name
@@ -65,6 +65,7 @@ class Api::RecipesController < ApplicationController
       end
       @user = current_user
       @user.recipes << @recipe
+      @recipe.update_tags tags
     else
       @recipe = "Invalid recipe."
     end
@@ -78,15 +79,21 @@ class Api::RecipesController < ApplicationController
     @recipe.current_user = current_user
 
     if @recipe
-      render :json => @recipe.to_json(:methods => [:is_favorited_by_user, :is_authored_by_user, :author_name, :current_user_is_admin])
+      render :json => @recipe.to_json(:methods => [:is_favorited_by_user,
+                                                   :is_authored_by_user,
+                                                   :author_name,
+                                                   :current_user_is_admin,
+                                                   :all_tags])
     end
   end
 
   def update
     @recipe = Recipe.find(params[:id])
+    tags = params[:all_tags]
+    @recipe.update_tags tags
     # raise MongoidErrors::DocumentNotFound unless @recipe
 
-    if current_user.admin || current.user == @recipe.author
+    if current_user.admin || current_user == @recipe.author
       if @recipe.update_attributes! params[:recipe]
         render :json => @recipe
       end
@@ -129,8 +136,6 @@ class Api::RecipesController < ApplicationController
 
     if @user.save
       render :json => @recipe
-    else
-      render :json => []
     end
   end
 
@@ -142,8 +147,6 @@ class Api::RecipesController < ApplicationController
 
     if @user.save
       render :json => @recipe
-    else
-      render :json => []
     end
   end
 
@@ -154,8 +157,6 @@ class Api::RecipesController < ApplicationController
     @recipe.published = true
     if @recipe.author == @user and @recipe.save
       render :json => @recipe
-    else
-      render :json => []
     end
   end
 
