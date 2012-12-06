@@ -10,7 +10,8 @@ define ["backbone",
         end_time: 'Text'
 
       initialize: ->
-        @set "comments", new CommentsCollection()
+        comments = new CommentsCollection {parent: @id}
+        @set "comments", comments
 
       for_template: ->
         @toJSON()

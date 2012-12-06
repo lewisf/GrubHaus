@@ -9,11 +9,10 @@ define ["jquery"
     commentListView = Backbone.View.extend
       initialize: ->
         @template = Handlebars.compile commentListTemplate
-
-        # commentList = @collection.fetch
-        #   success: =>
-        #     @render()
-        @render()
+        commentList = @collection.fetch
+          data: $.param {parent: @collection.parent}
+          success: =>
+            @render()
 
 
       render: ->

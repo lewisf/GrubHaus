@@ -5,7 +5,7 @@ class Api::CommentsController < ApplicationController
     @page = params[:page].to_i - 1
     @offset = @page * @amount
 
-    @comments = Comment.limit(@amount).offset(@offset)
+    @comments = Comment.find_by(:parent => params[:parent]).limit(@amount).offset(@offset)
 
     respond_to do |format|
       format.json { render :json => @comments }
@@ -26,6 +26,7 @@ class Api::CommentsController < ApplicationController
 
   def create
     @comment = Comment.new params[:comment]
+    @comment.author = current_user
     recipe = Recipe.where("steps._id" => Moped::BSON::ObjectId(params[:parent])).first
     step = recipe.steps.find(params[:parent])
     step.comments << @comment
