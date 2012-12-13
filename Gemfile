@@ -25,6 +25,7 @@ gem 'carrierwave'
 gem 'carrierwave-mongoid'
 gem 'faker'
 gem 'maruku'
+gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -63,6 +64,7 @@ gem 'jquery-rails'
 group :production do
   gem 'thin'
   gem 'haml'
+  gem 'newrelic_rpm'
 end
 
 # To use ActiveModel has_secure_password
